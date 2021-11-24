@@ -23,7 +23,6 @@ const Phrase = db.define('phrase', {
     allowNull: false,
     validate: {
       notEmpty: true,
-      isUrl: true,
     },
   },
 });
