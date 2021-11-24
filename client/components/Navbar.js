@@ -1,11 +1,19 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
+const Navbar = () => {
+  const isLoggedIn = useSelector(state => !!state.auth.id)
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(logout())
+  }
+
+  return (
   <div>
-    <h1>FS-App-Template</h1>
+    <h1>Red Panda</h1>
     <nav>
       {isLoggedIn ? (
         <div>
@@ -25,23 +33,6 @@ const Navbar = ({handleClick, isLoggedIn}) => (
     </nav>
     <hr />
   </div>
-)
+)}
 
-/**
- * CONTAINER
- */
-const mapState = state => {
-  return {
-    isLoggedIn: !!state.auth.id
-  }
-}
-
-const mapDispatch = dispatch => {
-  return {
-    handleClick() {
-      dispatch(logout())
-    }
-  }
-}
-
-export default connect(mapState, mapDispatch)(Navbar)
+export default Navbar
