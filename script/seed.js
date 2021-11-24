@@ -1,30 +1,58 @@
 'use strict'
 
-const {db, models: {User} } = require('../server/db')
+const {db, models: {User, Phrase} } = require('../server/db')
 
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
  */
-async function seed() {
+async function syncDB() {
   await db.sync({ force: true }) // clears db and matches models to tables
   console.log('db synced!')
-
+}
   // Creating Users
+async function createUsers() {
   const users = await Promise.all([
-    User.create({ username: 'cody', password: '123' }),
-    User.create({ username: 'murphy', password: '123' }),
+    User.create({ email: 'cody@gmail.com', password: '123', firstname: 'cody', lastname: 'coder', points: 50, isAdmin: false }),
+    User.create({ email: 'murphy@gmail.com', password: '123', firstname: 'murphy', lastname: 'coder', points: 20, isAdmin: true }),
   ])
+}
 
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1]
-    }
+const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+
+const letterLinks = [
+  "letterA.png", "letterB.png", "letterC.png", "letterD.png", "letterE.png", "letterF.png", "letterG.png", "letterH.png", "letterI.png", "letterJ.png", "letterK.png", "letterL.png", "letterM.png", "letterN.png","letterO.png", "letterP.png","letterQ.png","letterR.png","letterS.png","letterT.png","letterU.png","letterV.png","letterW.png","letterX.png","letterY.png","letterX.png",
+]
+
+const tiers = ["1", "1", "1", "1", "1", "1", "2", "2", "2", "2", "2", "3", "3", "3", "3", "3", "4", "4", "4", "4", "4", "5", "5", "5", "5", "5"]
+
+async function createPhrases() {
+  for (let i = 0; i < letters.length; i++) {
+    await Phrase.create({ tiers: tiers[i], letterwords: letters[i], url: letterLinks[i] })
   }
 }
+
+async function createConnections() {
+  const user1 = await User.findByPk(1)
+  const user2 = await User.findByPk(2)
+  for (let i = 1; i <= letters.length; i ++) {
+    await user1.addPhrase([i], { through: {isUnlocked : (Math.random() > 0.5) }})
+    await user2.addPhrase([i], { through: {isUnlocked : (Math.random() > 0.5) }})
+  }
+}
+
+const seedWithRandom = async () => {
+  try {
+    await createUsers()
+    await createPhrases()
+    await createConnections()
+    console.log(`seeded successfully`)
+  }
+  catch (error) {
+    console.error(error)
+  }
+}
+
 
 /*
  We've separated the `seed` function from the `runSeed` function.
@@ -34,7 +62,8 @@ async function seed() {
 async function runSeed() {
   console.log('seeding...')
   try {
-    await seed()
+    await syncDB()
+    await seedWithRandom()
   } catch (err) {
     console.error(err)
     process.exitCode = 1
@@ -55,4 +84,4 @@ if (module === require.main) {
 }
 
 // we export the seed function for testing purposes (see `./seed.spec.js`)
-module.exports = seed
+module.exports = runSeed
