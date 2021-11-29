@@ -5,7 +5,7 @@ import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
 import * as fp from "fingerpose";
 import {fetchPhrases} from '../store/phrases'
-//import allGestures from './whereever'
+import allGestures from '../letterGestures'
 
 
 const SingleLearning = () => {
@@ -18,21 +18,23 @@ const SingleLearning = () => {
   const [emoji, setEmoji] = useState(null);
   const [images, setImages] = useState(null)
   const allLetters = useSelector(state => state.phrases)
-  const currentGestures = allGestures.filter(gesture => {
-    const lettersOnly = allLetters.map(letter => letter.letterwords);
 
-    if (lettersOnly.includes(gesture.toString())) {
-      return true;
-    } else {
-      return false
-    }
-  })
+  const lettersOnly = allLetters.map(letter => letter.letterwords);
+  const currentGestures = Object.entries(allGestures)
+    .filter(entry => {
+      const [key, value] = entry
+      return lettersOnly.includes(key)
+    })
+    .map(entry => {
+      const [key, value] = entry
+      return value;
+    })
 
 
   const gestureAccuracyMany = 10;
   const gestureAccuracyOne = 9.5;
 
-  //like componentDidMount
+  //Like componentDidMount
   useEffect(() => {
     dispatch(fetchPhrases(1)) //need to make tier dynamic
     setLetter(allLetters[0].letterwords)
@@ -41,6 +43,24 @@ const SingleLearning = () => {
       return accu
     },{}))
   }, [])
+
+  //Like componentWillUpdate
+  useEffect(() => {
+    let intervalId;
+
+    const run = async () => {
+      intervalId = await runHandpose();
+    }
+
+    run()
+
+    //Like componentWillUnmount
+    return () => {
+      clearInterval(intervalId)
+    }
+
+  }, [currentLetter]);
+
 
   const runHandpose = async () => {
     const net = await handpose.load();
@@ -88,14 +108,7 @@ const SingleLearning = () => {
 
       // Gesture detections
       if (hand.length > 0) {
-        const GE = new fp.GestureEstimator([
-          //--------ADD NEW HERE--------
-          fp.Gestures.VictoryGesture,
-          fp.Gestures.ThumbsUpGesture,
-          letterAGesture,
-          letterBGesture,
-          letterCGesture,
-        ]);
+        const GE = new fp.GestureEstimator(currentGestures);
 
         //second argument is the confidence level
         const gesture = await GE.estimate(hand[0].landmarks, 8);
@@ -127,7 +140,88 @@ const SingleLearning = () => {
   };
   console.log(emoji);
 
+  let emojiPrint =
+    emoji === currentLetter ? (
+      <img
+        src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
+        style={{
+          position: "absolute",
+          marginLeft: "auto",
+          marginRight: "auto",
+          left: 400,
+          bottom: 50,
+          right: 0,
+          textAlign: "center",
+          height: 100,
+        }}
+      />
+    ) : (
+      ""
+    );
 
+  return (
+    <div className="App">
+      <header className="App-header">
+        <Webcam
+          ref={webcamRef}
+          style={{
+            position: "absolute",
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 0,
+            right: 0,
+            textAlign: "center",
+            zindex: 9,
+            width: 640,
+            height: 480,
+          }}
+        />
+        <canvas
+          ref={canvasRef}
+          style={{
+            position: "absolute",
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 0,
+            right: 0,
+            textAlign: "center",
+            zindex: 9,
+            width: 640,
+            height: 480,
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 0,
+            top: 100,
+            right: 0,
+            textAlign: "center",
+            height: 100,
+          }}
+        >
+          Copy gesture to complete
+        </div>
+        <img
+          src={images[currentLetter]}
+          style={{
+            position: "absolute",
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 100,
+            bottom: 50,
+            right: 0,
+            textAlign: "center",
+            height: 100,
+          }}
+        />
+
+        {emojiPrint}
+      </header>
+    </div>
+  );
 }
 
 export default SingleLearning
