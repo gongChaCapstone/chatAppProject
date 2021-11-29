@@ -37,36 +37,25 @@ const SingleLearning = () => {
   //Like componentDidMount
   useEffect(() => {
     dispatch(fetchPhrases(1)) //need to make tier dynamic
-
-
-
-    //setLetter(allLetters[0].letterwords)
-    // setImages(allLetters.reduce((accu,letter) => {
-    //   accu[letter.letterwords] = letter.url
-    //   return accu
-    // },{}))
   }, [])
 
   //Like componentWillUpdate
   useEffect(() => {
-    // let intervalId;
+    let intervalId;
+    const run = async () => {
+      intervalId = await runHandpose();
+    }
 
-    // const run = async () => {
-    //   intervalId = await runHandpose();
-    // }
+    run()
 
-    // run()
-
-    // //Like componentWillUnmount
-    // return () => {
-    //   clearInterval(intervalId)
-    // }
-
-
-    runHandpose()
+    //Like componentWillUnmount
+    return () => {
+      clearInterval(intervalId)
+    }
 
   }, [currentLetter]);
 
+  //componentWillUpdate to get allLetters
   useEffect(() => {
     allLetters[0] ? setLetter(allLetters[0].letterwords) : ''
     setImages(allLetters.reduce((accu,letter) => {
