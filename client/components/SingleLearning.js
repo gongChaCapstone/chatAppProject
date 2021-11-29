@@ -5,7 +5,7 @@ import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
 import * as fp from "fingerpose";
 import {fetchPhrases} from '../store/phrases'
-import allGestures from '../letterGestures'
+import {allGestures} from '../letterGestures'
 
 
 const SingleLearning = () => {
@@ -14,10 +14,10 @@ const SingleLearning = () => {
   const canvasRef = useRef(null);
 
 
-  const [currentLetter, setLetter] = useState(null);
+  const [currentLetter, setLetter] = useState("");
   const [emoji, setEmoji] = useState(null);
-  const [images, setImages] = useState(null)
-  const allLetters = useSelector(state => state.phrases)
+  const [images, setImages] = useState({})
+  let allLetters = useSelector((state) => state.phrases)
 
   const lettersOnly = allLetters.map(letter => letter.letterwords);
   const currentGestures = Object.entries(allGestures)
@@ -37,29 +37,43 @@ const SingleLearning = () => {
   //Like componentDidMount
   useEffect(() => {
     dispatch(fetchPhrases(1)) //need to make tier dynamic
-    setLetter(allLetters[0].letterwords)
-    setImages(allLetters.reduce((accu,letter) => {
-      accu[letter.letterwords] = letter.url
-      return accu
-    },{}))
+
+
+
+    //setLetter(allLetters[0].letterwords)
+    // setImages(allLetters.reduce((accu,letter) => {
+    //   accu[letter.letterwords] = letter.url
+    //   return accu
+    // },{}))
   }, [])
 
   //Like componentWillUpdate
   useEffect(() => {
-    let intervalId;
+    // let intervalId;
 
-    const run = async () => {
-      intervalId = await runHandpose();
-    }
+    // const run = async () => {
+    //   intervalId = await runHandpose();
+    // }
 
-    run()
+    // run()
 
-    //Like componentWillUnmount
-    return () => {
-      clearInterval(intervalId)
-    }
+    // //Like componentWillUnmount
+    // return () => {
+    //   clearInterval(intervalId)
+    // }
+
+
+    runHandpose()
 
   }, [currentLetter]);
+
+  useEffect(() => {
+    allLetters[0] ? setLetter(allLetters[0].letterwords) : ''
+    setImages(allLetters.reduce((accu,letter) => {
+      accu[letter.letterwords] = letter.url
+      return accu
+    },{}))
+  }, [allLetters])
 
 
   const runHandpose = async () => {
@@ -72,11 +86,11 @@ const SingleLearning = () => {
       if (result === currentLetter) {
         clearInterval(timerId);
 
-        const letterIndex = allLetters.indexOf(currentLetter) + 1;
+        const letterIndex = lettersOnly.indexOf(currentLetter) + 1;
 
-        if (letterIndex < allLetters.length) {
+        if (letterIndex < lettersOnly.length) {
           setTimeout(() => {
-            setLetter(allLetters[letterIndex]);
+            setLetter(lettersOnly[letterIndex]);
           }, 3000); // timer for between gestures
         } //else statement to update database upon completion
       }
@@ -138,7 +152,11 @@ const SingleLearning = () => {
       }
     }
   };
-  console.log(emoji);
+  console.log("emoji", emoji);
+  // console.log("allLetters", allLetters)
+  console.log('currentLetter',currentLetter)
+  // console.log('images',images)
+
 
   let emojiPrint =
     emoji === currentLetter ? (

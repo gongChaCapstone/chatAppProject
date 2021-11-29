@@ -1,6 +1,6 @@
 import * as fp from "fingerpose";
 
-const letterC = new fp.GestureDescription('letterC')
+const letterC = new fp.GestureDescription('C')
 
 
 letterC.addCurl(fp.Finger.Thumb, fp.FingerCurl.NoCurl, 1);

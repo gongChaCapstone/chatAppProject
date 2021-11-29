@@ -15,7 +15,7 @@ import * as fp from "fingerpose";
 //   thumbsDownGesture.addCurl(finger, fp.FingerCurl.HalfCurl, 0.9);
 // }
 
-const letterA = new fp.GestureDescription('letterA')
+const letterA = new fp.GestureDescription('A')
 
 letterA.addCurl(fp.Finger.Thumb, fp.FingerCurl.NoCurl);
 letterA.addDirection(fp.Finger.Thumb, fp.FingerDirection.DiagonalUpLeft, 1.0);

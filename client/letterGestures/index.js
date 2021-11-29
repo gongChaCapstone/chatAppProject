@@ -3,7 +3,7 @@ import letterB from './letterB';
 import letterC from './letterC';
 
 
-export default allGestures = {
+export const allGestures = {
   "A": letterA,
   "B": letterB,
   "C": letterC
