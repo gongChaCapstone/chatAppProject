@@ -36,7 +36,7 @@ const SingleLearning = (props) => {
 
   //Like componentDidMount
   useEffect(() => {
-    dispatch(fetchPhrases(props.match.params.tier)) //need to make tier dynamic------<<
+    dispatch(fetchPhrases(props.match.params.tier))
   }, [])
 
   //Like componentWillUpdate
@@ -142,9 +142,9 @@ const SingleLearning = (props) => {
     }
   };
   // console.log("emoji", emoji);
-  console.log("allLetters", allLetters)
-  console.log('currentLetter',currentLetter)
-  console.log('images',images)
+  // console.log("allLetters", allLetters)
+  // console.log('currentLetter',currentLetter)
+  // console.log('images',images)
 
 
   let emojiPrint =
