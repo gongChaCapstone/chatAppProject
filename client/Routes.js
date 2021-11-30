@@ -4,6 +4,7 @@ import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import {me} from './store'
+import SingleLearning from './components/SingleLearning';
 
 const Routes = () => {
   const isLoggedIn = useSelector(state => !!state.auth.id)
@@ -17,6 +18,7 @@ const Routes = () => {
     <div>
       {isLoggedIn ? (
         <Switch>
+          <Route exact path ='/learning/:tier' component={SingleLearning}/>
           <Route path="/home" component={Home} />
           <Redirect to="/home" />
         </Switch>

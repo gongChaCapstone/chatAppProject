@@ -20,15 +20,20 @@
   "author": "Sabi Kumar, Max Boykin, Brendan Shulman, Peter Oehman",
   "license": "MIT",
   "dependencies": {
+    "@tensorflow-models/handpose": "0.0.7",
+    "@tensorflow/tfjs": "^3.11.0",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "compression": "^1.7.3",
     "express": "^4.16.4",
+    "fingerpose": "^0.1.0",
     "history": "^4.9.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
     "pg": "^8.5.1",
-    "sequelize": "^6.3.5"
+    "react-webcam": "^6.0.0",
+    "sequelize": "^6.3.5",
+    "web-vitals": "^2.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
