@@ -5,6 +5,7 @@ import { Login, Signup } from './components/AuthForm';
 import Home from './components/Home';
 import {me} from './store'
 import SingleLearning from './components/SingleLearning';
+import CompletionPage from './components/CompletionPage';
 
 const Routes = () => {
   const isLoggedIn = useSelector(state => !!state.auth.id)
@@ -19,6 +20,7 @@ const Routes = () => {
       {isLoggedIn ? (
         <Switch>
           <Route exact path ='/learning/:tier' component={SingleLearning}/>
+          <Route path='/completionPage' component={CompletionPage}/>
           <Route path="/home" component={Home} />
           <Redirect to="/home" />
         </Switch>

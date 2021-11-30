@@ -1,67 +1,69 @@
-import React, { useRef, useState, useEffect, useReducer} from "react";
-import {useSelector, useDispatch} from 'react-redux'
+import React, { useRef, useState, useEffect, useReducer } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
 import * as fp from "fingerpose";
-import {fetchPhrases, unlockPhrases} from '../store/phrases'
-import {allGestures} from '../letterGestures'
+import { fetchPhrases, unlockPhrases } from "../store/phrases";
+import { allGestures } from "../letterGestures";
+import { useHistory } from "react-router-dom";
 
-
-const SingleLearning = (props) => {
+const SingleLearning = props => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
   const [currentLetter, setLetter] = useState("");
   const [emoji, setEmoji] = useState(null);
-  const [images, setImages] = useState({})
-  let allLetters = useSelector((state) => state.phrases)
+  const [images, setImages] = useState({});
+  let allLetters = useSelector(state => state.phrases);
 
   const lettersOnly = allLetters.map(letter => letter.letterwords);
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
     .filter(entry => {
       //key = key1 & value = value1  ..etc
-      const [key, value] = entry
-      return lettersOnly.includes(key)
+      const [key, value] = entry;
+      return lettersOnly.includes(key);
     })
     .map(entry => {
-      const [key, value] = entry
+      const [key, value] = entry;
       return value;
-    })
+    });
 
   const gestureAccuracyMany = 10;
   const gestureAccuracyOne = 9.5;
 
   //Like componentDidMount
   useEffect(() => {
-    dispatch(fetchPhrases(props.match.params.tier))
-  }, [])
+    dispatch(fetchPhrases(props.match.params.tier));
+  }, []);
 
   //Like componentWillUpdate
   useEffect(() => {
     const run = async () => {
       const intervalId = await runHandpose();
-      return intervalId
-    }
-    const intervalId = run()
+      return intervalId;
+    };
+    const intervalId = run();
 
     // Like componentWillUnmount
     return async () => {
-      clearInterval(await intervalId)
-    }
+      clearInterval(await intervalId);
+    };
   }, [currentLetter]);
 
   //componentWillUpdate to get allLetters
   useEffect(() => {
-    allLetters[0] ? setLetter(allLetters[0].letterwords) : ''
-    setImages(allLetters.reduce((accu,letter) => {
-      accu[letter.letterwords] = letter.url
-      return accu
-    },{}))
-  }, [allLetters])
-
+    allLetters[0] ? setLetter(allLetters[0].letterwords) : "";
+    setImages(
+      allLetters.reduce((accu, letter) => {
+        accu[letter.letterwords] = letter.url;
+        return accu;
+      }, {})
+    );
+  }, [allLetters]);
 
   const runHandpose = async () => {
     const net = await handpose.load();
@@ -80,12 +82,18 @@ const SingleLearning = (props) => {
             setLetter(lettersOnly[letterIndex]);
           }, 3000); // timer for between gestures
         } else {
-          dispatch(unlockPhrases(props.match.params.tier))
+          dispatch(unlockPhrases(props.match.params.tier));
+          setTimeout(() => {
+            history.push({
+              pathname: "/completionPage",
+              state: { tier: Number(props.match.params.tier) },
+            });
+          }, 3000)
         }
       }
     }, 100);
 
-    return intervalId
+    return intervalId;
   };
 
   const detect = async net => {
@@ -147,7 +155,6 @@ const SingleLearning = (props) => {
   // console.log("allLetters", allLetters)
   // console.log('currentLetter',currentLetter)
   // console.log('images',images)
-
 
   let emojiPrint =
     emoji === currentLetter ? (
@@ -217,6 +224,6 @@ const SingleLearning = (props) => {
       </header>
     </div>
   );
-}
+};
 
-export default SingleLearning
+export default SingleLearning;
