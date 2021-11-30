@@ -8,7 +8,7 @@ import {fetchPhrases} from '../store/phrases'
 import {allGestures} from '../letterGestures'
 
 
-const SingleLearning = () => {
+const SingleLearning = (props) => {
   const dispatch = useDispatch();
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -19,8 +19,10 @@ const SingleLearning = () => {
   let allLetters = useSelector((state) => state.phrases)
 
   const lettersOnly = allLetters.map(letter => letter.letterwords);
+  //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
     .filter(entry => {
+      //key = key1 & value = value1  ..etc
       const [key, value] = entry
       return lettersOnly.includes(key)
     })
@@ -34,7 +36,7 @@ const SingleLearning = () => {
 
   //Like componentDidMount
   useEffect(() => {
-    dispatch(fetchPhrases(1)) //need to make tier dynamic------<<
+    dispatch(fetchPhrases(props.match.params.tier)) //need to make tier dynamic------<<
   }, [])
 
   //Like componentWillUpdate
@@ -140,9 +142,9 @@ const SingleLearning = () => {
     }
   };
   // console.log("emoji", emoji);
-  // console.log("allLetters", allLetters)
-  //console.log('currentLetter',currentLetter)
-  // console.log('images',images)
+  console.log("allLetters", allLetters)
+  console.log('currentLetter',currentLetter)
+  console.log('images',images)
 
 
   let emojiPrint =

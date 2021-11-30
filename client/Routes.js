@@ -18,7 +18,7 @@ const Routes = () => {
     <div>
       {isLoggedIn ? (
         <Switch>
-          <Route path ='/learning' component={SingleLearning}/>
+          <Route exact path ='/learning/:tier' component={SingleLearning}/>
           <Route path="/home" component={Home} />
           <Redirect to="/home" />
         </Switch>

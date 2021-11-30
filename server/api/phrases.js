@@ -8,7 +8,10 @@ router.get('/:tierId', async (req, res, next) => {
     const tier = await Phrase.findAll({
       where: {
         tiers: req.params.tierId
-      }
+      },
+      order: [
+        ['letterwords', 'ASC']
+      ]
     })
 
     res.json(tier)
