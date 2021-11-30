@@ -13,7 +13,6 @@ const SingleLearning = () => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
-
   const [currentLetter, setLetter] = useState("");
   const [emoji, setEmoji] = useState(null);
   const [images, setImages] = useState({})
@@ -29,7 +28,6 @@ const SingleLearning = () => {
       const [key, value] = entry
       return value;
     })
-
 
   const gestureAccuracyMany = 10;
   const gestureAccuracyOne = 9.5;
@@ -84,6 +82,8 @@ const SingleLearning = () => {
         } //else statement to update database upon completion
       }
     }, 100);
+
+    return timerId
   };
 
   const detect = async net => {
