@@ -34,23 +34,21 @@ const SingleLearning = () => {
 
   //Like componentDidMount
   useEffect(() => {
-    dispatch(fetchPhrases(1)) //need to make tier dynamic
+    dispatch(fetchPhrases(1)) //need to make tier dynamic------<<
   }, [])
 
   //Like componentWillUpdate
   useEffect(() => {
-    let intervalId;
     const run = async () => {
-      intervalId = await runHandpose();
+      const intervalId = await runHandpose();
+      return intervalId
     }
+    const intervalId = run()
 
-    run()
-
-    //Like componentWillUnmount
-    return () => {
-      clearInterval(intervalId)
+    // Like componentWillUnmount
+    return async () => {
+      clearInterval(await intervalId)
     }
-
   }, [currentLetter]);
 
   //componentWillUpdate to get allLetters
@@ -67,11 +65,11 @@ const SingleLearning = () => {
     const net = await handpose.load();
 
     //Loop and detect hands
-    let timerId = setInterval(async () => {
+    let intervalId = setInterval(async () => {
       let result = await detect(net);
 
       if (result === currentLetter) {
-        clearInterval(timerId);
+        clearInterval(intervalId);
 
         const letterIndex = lettersOnly.indexOf(currentLetter) + 1;
 
@@ -83,7 +81,7 @@ const SingleLearning = () => {
       }
     }, 100);
 
-    return timerId
+    return intervalId
   };
 
   const detect = async net => {
@@ -141,9 +139,9 @@ const SingleLearning = () => {
       }
     }
   };
-  console.log("emoji", emoji);
+  // console.log("emoji", emoji);
   // console.log("allLetters", allLetters)
-  console.log('currentLetter',currentLetter)
+  //console.log('currentLetter',currentLetter)
   // console.log('images',images)
 
 
@@ -197,7 +195,7 @@ const SingleLearning = () => {
             height: 480,
           }}
         />
-        <div
+        {/* <div
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -210,7 +208,7 @@ const SingleLearning = () => {
           }}
         >
           Copy gesture to complete
-        </div>
+        </div> */}
         <img
           src={images[currentLetter]}
           style={{
