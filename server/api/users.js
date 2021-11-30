@@ -54,7 +54,7 @@ router.put("/update/:tierId", requireToken, async (req, res, next) => {
   }
 });
 
-//will get all associated phrases for a user
+//will get the highest learning and testing tier for a user
 router.get("/maxTier", requireToken, async (req, res, next) => {
   try {
     const userPhrases = await User.findOne({
@@ -68,8 +68,13 @@ router.get("/maxTier", requireToken, async (req, res, next) => {
         [Phrase, 'tiers', 'DESC']
       ]
     });
-    const highestUserTier = userPhrases.phrases[0].tiers
-    res.json({highestUserTier})
+    const highestLearningTier = userPhrases.phrases[0].tiers
+    let highestTestTier = userPhrases.phrases.filter(phrase => {
+      return phrase.phraseUser.isComplete === true
+    })
+    highestTestTier = highestTestTier[0].tiers
+
+    res.json({highestLearningTier, highestTestTier})
   } catch (error) {
     next(error);
   }
