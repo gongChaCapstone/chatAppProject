@@ -16,7 +16,7 @@ const setMaxTiers = (tiers) => {
 //thunk creators
 export const fetchMaxTiers = () => async (dispatch) => {
   try {
-    const maxTiers = await authenticateRequest('get', `/api/users/maxTier`)
+    const maxTiers = await authenticateRequest('get', '/api/users/maxTier')
     dispatch(setMaxTiers(maxTiers))
   } catch (error) {
     console.log(error)
