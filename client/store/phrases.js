@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { authenticateRequest } from './gateKeepingMiddleware'
+
 
 //action types
 const SET_PHRASES = 'SET_PHRASES';
@@ -19,6 +21,14 @@ export const fetchPhrases = (tierId) => async (dispatch) => {
     dispatch(setPhrases(currentPhrases))
   } catch (error) {
     console.log(error)
+  }
+}
+
+export const unlockPhrases = (tierId) => async () => {
+  try {
+    await authenticateRequest('put', `/api/users/update/${tierId}`, {})
+  } catch (error) {
+    console.error(error)
   }
 }
 

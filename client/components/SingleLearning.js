@@ -4,7 +4,7 @@ import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
 import * as fp from "fingerpose";
-import {fetchPhrases} from '../store/phrases'
+import {fetchPhrases, unlockPhrases} from '../store/phrases'
 import {allGestures} from '../letterGestures'
 
 
@@ -80,7 +80,8 @@ const SingleLearning = (props) => {
             setLetter(lettersOnly[letterIndex]);
           }, 3000); // timer for between gestures
         } else {
-          
+          console.log('im here')
+          dispatch(unlockPhrases(props.match.params.tier))
         } //else statement to update database upon completion
       }
     }, 100);
@@ -127,7 +128,7 @@ const SingleLearning = (props) => {
             Math.max.apply(null, confidence)
           );
 
-          console.log(gesture);
+          // console.log(gesture);
 
           const maxGesture = gesture.gestures[maxConfidence];
 
