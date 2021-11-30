@@ -51,3 +51,24 @@ router.put("/update/:tierId", requireToken, async (req, res, next) => {
     next(error);
   }
 });
+
+router.get("/tiers", requireToken, async (req, res, next) => {
+  try {
+    const userPhrases = await User.findOne({
+      where: {
+        id: req.user.id,
+      },
+      include: {
+        model: Phrase,
+      },
+      order: [
+        [Phrase, 'letterwords', 'ASC']
+      ]
+    });
+    res.send(userPhrases)
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/userPhrases")
