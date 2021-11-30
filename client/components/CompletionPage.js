@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 //also update in users api routes
-const maxTier = 6;
+export const maxTier = 6;
 
 const CompletionPage = props => {
   const currentTier = props.location.state.tier;
