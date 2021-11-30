@@ -80,9 +80,8 @@ const SingleLearning = (props) => {
             setLetter(lettersOnly[letterIndex]);
           }, 3000); // timer for between gestures
         } else {
-          console.log('im here')
           dispatch(unlockPhrases(props.match.params.tier))
-        } //else statement to update database upon completion
+        }
       }
     }, 100);
 
@@ -128,7 +127,7 @@ const SingleLearning = (props) => {
             Math.max.apply(null, confidence)
           );
 
-          // console.log(gesture);
+          console.log(gesture);
 
           const maxGesture = gesture.gestures[maxConfidence];
 

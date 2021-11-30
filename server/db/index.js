@@ -9,6 +9,7 @@ const PhraseUser = require('./models/PhraseUser');
 User.belongsToMany(Phrase, { through: PhraseUser });
 Phrase.belongsToMany(User, { through: PhraseUser });
 
+
 module.exports = {
   db,
   models: {
