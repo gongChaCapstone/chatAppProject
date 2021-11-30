@@ -8,6 +8,7 @@ module.exports = router;
 //also update in completionpage component
 const maxTier = 6;
 
+//will get all users
 router.get("/", async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -22,6 +23,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+//will update the iscomplete for current tier and associate next tier
 router.put("/update/:tierId", requireToken, async (req, res, next) => {
   try {
     const userPhrases = await User.findOne({
@@ -52,7 +54,8 @@ router.put("/update/:tierId", requireToken, async (req, res, next) => {
   }
 });
 
-router.get("/tiers", requireToken, async (req, res, next) => {
+//will get all associated phrases for a user
+router.get("/maxTier", requireToken, async (req, res, next) => {
   try {
     const userPhrases = await User.findOne({
       where: {
@@ -62,10 +65,11 @@ router.get("/tiers", requireToken, async (req, res, next) => {
         model: Phrase,
       },
       order: [
-        [Phrase, 'letterwords', 'ASC']
+        [Phrase, 'tiers', 'DESC']
       ]
     });
-    res.send(userPhrases)
+    const highestUserTier = userPhrases.phrases[0].tiers
+    res.json({highestUserTier})
   } catch (error) {
     next(error);
   }
