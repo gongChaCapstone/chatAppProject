@@ -79,6 +79,8 @@ const SingleLearning = (props) => {
           setTimeout(() => {
             setLetter(lettersOnly[letterIndex]);
           }, 3000); // timer for between gestures
+        } else {
+          
         } //else statement to update database upon completion
       }
     }, 100);
@@ -197,20 +199,6 @@ const SingleLearning = (props) => {
             height: 480,
           }}
         />
-        {/* <div
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: 0,
-            top: 100,
-            right: 0,
-            textAlign: "center",
-            height: 100,
-          }}
-        >
-          Copy gesture to complete
-        </div> */}
         <img
           src={images[currentLetter]}
           style={{
