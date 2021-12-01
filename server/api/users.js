@@ -9,19 +9,45 @@ module.exports = router;
 const maxTier = 6;
 
 //will get all users
-router.get("/", async (req, res, next) => {
+router.get("/", requireToken, async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and username fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ["id", "username"],
+      attributes: ["id", "email"],
     });
     res.json(users);
   } catch (err) {
     next(err);
   }
 });
+
+//will get single user
+//might not need this since auth adds the user to the state
+// router.get('/user', requireToken, async (req,res,next) => {
+//   try {
+//     const {email, firstname, lastname, points} = req.user;
+
+//     res.send(req.user)
+//   } catch (error) {
+//     next(error)
+//   }
+// })
+
+//will update single user
+router.put('/user', requireToken, async (req,res,next) => {
+  try {
+    const {email, password, firstname, lastname} = req.body;
+
+    const updatedUser = await req.user.update({email, password, firstname, lastname})
+
+    res.send(updatedUser).status(202)
+  } catch (error) {
+    next(error)
+  }
+})
+
 
 //will update the iscomplete for current tier and associate next tier
 router.put("/update/:tierId", requireToken, async (req, res, next) => {

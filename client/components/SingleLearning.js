@@ -35,6 +35,10 @@ const SingleLearning = props => {
   const gestureAccuracyMany = 10;
   const gestureAccuracyOne = 9.5;
 
+  //setTimeout ids to clear
+  let timerBetweenLetterId;
+  let timerBetweenCompletionId;
+
   //Like componentDidMount
   useEffect(() => {
     dispatch(fetchPhrases(props.match.params.tier));
@@ -46,13 +50,13 @@ const SingleLearning = props => {
       const intervalIds = await runHandpose();
       return intervalIds;
     };
-    const intervalIds = run();
+    const intervalId = run();
 
     // Like componentWillUnmount
     return async () => {
-      clearInterval(await intervalIds[0]);
-      clearInterval(await intervalIds[1]);
-      clearInterval(await intervalIds[2]);
+      clearInterval(await intervalId);
+      clearTimeout(timerBetweenLetterId)
+      clearTimeout(timerBetweenCompletionId)
     };
   }, [currentLetter]);
 
