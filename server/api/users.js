@@ -25,22 +25,24 @@ router.get("/", requireToken, async (req, res, next) => {
 
 //will get single user
 //might not need this since auth adds the user to the state
-router.get('/user', requireToken, async (req,res,next) => {
-  try {
-    res.send(req.user)
-  } catch (error) {
-    next(error)
-  }
-})
+// router.get('/user', requireToken, async (req,res,next) => {
+//   try {
+//     const {email, firstname, lastname, points} = req.user;
+
+//     res.send(req.user)
+//   } catch (error) {
+//     next(error)
+//   }
+// })
 
 //will update single user
 router.put('/user', requireToken, async (req,res,next) => {
   try {
     const {email, password, firstname, lastname} = req.body;
 
-    await req.user.update({email, password, firstname, lastname})
+    const updatedUser = await req.user.update({email, password, firstname, lastname})
 
-    res.sendStatus(202)
+    res.send(updatedUser).status(202)
   } catch (error) {
     next(error)
   }
