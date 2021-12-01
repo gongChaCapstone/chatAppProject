@@ -84,8 +84,9 @@ const AllLearning = () => {
   return (
     <div>
       <div>
-        <h1>Hello, {currentUser.firstname}</h1>
-        <div>Hello, {aslName.map((image) => image)}</div>
+        <h1>
+          Hello, {currentUser.firstname} ({aslName.map((image) => image)})
+        </h1>
         <h4>Points: {currentUser.points}</h4>
       </div>
       {allTiers.map((tier) => tier)}
