@@ -25,6 +25,10 @@ const Phrase = db.define('phrase', {
       notEmpty: true,
     },
   },
+  textUrl: {
+    type: Sequelize.TEXT,
+    allowNull: false,
+  },
 });
 
 module.exports = Phrase;
