@@ -54,10 +54,7 @@ export const setUser = (newUserInfo) => async dispatch => {
   try {
     const res = await authenticateRequest('put', '/api/users/user', newUserInfo)
 
-    dispatch
-
-    console.log(res)
-
+    dispatch(updateUser(res))
   } catch (error) {
     console.log(error)
   }
@@ -70,6 +67,8 @@ export default function(state = {}, action) {
   switch (action.type) {
     case SET_AUTH:
       return action.auth
+    case UPDATE_USER:
+      return action.user
     default:
       return state
   }

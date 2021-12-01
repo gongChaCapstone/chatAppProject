@@ -8,7 +8,7 @@ const UserProfile = () => {
   const [email, setEmail] = useState(currentUser.email);
   const [firstname, setFirstname] = useState(currentUser.firstname);
   const [lastname, setLastname] = useState(currentUser.lastname);
-  const [password, setPassword] = useState(null);
+  const [password, setPassword] = useState("");
 
   const legend = {
     email: setEmail,
@@ -22,13 +22,13 @@ const UserProfile = () => {
     const fn = legend[evt.target.name];
 
     fn(evt.target.value);
-
-    console.log(email, firstname, lastname, password)
   };
 
   const handleSubmit = evt => {
     evt.preventDefault();
-    dispatch(setUser({email, firstname, lastname}))
+    const newInfo = password ? {email, firstname, lastname, password} : {email, firstname, lastname}
+
+    dispatch(setUser(newInfo))
   }
 
   return (
@@ -38,6 +38,11 @@ const UserProfile = () => {
         <div>
           <label htmlFor="email">Email:</label>
           <input type="text" name="email" value={email} onChange={handleChange} />
+        </div>
+
+        <div>
+          <label htmlFor="password">Password:</label>
+          <input type="password" name="password" value={password} onChange={handleChange} />
         </div>
 
         <div>
