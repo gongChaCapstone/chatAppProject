@@ -68,6 +68,7 @@ router.get("/maxTier", requireToken, async (req, res, next) => {
         [Phrase, 'tiers', 'DESC']
       ]
     });
+
     const highestLearningTier = userPhrases.phrases[0].tiers
     let highestTestTier = userPhrases.phrases.filter(phrase => {
       return phrase.phraseUser.isComplete === true

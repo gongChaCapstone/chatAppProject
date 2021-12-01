@@ -43,14 +43,16 @@ const SingleLearning = props => {
   //Like componentWillUpdate
   useEffect(() => {
     const run = async () => {
-      const intervalId = await runHandpose();
-      return intervalId;
+      const intervalIds = await runHandpose();
+      return intervalIds;
     };
-    const intervalId = run();
+    const intervalIds = run();
 
     // Like componentWillUnmount
     return async () => {
-      clearInterval(await intervalId);
+      clearInterval(await intervalIds[0]);
+      clearInterval(await intervalIds[1]);
+      clearInterval(await intervalIds[2]);
     };
   }, [currentLetter]);
 
@@ -68,6 +70,9 @@ const SingleLearning = props => {
   const runHandpose = async () => {
     const net = await handpose.load();
 
+    let timerBetweenLetterId;
+    let timerBetweenCompletionId;
+
     //Loop and detect hands
     let intervalId = setInterval(async () => {
       let result = await detect(net);
@@ -78,12 +83,12 @@ const SingleLearning = props => {
         const letterIndex = lettersOnly.indexOf(currentLetter) + 1;
 
         if (letterIndex < lettersOnly.length) {
-          setTimeout(() => {
+          timerBetweenLetterId = setTimeout(() => {
             setLetter(lettersOnly[letterIndex]);
           }, 3000); // timer for between gestures
         } else {
           dispatch(unlockPhrases(props.match.params.tier));
-          setTimeout(() => {
+          timerBetweenCompletionId = setTimeout(() => {
             history.push({
               pathname: "/completionPage",
               state: { tier: Number(props.match.params.tier) },
@@ -93,7 +98,8 @@ const SingleLearning = props => {
       }
     }, 100);
 
-    return intervalId;
+    //return id of timers to clear when component unmounts
+    return [intervalId, timerBetweenLetterId, timerBetweenCompletionId];
   };
 
   const detect = async net => {
