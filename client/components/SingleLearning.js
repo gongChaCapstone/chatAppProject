@@ -19,6 +19,10 @@ const SingleLearning = props => {
   const [images, setImages] = useState({});
   let allLetters = useSelector(state => state.phrases);
 
+  let timerBetweenLetterId; //<----------------------
+  let timerBetweenCompletionId; //<----------------------
+
+
   const lettersOnly = allLetters.map(letter => letter.letterwords);
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
@@ -43,16 +47,17 @@ const SingleLearning = props => {
   //Like componentWillUpdate
   useEffect(() => {
     const run = async () => {
-      const intervalIds = await runHandpose();
-      return intervalIds;
+      const intervalId = await runHandpose();
+      return intervalId;
     };
-    const intervalIds = run();
+    const intervalId = run();
+
 
     // Like componentWillUnmount
     return async () => {
-      clearInterval(await intervalIds[0]);
-      clearInterval(await intervalIds[1]);
-      clearInterval(await intervalIds[2]);
+      clearInterval(await intervalId)
+      clearInterval(timerBetweenLetterId) //<----------------------
+      clearInterval(timerBetweenCompletionId) //<----------------------
     };
   }, [currentLetter]);
 
@@ -70,12 +75,12 @@ const SingleLearning = props => {
   const runHandpose = async () => {
     const net = await handpose.load();
 
-    let timerBetweenLetterId;
-    let timerBetweenCompletionId;
 
     //Loop and detect hands
     let intervalId = setInterval(async () => {
       let result = await detect(net);
+
+      console.log('intervalid')
 
       if (result === currentLetter) {
         clearInterval(intervalId);
@@ -84,11 +89,16 @@ const SingleLearning = props => {
 
         if (letterIndex < lettersOnly.length) {
           timerBetweenLetterId = setTimeout(() => {
+            //console.log('timeout1')
+
             setLetter(lettersOnly[letterIndex]);
           }, 3000); // timer for between gestures
         } else {
           dispatch(unlockPhrases(props.match.params.tier));
           timerBetweenCompletionId = setTimeout(() => {
+            //console.log('timeout2')
+            //setAllTimers([...allTimers, timerBetweenCompletionId])
+
             history.push({
               pathname: "/completionPage",
               state: { tier: Number(props.match.params.tier) },
@@ -99,7 +109,7 @@ const SingleLearning = props => {
     }, 100);
 
     //return id of timers to clear when component unmounts
-    return [intervalId, timerBetweenLetterId, timerBetweenCompletionId];
+    return intervalId;
   };
 
   const detect = async net => {
