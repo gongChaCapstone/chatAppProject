@@ -17,6 +17,7 @@ const SingleTest = props => {
   const [currentLetter, setLetter] = useState("");
   const [emoji, setEmoji] = useState(null);
   const [images, setImages] = useState({});
+  const [textImages, setTextImages] = useState({})
   let allLetters = useSelector(state => state.phrases);
 
   const lettersOnly = allLetters.map(letter => letter.letterwords);
@@ -66,6 +67,12 @@ const SingleTest = props => {
     setImages(
       allLetters.reduce((accu, letter) => {
         accu[letter.letterwords] = letter.url;
+        return accu;
+      }, {})
+    );
+    setTextImages(
+      allLetters.reduce((accu, letter) => {
+        accu[letter.letterwords] = letter.textUrl;
         return accu;
       }, {})
     );
