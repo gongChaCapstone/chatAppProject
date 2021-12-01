@@ -24,7 +24,7 @@ const letterLinks = [
   "letterA.png", "letterB.png", "letterC.png", "letterD.png", "letterE.png", "letterF.png", "letterG.png", "letterH.png", "letterI.png", "letterJ.png", "letterK.png", "letterL.png", "letterM.png", "letterN.png","letterO.png", "letterP.png","letterQ.png","letterR.png","letterS.png","letterT.png","letterU.png","letterV.png","letterW.png","letterX.png","letterY.png","letterX.png",
 ]
 
-const tiers = ["1", "1", "1", "1", "1", "1", "2", "2", "2", "2", "2", "3", "3", "3", "3", "3", "4", "4", "4", "4", "4", "5", "5", "5", "5", "5"]
+const tiers = ["1", "1", "1", "1", "2", "2", "2", "2", "3", "3", "3", "3", "3", "4", "4", "4", "4", "5", "5", "5", "5", "6", "6", "6", "6", "6"]
 
 async function createPhrases() {
   for (let i = 0; i < letters.length; i++) {
@@ -35,9 +35,9 @@ async function createPhrases() {
 async function createConnections() {
   const user1 = await User.findByPk(1)
   const user2 = await User.findByPk(2)
-  for (let i = 1; i <= letters.length; i ++) {
-    await user1.addPhrase([i], { through: {isUnlocked : (Math.random() > 0.5) }})
-    await user2.addPhrase([i], { through: {isUnlocked : (Math.random() > 0.5) }})
+  for (let i = 1; i < 5; i ++) {
+    await user1.addPhrase([i])
+    await user2.addPhrase([i])
   }
 }
 
