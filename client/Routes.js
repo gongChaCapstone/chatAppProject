@@ -8,6 +8,7 @@ import SingleLearning from './components/SingleLearning';
 import CompletionPage from './components/CompletionPage';
 import AllLearning from './components/AllLearning';
 import QuickStartGuide from './components/QuickStartGuide';
+import UserProfile from './components/UserProfile';
 
 const Routes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
@@ -26,6 +27,7 @@ const Routes = () => {
           <Route path="/completionPage" component={CompletionPage} />
           <Route path="/home" component={Home} />
           <Route path="/quickstart" component={QuickStartGuide} />
+          <Route path='/user' component={UserProfile}/>
           <Redirect to="/home" />
         </Switch>
       ) : (

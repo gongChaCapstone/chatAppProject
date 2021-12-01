@@ -24,6 +24,7 @@ router.get("/", requireToken, async (req, res, next) => {
 });
 
 //will get single user
+//might not need this since auth adds the user to the state
 router.get('/user', requireToken, async (req,res,next) => {
   try {
     res.send(req.user)
