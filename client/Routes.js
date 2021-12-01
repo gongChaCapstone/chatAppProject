@@ -25,10 +25,9 @@ const Routes = () => {
           <Route exact path="/allLearning" component={AllLearning} />
           <Route exact path="/learning/:tier" component={SingleLearning} />
           <Route path="/completionPage" component={CompletionPage} />
-          <Route path="/home" component={Home} />
           <Route path="/quickstart" component={QuickStartGuide} />
-          <Route path='/user' component={UserProfile}/>
-          <Redirect to="/home" />
+          <Route path="/user" component={UserProfile} />
+          <Redirect to="/allLearning" />
         </Switch>
       ) : (
         <Switch>

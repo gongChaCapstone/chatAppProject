@@ -1,10 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 //also update in users api routes
 export const maxTier = 6;
 
-const CompletionPage = props => {
+const CompletionPage = (props) => {
   const currentTier = props.location.state.tier;
 
   const nextTier =
@@ -17,7 +17,7 @@ const CompletionPage = props => {
   return (
     <div>
       <div>Congrats!! You completed level {currentTier}</div>
-      <Link to="/home">Click Here to go back to all lessons</Link>
+      <Link to="/allLearning">Click Here to go back to all lessons</Link>
       <div>{nextTier}</div>
     </div>
   );
