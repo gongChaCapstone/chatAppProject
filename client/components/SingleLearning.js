@@ -35,6 +35,10 @@ const SingleLearning = props => {
   const gestureAccuracyMany = 10;
   const gestureAccuracyOne = 9.5;
 
+  //setTimeout ids to clear
+  let timerBetweenLetterId;
+  let timerBetweenCompletionId;
+
   //Like componentDidMount
   useEffect(() => {
     dispatch(fetchPhrases(props.match.params.tier));
@@ -51,6 +55,8 @@ const SingleLearning = props => {
     // Like componentWillUnmount
     return async () => {
       clearInterval(await intervalId);
+      clearTimeout(timerBetweenLetterId)
+      clearTimeout(timerBetweenCompletionId)
     };
   }, [currentLetter]);
 
@@ -78,12 +84,12 @@ const SingleLearning = props => {
         const letterIndex = lettersOnly.indexOf(currentLetter) + 1;
 
         if (letterIndex < lettersOnly.length) {
-          setTimeout(() => {
+          timerBetweenLetterId = setTimeout(() => {
             setLetter(lettersOnly[letterIndex]);
           }, 3000); // timer for between gestures
         } else {
           dispatch(unlockPhrases(props.match.params.tier));
-          setTimeout(() => {
+          timerBetweenCompletionId = setTimeout(() => {
             history.push({
               pathname: "/completionPage",
               state: { tier: Number(props.match.params.tier) },
