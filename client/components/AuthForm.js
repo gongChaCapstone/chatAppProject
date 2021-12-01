@@ -1,17 +1,18 @@
-import React from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import {authenticate} from '../store'
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { authenticate } from '../store';
+import { useHistory } from 'react-router-dom';
 
 export const Login = () => {
-  const error = useSelector(state => state.auth.error)
+  const error = useSelector((state) => state.auth.error);
   const dispatch = useDispatch();
 
   const handleSubmit = (evt) => {
-    evt.preventDefault()
-    const email = evt.target.email.value
-    const password = evt.target.password.value
-    dispatch(authenticate(email, password, 'login'))
-  }
+    evt.preventDefault();
+    const email = evt.target.email.value;
+    const password = evt.target.password.value;
+    dispatch(authenticate(email, password, 'login'));
+  };
 
   return (
     <div>
@@ -34,21 +35,23 @@ export const Login = () => {
         {error && error.response && <div> {error.response.data} </div>}
       </form>
     </div>
-  )
-}
+  );
+};
 
 export const Signup = () => {
-  const error = useSelector(state => state.auth.error)
+  const error = useSelector((state) => state.auth.error);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleSubmit = (evt) => {
-    evt.preventDefault()
-    const email = evt.target.email.value
-    const password = evt.target.password.value
-    const firstname = evt.target.firstname.value
-    const lastname = evt.target.lastname.value
-    dispatch(authenticate(email, password, 'signup', firstname, lastname))
-  }
+    evt.preventDefault();
+    const email = evt.target.email.value;
+    const password = evt.target.password.value;
+    const firstname = evt.target.firstname.value;
+    const lastname = evt.target.lastname.value;
+    dispatch(authenticate(email, password, 'signup', firstname, lastname));
+    history.push('/quickstart');
+  };
 
   return (
     <div>
@@ -83,5 +86,5 @@ export const Signup = () => {
         {error && error.response && <div> {error.response.data} </div>}
       </form>
     </div>
-  )
-}
+  );
+};
