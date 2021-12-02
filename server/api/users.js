@@ -63,7 +63,7 @@ router.get('/points', requireToken, async (req,res,next) => {
 
 router.put('/points', requireToken, async (req,res,next) => {
   try {
-    // let incremental = req.addedPoints;
+    let incremental = req.body.incrementalQty;
 
     const specificUser = await User.findOne({
       where: {
@@ -71,11 +71,11 @@ router.put('/points', requireToken, async (req,res,next) => {
       }
     });
     let currentPoints = specificUser.points;
-    let updatedPoints = currentPoints + 10;
-     await specificUser.update({
+    let updatedPoints = parseInt(currentPoints) + parseInt(incremental);
+     let updatedUser = await specificUser.update({
          points: updatedPoints
      })
-    res.json(req.body);
+    res.json(updatedUser);
   } catch (error) {
     next(error)
   }
