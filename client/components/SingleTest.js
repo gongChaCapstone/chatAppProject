@@ -5,6 +5,7 @@ import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
 import * as fp from "fingerpose";
 import { fetchPhrases, unlockPhrases } from "../store/phrases";
+import { addPoints } from "../store/points"
 import { allGestures } from "../letterGestures";
 import { useHistory } from "react-router-dom";
 
@@ -18,7 +19,7 @@ const SingleTest = props => {
   const [emoji, setEmoji] = useState(null);
   const [images, setImages] = useState({});
   const [textImages, setTextImages] = useState({})
-  const [ifTextBox, setTextBox] = useState(false);
+  const [ifTextBox, setTextBox] = useState(true);
   const [mixedImages, setMixedImages] = useState({});
   const [userTextInput, setTextInput] = useState({});
   let allLetters = useSelector(state => state.phrases);
@@ -127,7 +128,7 @@ const SingleTest = props => {
       //getresultfrom text box
 
       if ((!ifTextBox && result === currentLetter) || (ifTextBox && userTextInput === currentLetter)) {
-        console.log('curent letter', currentLetter, 'result', result, 'ifTextBox', ifTextBox);
+        console.log('curent letter', currentLetter, 'result', result, 'ifTextBox', ifTextBox, 'userTextInput', userTextInput);
         clearInterval(intervalId);
         let letterIndex = lettersOnly.indexOf(currentLetter) + 1;
 
@@ -137,6 +138,7 @@ const SingleTest = props => {
           }, 3000); // timer for between gestures
         } else {
           dispatch(unlockPhrases(props.match.params.tier));
+          dispatch(addPoints(20));
           timerBetweenCompletionId = setTimeout(() => {
             history.push({
               pathname: "/completionPage",

@@ -13,8 +13,8 @@ async function syncDB() {
   // Creating Users
 async function createUsers() {
   const users = await Promise.all([
-    User.create({ email: 'cody@gmail.com', password: '123', firstname: 'cody', lastname: 'coder', points: 50, isAdmin: false }),
-    User.create({ email: 'murphy@gmail.com', password: '123', firstname: 'murphy', lastname: 'coder', points: 20, isAdmin: true }),
+    User.create({ email: 'cody@gmail.com', password: '123', firstname: 'cody', lastname: 'coder', points: 0, isAdmin: false }),
+    User.create({ email: 'murphy@gmail.com', password: '123', firstname: 'murphy', lastname: 'coder', points: 0, isAdmin: true }),
   ])
 }
 

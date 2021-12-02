@@ -48,6 +48,39 @@ router.put('/user', requireToken, async (req,res,next) => {
   }
 })
 
+router.get('/points', requireToken, async (req,res,next) => {
+  try {
+    const specificUser = await User.findOne({
+      where: {
+        id: req.user.id
+      }
+    });
+    res.json(specificUser.points)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/points', requireToken, async (req,res,next) => {
+  try {
+    // let incremental = req.addedPoints;
+
+    const specificUser = await User.findOne({
+      where: {
+        id: req.user.id
+      }
+    });
+    let currentPoints = specificUser.points;
+    let updatedPoints = currentPoints + 10;
+     await specificUser.update({
+         points: updatedPoints
+     })
+    res.json(req.body);
+  } catch (error) {
+    next(error)
+  }
+})
+
 
 //will update the iscomplete for current tier and associate next tier
 router.put("/update/:tierId", requireToken, async (req, res, next) => {

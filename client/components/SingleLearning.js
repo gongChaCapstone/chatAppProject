@@ -5,6 +5,7 @@ import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
 import * as fp from "fingerpose";
 import { fetchPhrases, unlockPhrases } from "../store/phrases";
+import { addPoints } from "../store/points"
 import { allGestures } from "../letterGestures";
 import { useHistory } from "react-router-dom";
 
@@ -92,6 +93,7 @@ const SingleLearning = props => {
           }, 3000); // timer for between gestures
         } else {
           dispatch(unlockPhrases(props.match.params.tier));
+          dispatch(addPoints(10));
           timerBetweenCompletionId = setTimeout(() => {
             history.push({
               pathname: "/completionPage",
