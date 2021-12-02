@@ -17,7 +17,6 @@ for (let finger of [fp.Finger.Ring, fp.Finger.Pinky]) {
   letterU.addCurl(finger, fp.FingerCurl.FullCurl, 1.0);
   letterU.addCurl(finger, fp.FingerCurl.HalfCurl, 0.9);
   letterU.addDirection(finger, fp.FingerDirection.VerticalUp, 1.0);
-  letterU.addDirection(finger, fp.FingerDirection.VerticalUp, 1.0);
 }
 
 export default letterU;

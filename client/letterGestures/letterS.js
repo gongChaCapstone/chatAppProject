@@ -16,6 +16,8 @@ for (let finger of [
   letterS.addCurl(finger, fp.FingerCurl.FullCurl, 1.0);
   letterS.addDirection(finger, fp.FingerDirection.VerticalUp, 1.0);
   letterS.addDirection(finger, fp.FingerDirection.VerticalUp, 1.0);
+  letterS.addDirection(finger, fp.FingerDirection.DiagonalUpLeft, 1.0);
+  letterS.addDirection(finger, fp.FingerDirection.DiagonalUpRight, 1.0);
 }
 
 export default letterS;
