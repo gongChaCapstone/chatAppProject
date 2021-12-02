@@ -74,8 +74,8 @@ const SingleLearning = props => {
   const runHandpose = async () => {
     const net = await handpose.load();
 
-    let timerBetweenLetterId;
-    let timerBetweenCompletionId;
+    // let timerBetweenLetterId;
+    // let timerBetweenCompletionId;
 
     //Loop and detect hands
     let intervalId = setInterval(async () => {
