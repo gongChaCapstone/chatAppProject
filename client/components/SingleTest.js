@@ -14,7 +14,6 @@ const SingleTest = props => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
-  let mixedArray = [];
   const [currentLetter, setLetter] = useState("");
   const [emoji, setEmoji] = useState(null);
   const [images, setImages] = useState({});
