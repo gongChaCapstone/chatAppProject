@@ -2,9 +2,8 @@ import * as fp from "fingerpose";
 
 const letterB = new fp.GestureDescription('B')
 
-letterB.addCurl(fp.Finger.Thumb, fp.FingerCurl.NoCurl, 0.9);
-letterB.addDirection(fp.Finger.Thumb, fp.FingerDirection.VerticalUp, 0.9);
-
+letterB.addCurl(fp.Finger.Thumb, fp.FingerCurl.NoCurl, 1);
+letterB.addDirection(fp.Finger.Thumb, fp.FingerDirection.VerticalUp, 1);
 
 
 

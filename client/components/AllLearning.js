@@ -4,9 +4,6 @@ import { Link } from 'react-router-dom';
 import { fetchMaxTiers } from '../store/maxTiers';
 import { maxTier } from './CompletionPage';
 
-// To Do:
-// 1. add user points to top of page
-// 2. Add ASL greeting top of page
 const alphabet = [
   'A',
   'B',
@@ -43,7 +40,7 @@ const AllLearning = () => {
   );
   const currentUser = useSelector((state) => state.auth);
   // const UserName = currentUser.firstname || '';
-  console.log(currentUser.firstname);
+
 
   useEffect(() => {
     dispatch(fetchMaxTiers());
@@ -80,7 +77,7 @@ const AllLearning = () => {
       />
     );
   }
-  console.log(aslName);
+
   return (
     <div>
       <div>
