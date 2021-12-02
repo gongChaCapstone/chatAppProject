@@ -18,26 +18,30 @@ async function createUsers() {
   ])
 }
 
-const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
 const letterLinks = [
-  "letterA.png", "letterB.png", "letterC.png", "letterD.png", "letterE.png", "letterF.png", "letterG.png", "letterH.png", "letterI.png", "letterJ.png", "letterK.png", "letterL.png", "letterM.png", "letterN.png","letterO.png", "letterP.png","letterQ.png","letterR.png","letterS.png","letterT.png","letterU.png","letterV.png","letterW.png","letterX.png","letterY.png","letterX.png",
+  "letterA.png", "letterB.png", "letterC.png", "letterD.png", "letterE.png", "letterF.png", "letterG.png", "letterH.png", "letterI.png", "letterJ.png", "letterK.png", "letterL.png", "letterM.png", "letterN.png","letterO.png", "letterP.png","letterQ.png","letterR.png","letterS.png","letterT.png","letterU.png","letterV.png","letterW.png","letterX.png","letterY.png","letterZ.png", "letterA.png", "letterB.png", "letterC.png", "letterD.png", "letterE.png", "letterF.png", "letterG.png", "letterH.png", "letterI.png", "letterJ.png", "letterK.png", "letterL.png", "letterM.png", "letterN.png","letterO.png", "letterP.png","letterQ.png","letterR.png","letterS.png","letterT.png","letterU.png","letterV.png","letterW.png","letterX.png","letterY.png","letterZ.png",
 ]
 
-const tiers = ["1", "1", "1", "1", "1", "1", "2", "2", "2", "2", "2", "3", "3", "3", "3", "3", "4", "4", "4", "4", "4", "5", "5", "5", "5", "5"]
+const textLinks = [
+  "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "texta.png", "textb.png", "textc.png", "textd.png", "texte.png", "textf.png", "textg.png", "texth.png", "texti.png", "textj.png", "textk.png", "textl.png", "textm.png", "textn.png", "texto.png", "textp.png", "textq.png", "textr.png", "texts.png", "textt.png", "textu.png", "textv.png", "textw.png", "textx.png", "texty.png", "textz.png"
+]
+
+const tiers = ["1", "1", "1", "1", "2", "2", "2", "2", "3", "3", "3", "3", "3", "4", "4", "4", "4", "5", "5", "5", "5", "6", "6", "6", "6", "6", "7", "7", "7", "7", "7", "7", "7", "7", "8", "8", "8", "8", "8", "8", "8", "8", "8", "9", "9", "9", "9", "9", "9", "9", "9", "9"]
 
 async function createPhrases() {
   for (let i = 0; i < letters.length; i++) {
-    await Phrase.create({ tiers: tiers[i], letterwords: letters[i], url: letterLinks[i] })
+    await Phrase.create({ tiers: tiers[i], letterwords: letters[i], url: letterLinks[i], textUrl: textLinks[i] })
   }
 }
 
 async function createConnections() {
   const user1 = await User.findByPk(1)
   const user2 = await User.findByPk(2)
-  for (let i = 1; i <= letters.length; i ++) {
-    await user1.addPhrase([i], { through: {isUnlocked : (Math.random() > 0.5) }})
-    await user2.addPhrase([i], { through: {isUnlocked : (Math.random() > 0.5) }})
+  for (let i = 1; i < 5; i ++) {
+    await user1.addPhrase([i])
+    await user2.addPhrase([i])
   }
 }
 

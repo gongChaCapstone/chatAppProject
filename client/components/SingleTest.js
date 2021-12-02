@@ -8,17 +8,20 @@ import { fetchPhrases, unlockPhrases } from "../store/phrases";
 import { allGestures } from "../letterGestures";
 import { useHistory } from "react-router-dom";
 
-const SingleLearning = props => {
+const SingleTest = props => {
   const dispatch = useDispatch();
   const history = useHistory();
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
+  let mixedArray = [];
   const [currentLetter, setLetter] = useState("");
   const [emoji, setEmoji] = useState(null);
   const [images, setImages] = useState({});
+  const [textImages, setTextImages] = useState({})
+  const [mixedImages, setMixedImages] = useState({});
   let allLetters = useSelector(state => state.phrases);
-
+  console.log('allLetters', allLetters)
   const lettersOnly = allLetters.map(letter => letter.letterwords);
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
@@ -32,8 +35,10 @@ const SingleLearning = props => {
       return value;
     });
 
-  const gestureAccuracyMany = 10;
-  const gestureAccuracyOne = 9.5;
+    console.log('currentGestures', currentGestures)
+
+  const gestureAccuracyMany = 9.5;
+  const gestureAccuracyOne = 9.2;
 
   //setTimeout ids to clear
   let timerBetweenLetterId;
@@ -47,10 +52,22 @@ const SingleLearning = props => {
   //Like componentWillUpdate
   useEffect(() => {
     const run = async () => {
-      const intervalIds = await runHandpose();
-      return intervalIds;
+      const intervalId = await runHandpose();
+      return intervalId;
     };
     const intervalId = run();
+
+    setMixedImages(
+      allLetters.reduce((accu, letter) => {
+        if(Math.random() > 0.5){
+          accu[letter.letterwords] = letter.url;
+        }
+        else {
+          accu[letter.letterwords] = letter.textUrl
+        }
+        return accu;
+      }, {})
+      );
 
     // Like componentWillUnmount
     return async () => {
@@ -63,19 +80,23 @@ const SingleLearning = props => {
   //componentWillUpdate to get allLetters
   useEffect(() => {
     allLetters[0] ? setLetter(allLetters[0].letterwords) : "";
-    setImages(
-      allLetters.reduce((accu, letter) => {
-        accu[letter.letterwords] = letter.url;
-        return accu;
-      }, {})
-    );
+    // setImages(
+    //   allLetters.reduce((accu, letter) => {
+    //     accu[letter.letterwords] = letter.url;
+    //     return accu;
+    //   }, {})
+    // );
+    // setTextImages(
+    //   allLetters.reduce((accu, letter) => {
+    //     accu[letter.letterwords] = letter.textUrl;
+    //     return accu;
+    //   }, {})
+    // );
+
   }, [allLetters]);
 
   const runHandpose = async () => {
     const net = await handpose.load();
-
-    let timerBetweenLetterId;
-    let timerBetweenCompletionId;
 
     //Loop and detect hands
     let intervalId = setInterval(async () => {
@@ -83,8 +104,7 @@ const SingleLearning = props => {
 
       if (result === currentLetter) {
         clearInterval(intervalId);
-
-        const letterIndex = lettersOnly.indexOf(currentLetter) + 1;
+        let letterIndex = lettersOnly.indexOf(currentLetter) + 1;
 
         if (letterIndex < lettersOnly.length) {
           timerBetweenLetterId = setTimeout(() => {
@@ -102,8 +122,7 @@ const SingleLearning = props => {
       }
     }, 100);
 
-    //return id of timers to clear when component unmounts
-    return [intervalId, timerBetweenLetterId, timerBetweenCompletionId];
+    return intervalId;
   };
 
   const detect = async net => {
@@ -166,7 +185,7 @@ const SingleLearning = props => {
   // console.log('currentLetter',currentLetter)
   // console.log('images',images)
 
-  let emojiPrint =
+  let checkMark =
     emoji === currentLetter ? (
       <img
         src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
@@ -216,8 +235,8 @@ const SingleLearning = props => {
             height: 480,
           }}
         />
-        <img
-          src={images[currentLetter]}
+
+        <img src={mixedImages[currentLetter]}
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -230,10 +249,10 @@ const SingleLearning = props => {
           }}
         />
 
-        {emojiPrint}
+        {checkMark}
       </header>
     </div>
   );
 };
 
-export default SingleLearning;
+export default SingleTest;
