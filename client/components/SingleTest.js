@@ -58,11 +58,11 @@ const SingleTest = props => {
     if(currentLetter !== 'A' && mixedImages[currentLetter] && mixedImages[currentLetter].includes("letter")) {
       console.log('ive updated setTextBox to true');
       setTextBox(true);
-      textCheck = true;
+      // textCheck = true;
     } else {
       console.log('ive updated setTextBox to false');
       setTextBox(false);
-      textCheck = false;
+      // textCheck = false;
     }
 
     let intervalId;
@@ -70,7 +70,7 @@ const SingleTest = props => {
       intervalId = await runHandpose();
       return intervalId;
     };
-    if(textCheck){
+    if(ifTextBox){
       runTextBox();
     } else {
       intervalId = runHandModel();
@@ -115,8 +115,25 @@ const SingleTest = props => {
   }, [allLetters]);
 
   useEffect(() => {
+    checkTextBox();
+  },[ifTextBox])
+
+
+  useEffect(() => {
     runTextBox();
   }, [userTextInput]);
+
+const checkTextBox = async () => {
+  if(currentLetter !== 'A' && mixedImages[currentLetter] && mixedImages[currentLetter].includes("letter")) {
+    console.log('ive updated setTextBox to true');
+    setTextBox(true);
+    // textCheck = true;
+  } else {
+    console.log('ive updated setTextBox to false');
+    setTextBox(false);
+    // textCheck = false;
+  }
+}
 
 const runTextBox = async () => {
   console.log('run text box is running!');
@@ -248,7 +265,7 @@ const runTextBox = async () => {
     );
 
     let textBoxx =
-    ifTextBox || textCheck ? (
+    ifTextBox || ifTextBox ? (
       <div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="userGuess">Guess letter</label>
