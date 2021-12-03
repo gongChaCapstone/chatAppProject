@@ -33,6 +33,15 @@ const alphabet = [
   'Z',
 ];
 
+const alphaTiers = {
+  1: 'A B C D',
+  2: 'E F G H',
+  3: 'I J K L M',
+  4: 'N O P Q',
+  5: 'R S T U',
+  6: 'V W X Y Z',
+};
+
 const AllLearning = () => {
   const dispatch = useDispatch();
   const maxLearningTier = useSelector(
@@ -40,7 +49,6 @@ const AllLearning = () => {
   );
   const currentUser = useSelector((state) => state.auth);
   // const UserName = currentUser.firstname || '';
-
 
   useEffect(() => {
     dispatch(fetchMaxTiers());
@@ -51,7 +59,7 @@ const AllLearning = () => {
     if (i <= maxLearningTier) {
       allTiers.push(
         <div key={i}>
-          <Link to={`/learning/${i}`}>Lesson {i}</Link>
+          <Link to={`/learning/${i}`}>{alphaTiers[i]}</Link>
         </div>
       );
     } else {
