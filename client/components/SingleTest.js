@@ -17,12 +17,16 @@ const SingleTest = props => {
 
   const [currentLetter, setLetter] = useState("");
   const [emoji, setEmoji] = useState(null);
-  const [images, setImages] = useState({});
-  const [textImages, setTextImages] = useState({})
-  const [ifTextBox, setTextBox] = useState(true);
+  // const [images, setImages] = useState({});
+  // const [textImages, setTextImages] = useState({})
+   const [ifTextBox, setTextBox] = useState(true);
+  // console.log('ifTextBox at top', ifTextBox)
+  let textCheck = false;
+  let userInputText = "";
   const [mixedImages, setMixedImages] = useState({});
-  const [userTextInput, setTextInput] = useState({});
+  const [userTextInput, setTextInput] = useState('');
   let allLetters = useSelector(state => state.phrases);
+
 
   const lettersOnly = allLetters.map(letter => letter.letterwords);
   //Object is now 2d array: [[key1,value1], [key2,value2]]
@@ -81,9 +85,11 @@ const SingleTest = props => {
     if(currentLetter !== 'A' && mixedImages[currentLetter] && mixedImages[currentLetter].includes("letter")) {
       console.log('ive updated setTextBox to true');
       setTextBox(true);
+      textCheck = true;
     } else {
       console.log('ive updated setTextBox to false');
       setTextBox(false);
+      textCheck = false;
     }
 
     // Like componentWillUnmount
@@ -94,28 +100,19 @@ const SingleTest = props => {
     };
   }, [currentLetter]);
 
-  const handleUpdate = (event) => {
-    setTextInput(event.target.value)
+  const handleUpdate = async (event) => {
+    await setTextInput(event.target.value)
+    console.log('handleUPdate value of state', userTextInput);
   }
 
-
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    await setTextInput(event.target.value)
+  }
 
   //componentWillUpdate to get allLetters
   useEffect(() => {
     allLetters[0] ? setLetter(allLetters[0].letterwords) : "";
-    // setImages(
-    //   allLetters.reduce((accu, letter) => {
-    //     accu[letter.letterwords] = letter.url;
-    //     return accu;
-    //   }, {})
-    // );
-    // setTextImages(
-    //   allLetters.reduce((accu, letter) => {
-    //     accu[letter.letterwords] = letter.textUrl;
-    //     return accu;
-    //   }, {})
-    // );
-
   }, [allLetters]);
 
   const runHandpose = async () => {
@@ -125,10 +122,11 @@ const SingleTest = props => {
     let intervalId = setInterval(async () => {
       let result = await detect(net);
 
+      console.log('userTextInput state', userTextInput);
+      console.log('curent letter', currentLetter, 'result', result, 'textCheck', textCheck, 'userTextInput', userTextInput);
       //getresultfrom text box
 
-      if ((!ifTextBox && result === currentLetter) || (ifTextBox && userTextInput === currentLetter)) {
-        console.log('curent letter', currentLetter, 'result', result, 'ifTextBox', ifTextBox, 'userTextInput', userTextInput);
+      if ((!textCheck && result === currentLetter) || (textCheck && userTextInput === currentLetter)) {
         clearInterval(intervalId);
         let letterIndex = lettersOnly.indexOf(currentLetter) + 1;
 
@@ -210,10 +208,10 @@ const SingleTest = props => {
 
 
   console.log('mixed images current letter BELOW', mixedImages[currentLetter])
-  console.log('iftextbox below', ifTextBox);
+  console.log('textCheck below', textCheck);
 
   let checkMark =
-    (emoji === currentLetter && !ifTextBox) ? (
+    (emoji === currentLetter && !(ifTextBox || textCheck)) ? (
       <img
         src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
         style={{
@@ -232,14 +230,15 @@ const SingleTest = props => {
     );
 
     let textBoxx =
-    ifTextBox ? (
+    ifTextBox || textCheck ? (
       <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="userGuess">Guess letter</label>
         <input type="text"
         onChange={handleUpdate}
         name="userGuess"
-        value={userTextInput}/>
+        value={userTextInput}
+        />
         {/* style={{
           position: "absolute",
           marginLeft: "auto",
