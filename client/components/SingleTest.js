@@ -4,12 +4,12 @@ import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
 import * as fp from "fingerpose";
-import { fetchPhrases, unlockPhrases } from "../store/phrases";
-import { addPoints } from "../store/points"
+import { fetchTestPhrases } from "../store/phrases";
+import { addPoints } from "../store/points";
 import { allGestures } from "../letterGestures";
 import { useHistory } from "react-router-dom";
 
-const SingleTest = props => {
+const SingleTest = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const webcamRef = useRef(null);
@@ -19,21 +19,20 @@ const SingleTest = props => {
   const [emoji, setEmoji] = useState(null);
   // const [images, setImages] = useState({});
   // const [textImages, setTextImages] = useState({})
-   const [ifTextBox, setTextBox] = useState(true);
+  const [ifTextBox, setTextBox] = useState(true);
   const [mixedImages, setMixedImages] = useState({});
-  const [userTextInput, setTextInput] = useState('');
-  let allLetters = useSelector(state => state.phrases);
+  const [userTextInput, setTextInput] = useState("");
+  let allLetters = useSelector((state) => state.phrases);
 
-
-  const lettersOnly = allLetters.map(letter => letter.letterwords);
+  const lettersOnly = allLetters.map((letter) => letter.letterwords);
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
-    .filter(entry => {
+    .filter((entry) => {
       //key = key1 & value = value1  ..etc
       const [key, value] = entry;
       return lettersOnly.includes(key);
     })
-    .map(entry => {
+    .map((entry) => {
       const [key, value] = entry;
       return value;
     });
@@ -47,18 +46,21 @@ const SingleTest = props => {
 
   //Like componentDidMount
   useEffect(() => {
-    dispatch(fetchPhrases(props.match.params.tier));
+    dispatch(fetchTestPhrases(props.match.params.tier));
   }, []);
 
   //Like componentWillUpdate
   useEffect(() => {
-
-    if(currentLetter !== 'A' && mixedImages[currentLetter] && mixedImages[currentLetter].includes("letter")) {
-      console.log('ive updated setTextBox to true');
+    if (
+      currentLetter !== "A" &&
+      mixedImages[currentLetter] &&
+      mixedImages[currentLetter].includes("letter")
+    ) {
+      console.log("ive updated setTextBox to true");
       setTextBox(true);
       // textCheck = true;
     } else {
-      console.log('ive updated setTextBox to false');
+      console.log("ive updated setTextBox to false");
       setTextBox(false);
       // textCheck = false;
     }
@@ -68,45 +70,43 @@ const SingleTest = props => {
       intervalId = await runHandpose();
       return intervalId;
     };
-    if(ifTextBox){
+    if (ifTextBox) {
       runTextBox();
     } else {
       intervalId = runHandModel();
     }
 
-    if(!mixedImages['A']){
-    setMixedImages(
-      allLetters.reduce((accu, letter) => {
-        if(letter.letterwords === 'A'){
-          accu[letter.letterwords] = letter.textUrl;
-        }
-        else if(Math.random() > 0.5){
-          accu[letter.letterwords] = letter.url;
-        }
-        else {
-          accu[letter.letterwords] = letter.textUrl
-        }
-        return accu;
-      }, {})
+    if (!mixedImages["A"]) {
+      setMixedImages(
+        allLetters.reduce((accu, letter) => {
+          if (letter.letterwords === "A") {
+            accu[letter.letterwords] = letter.textUrl;
+          } else if (Math.random() > 0.5) {
+            accu[letter.letterwords] = letter.url;
+          } else {
+            accu[letter.letterwords] = letter.textUrl;
+          }
+          return accu;
+        }, {})
       );
     }
 
     // Like componentWillUnmount
     return async () => {
       clearInterval(await intervalId);
-      clearTimeout(timerBetweenLetterId)
-      clearTimeout(timerBetweenCompletionId)
+      clearTimeout(timerBetweenLetterId);
+      clearTimeout(timerBetweenCompletionId);
     };
   }, [currentLetter]);
 
   const handleUpdate = async (event) => {
-    await setTextInput(event.target.value)
-  }
+    await setTextInput(event.target.value);
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await setTextInput(event.target.value)
-  }
+    await setTextInput(event.target.value);
+  };
   //componentWillUpdate to get allLetters
   useEffect(() => {
     allLetters[0] ? setLetter(allLetters[0].letterwords) : "";
@@ -114,46 +114,42 @@ const SingleTest = props => {
 
   useEffect(() => {
     checkTextBox();
-  },[ifTextBox])
-
+  }, [ifTextBox]);
 
   useEffect(() => {
     runTextBox();
   }, [userTextInput]);
 
-  // useEffect(() => {
-  // }, [checkMark])
+  const checkTextBox = async () => {
+    if (
+      currentLetter !== "A" &&
+      mixedImages[currentLetter] &&
+      mixedImages[currentLetter].includes("letter")
+    ) {
+      console.log("ive updated setTextBox to true");
+      setTextBox(true);
+      // textCheck = true;
+    } else {
+      console.log("ive updated setTextBox to false");
+      setTextBox(false);
+      // textCheck = false;
+    }
+  };
 
-  // const checkMarkTest = async () => {
-  //   if ((emoji === currentLetter && !(ifTextBox)) || (ifTextBox && currentLetter === userTextInput)){
-  //     console.log('emoji', emoji, 'currentLetter', currentLetter, 'ifTextBox', ifTextBox, 'userTextInput', userTextInput)
-  //     setCheckMark(true);
-  //   }
-  //   else {
-  //     setCheckMark(false);
-  //   }
-  // }
-
-const checkTextBox = async () => {
-  if(currentLetter !== 'A' && mixedImages[currentLetter] && mixedImages[currentLetter].includes("letter")) {
-    console.log('ive updated setTextBox to true');
-    setTextBox(true);
-    // textCheck = true;
-  } else {
-    console.log('ive updated setTextBox to false');
-    setTextBox(false);
-    // textCheck = false;
-  }
-}
-
-const runTextBox = async () => {
-  console.log('run text box is running!');
-  const net = await handpose.load(); //just to run camera
-  await detect(net); //just to run camera
-  console.log('userTextInput in runTextBox function', userTextInput, 'currentLetter', currentLetter, currentLetter === userTextInput);
-  if(userTextInput){
-  if(userTextInput.toUpperCase() === currentLetter && userTextInput){
-    checkMarkElement = true;
+  const runTextBox = async () => {
+    console.log("run text box is running!");
+    const net = await handpose.load(); //just to run camera
+    await detect(net); //just to run camera
+    console.log(
+      "userTextInput in runTextBox function",
+      userTextInput,
+      "currentLetter",
+      currentLetter,
+      currentLetter === userTextInput
+    );
+    if (userTextInput) {
+      if (userTextInput.toUpperCase() === currentLetter && userTextInput) {
+        checkMarkElement = true;
         let letterIndex = lettersOnly.indexOf(currentLetter) + 1;
         if (letterIndex < lettersOnly.length) {
           timerBetweenLetterId = setTimeout(() => {
@@ -166,11 +162,11 @@ const runTextBox = async () => {
               pathname: "/completionPage",
               state: { tier: Number(props.match.params.tier) },
             });
-          }, 3000)
+          }, 3000);
         }
       }
     }
-  }
+  };
 
   const runHandpose = async () => {
     const net = await handpose.load();
@@ -180,7 +176,7 @@ const runTextBox = async () => {
       let result = await detect(net);
       //getresultfrom text box
 
-      if (result === currentLetter){
+      if (result === currentLetter) {
         clearInterval(intervalId);
         let letterIndex = lettersOnly.indexOf(currentLetter) + 1;
 
@@ -195,7 +191,7 @@ const runTextBox = async () => {
               pathname: "/completionPage",
               state: { tier: Number(props.match.params.tier) },
             });
-          }, 3000)
+          }, 3000);
         }
       }
     }, 100);
@@ -203,7 +199,7 @@ const runTextBox = async () => {
     return intervalId;
   };
 
-  const detect = async net => {
+  const detect = async (net) => {
     //Check data is available
     if (
       typeof webcamRef.current !== "undefined" &&
@@ -234,7 +230,7 @@ const runTextBox = async () => {
         const gesture = await GE.estimate(hand[0].landmarks, 8);
         if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
           const confidence = gesture.gestures.map(
-            prediction => prediction.score
+            (prediction) => prediction.score
           );
           const maxConfidence = confidence.indexOf(
             Math.max.apply(null, confidence)
@@ -253,10 +249,9 @@ const runTextBox = async () => {
     }
   };
 
-
-
   let checkMarkElement =
-     ((emoji === currentLetter && !(ifTextBox)) || (ifTextBox && currentLetter === userTextInput.toUpperCase())) ? (
+    (emoji === currentLetter && !ifTextBox) ||
+    (ifTextBox && currentLetter === userTextInput.toUpperCase()) ? (
       // checkMark ? (
       <img
         src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
@@ -275,17 +270,18 @@ const runTextBox = async () => {
       ""
     );
 
-    let textBoxx =
+  let textBoxx =
     ifTextBox || ifTextBox ? (
       <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="userGuess">Guess letter</label>
-        <input type="text"
-        onChange={handleUpdate}
-        name="userGuess"
-        value={userTextInput}
-        />
-        {/* style={{
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="userGuess">Guess letter</label>
+          <input
+            type="text"
+            onChange={handleUpdate}
+            name="userGuess"
+            value={userTextInput}
+          />
+          {/* style={{
           position: "absolute",
           marginLeft: "auto",
           marginRight: "auto",
@@ -295,13 +291,11 @@ const runTextBox = async () => {
           textAlign: "center",
           height: 100,
         }} */}
-      </form>
+        </form>
       </div>
     ) : (
       ""
     );
-
-
 
   return (
     <div className="App">
@@ -335,7 +329,8 @@ const runTextBox = async () => {
           }}
         />
 
-        <img src={mixedImages[currentLetter]}
+        <img
+          src={mixedImages[currentLetter]}
           style={{
             position: "absolute",
             marginLeft: "auto",
