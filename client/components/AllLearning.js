@@ -48,7 +48,6 @@ const AllLearning = () => {
     (state) => state.maxTiers.highestLearningTier
   );
   const currentUser = useSelector((state) => state.auth);
-  // const UserName = currentUser.firstname || '';
 
   useEffect(() => {
     dispatch(fetchMaxTiers());
@@ -63,7 +62,7 @@ const AllLearning = () => {
         </div>
       );
     } else {
-      allTiers.push(<div key={i}>Lesson {i}</div>);
+      allTiers.push(<div key={i}>{alphaTiers[i]}</div>);
     }
   }
 
