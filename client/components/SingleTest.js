@@ -20,9 +20,8 @@ const SingleTest = props => {
   // const [images, setImages] = useState({});
   // const [textImages, setTextImages] = useState({})
    const [ifTextBox, setTextBox] = useState(true);
-  // console.log('ifTextBox at top', ifTextBox)
+
   let textCheck = false;
-  let userInputText = "";
   const [mixedImages, setMixedImages] = useState({});
   const [userTextInput, setTextInput] = useState('');
   let allLetters = useSelector(state => state.phrases);
@@ -41,8 +40,6 @@ const SingleTest = props => {
       return value;
     });
 
-    // console.log('currentGestures', currentGestures)
-
   const gestureAccuracyMany = 9.5;
   const gestureAccuracyOne = 9.2;
 
@@ -57,13 +54,27 @@ const SingleTest = props => {
 
   //Like componentWillUpdate
   useEffect(() => {
-    const run = async () => {
-      const intervalId = await runHandpose();
+
+    if(currentLetter !== 'A' && mixedImages[currentLetter] && mixedImages[currentLetter].includes("letter")) {
+      console.log('ive updated setTextBox to true');
+      setTextBox(true);
+      textCheck = true;
+    } else {
+      console.log('ive updated setTextBox to false');
+      setTextBox(false);
+      textCheck = false;
+    }
+
+    let intervalId;
+    const runHandModel = async () => {
+      intervalId = await runHandpose();
       return intervalId;
     };
-
-
-    const intervalId = run();
+    if(textCheck){
+      runTextBox();
+    } else {
+      intervalId = runHandModel();
+    }
 
     if(!mixedImages['A']){
     setMixedImages(
@@ -82,16 +93,6 @@ const SingleTest = props => {
       );
     }
 
-    if(currentLetter !== 'A' && mixedImages[currentLetter] && mixedImages[currentLetter].includes("letter")) {
-      console.log('ive updated setTextBox to true');
-      setTextBox(true);
-      textCheck = true;
-    } else {
-      console.log('ive updated setTextBox to false');
-      setTextBox(false);
-      textCheck = false;
-    }
-
     // Like componentWillUnmount
     return async () => {
       clearInterval(await intervalId);
@@ -102,18 +103,46 @@ const SingleTest = props => {
 
   const handleUpdate = async (event) => {
     await setTextInput(event.target.value)
-    console.log('handleUPdate value of state', userTextInput);
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     await setTextInput(event.target.value)
   }
-
   //componentWillUpdate to get allLetters
   useEffect(() => {
     allLetters[0] ? setLetter(allLetters[0].letterwords) : "";
   }, [allLetters]);
+
+  useEffect(() => {
+    runTextBox();
+  }, [userTextInput]);
+
+const runTextBox = async () => {
+  console.log('run text box is running!');
+  const net = await handpose.load(); //just to run camera
+  await detect(net); //just to run camera
+  console.log('userTextInput in runTextBox function', userTextInput, 'currentLetter', currentLetter, currentLetter === userTextInput);
+  if(userTextInput){
+  if(userTextInput.toUpperCase() === currentLetter && userTextInput){
+        let letterIndex = lettersOnly.indexOf(currentLetter) + 1;
+        if (letterIndex < lettersOnly.length) {
+          timerBetweenLetterId = setTimeout(() => {
+            setLetter(lettersOnly[letterIndex]);
+          }, 3000); // timer for between gestures
+        } else {
+          dispatch(unlockPhrases(props.match.params.tier));
+          dispatch(addPoints(20));
+          timerBetweenCompletionId = setTimeout(() => {
+            history.push({
+              pathname: "/completionPage",
+              state: { tier: Number(props.match.params.tier) },
+            });
+          }, 3000)
+        }
+      }
+    }
+  }
 
   const runHandpose = async () => {
     const net = await handpose.load();
@@ -121,12 +150,9 @@ const SingleTest = props => {
     //Loop and detect hands
     let intervalId = setInterval(async () => {
       let result = await detect(net);
-
-      console.log('userTextInput state', userTextInput);
-      console.log('curent letter', currentLetter, 'result', result, 'textCheck', textCheck, 'userTextInput', userTextInput);
       //getresultfrom text box
 
-      if ((!textCheck && result === currentLetter) || (textCheck && userTextInput === currentLetter)) {
+      if (result === currentLetter){
         clearInterval(intervalId);
         let letterIndex = lettersOnly.indexOf(currentLetter) + 1;
 
@@ -179,20 +205,14 @@ const SingleTest = props => {
 
         //second argument is the confidence level
         const gesture = await GE.estimate(hand[0].landmarks, 8);
-
         if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
           const confidence = gesture.gestures.map(
             prediction => prediction.score
           );
-
           const maxConfidence = confidence.indexOf(
             Math.max.apply(null, confidence)
           );
-
-
-
           const maxGesture = gesture.gestures[maxConfidence];
-
           if (
             (gesture.gestures.length === 1 &&
               maxGesture.score >= gestureAccuracyOne) ||
@@ -207,8 +227,6 @@ const SingleTest = props => {
   };
 
 
-  console.log('mixed images current letter BELOW', mixedImages[currentLetter])
-  console.log('textCheck below', textCheck);
 
   let checkMark =
     (emoji === currentLetter && !(ifTextBox || textCheck)) ? (

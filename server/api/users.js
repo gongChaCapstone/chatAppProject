@@ -6,7 +6,7 @@ const { requireToken } = require("./gateKeepingMiddleware");
 module.exports = router;
 
 //also update in completionpage component
-const maxTier = 6;
+const maxTier = 9;
 
 //will get all users
 router.get("/", requireToken, async (req, res, next) => {
