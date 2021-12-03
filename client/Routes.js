@@ -10,6 +10,7 @@ import AllLearning from './components/AllLearning';
 import QuickStartGuide from './components/QuickStartGuide';
 import UserProfile from './components/UserProfile';
 import Leaderboard from './components/Leaderboard';
+import CommonPhrases from './components/CommonPhrases';
 
 const Routes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
@@ -29,6 +30,7 @@ const Routes = () => {
           <Route path="/quickstart" component={QuickStartGuide} />
           <Route path="/user" component={UserProfile} />
           <Route path='/leaderboard' component={Leaderboard}/>
+          <Route path='/commonphrases' component={CommonPhrases}/>
           <Redirect to="/allLearning" />
         </Switch>
       ) : (
