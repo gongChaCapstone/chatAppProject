@@ -90,7 +90,7 @@ const AllLearning = () => {
     <div>
       <div>
         <h1>
-          Hello, {currentUser.firstname} ({aslName.map((image) => image)})
+          Hello, {aslName.map((image) => image)} ({currentUser.firstname})
         </h1>
         <h4>Points: {currentUser.points}</h4>
       </div>
