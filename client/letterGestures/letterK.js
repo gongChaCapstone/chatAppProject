@@ -6,6 +6,7 @@ letterK.addCurl(fp.Finger.Thumb, fp.FingerCurl.HalfCurl, 1.0);
 letterK.addCurl(fp.Finger.Thumb, fp.FingerCurl.NoCurl, 0.9);
 letterK.addDirection(fp.Finger.Thumb, fp.FingerDirection.DiagonalUpRight, 1.0);
 letterK.addDirection(fp.Finger.Thumb, fp.FingerDirection.DiagonalUpLeft, 1.0);
+letterK.addDirection(fp.Finger.Thumb, fp.FingerDirection.VerticalUp, 1.0);
 
 for (let finger of [fp.Finger.Index, fp.Finger.Middle]) {
   letterK.addCurl(finger, fp.FingerCurl.NoCurl, 1.0);

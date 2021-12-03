@@ -2,10 +2,12 @@ import * as fp from 'fingerpose';
 
 const letterV = new fp.GestureDescription('V');
 
-letterV.addCurl(fp.Finger.Thumb, fp.FingerCurl.HalfCurl, 1.0);
-letterV.addCurl(fp.Finger.Thumb, fp.FingerCurl.NoCurl, 0.9);
+letterV.addCurl(fp.Finger.Thumb, fp.FingerCurl.HalfCurl, .9);
+letterV.addCurl(fp.Finger.Thumb, fp.FingerCurl.NoCurl, 1);
 letterV.addDirection(fp.Finger.Thumb, fp.FingerDirection.DiagonalUpRight, 1.0);
 letterV.addDirection(fp.Finger.Thumb, fp.FingerDirection.DiagonalUpLeft, 1.0);
+letterV.addDirection(fp.Finger.Thumb, fp.FingerDirection.VerticalUp, 1.0);
+
 
 for (let finger of [fp.Finger.Index, fp.Finger.Middle]) {
   letterV.addCurl(finger, fp.FingerCurl.NoCurl, 1.0);

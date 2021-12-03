@@ -14,7 +14,6 @@ for (let finger of [
   fp.Finger.Pinky,
 ]) {
   letterO.addCurl(finger, fp.FingerCurl.HalfCurl, 1.0);
-  // letterO.addCurl(finger, fp.FingerCurl.NoCurl, 0.9);
   letterO.addDirection(finger, fp.FingerDirection.DiagonalUpRight, 1);
   letterO.addDirection(finger, fp.FingerDirection.DiagonalUpLeft, 1);
 }
