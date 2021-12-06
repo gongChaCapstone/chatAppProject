@@ -14,6 +14,7 @@ import AllTests from './components/AllTests';
 import Leaderboard from './components/Leaderboard';
 import CommonPhrases from './components/CommonPhrases';
 import StudyGuide from './components/StudyGuide';
+import TestCompletionPage from './components/TestCompletionPage';
 
 const Routes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.id);
@@ -37,6 +38,7 @@ const Routes = () => {
           <Route path='/leaderboard' component={Leaderboard}/>
           <Route path='/commonphrases' component={CommonPhrases}/>
           <Route path='/studyguide' component={StudyGuide}/>
+          <Route path='/testcompletionpage' component={TestCompletionPage}/>
           <Redirect to="/allLearning" />
         </Switch>
       ) : (

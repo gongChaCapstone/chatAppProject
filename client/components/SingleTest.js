@@ -9,7 +9,15 @@ import { addPoints } from "../store/points";
 import { allGestures } from "../letterGestures";
 import { useHistory } from "react-router-dom";
 
-const SingleTest = (props) => {
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+const SingleTest = props => {
   const testPoints = 20;
   const dispatch = useDispatch();
   const history = useHistory();
@@ -21,18 +29,18 @@ const SingleTest = (props) => {
   let textCheck = false;
   const [mixedImages, setMixedImages] = useState({});
   const [userTextInput, setTextInput] = useState("");
-  let allLetters = useSelector((state) => state.phrases);
-  let lettersOnly = allLetters.map((letter) => letter.letterwords);
-  const [didSubmit, setDidSubmit] = useState(false)
+  const [didSubmit, setDidSubmit] = useState(false);
+  let allLetters = useSelector(state => state.phrases);
+  let lettersOnly = allLetters.map(letter => letter.letterwords);
 
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
-    .filter((entry) => {
+    .filter(entry => {
       //key = key1 & value = value1  ..etc
       const [key, value] = entry;
       return lettersOnly.includes(key);
     })
-    .map((entry) => {
+    .map(entry => {
       const [key, value] = entry;
       return value;
     });
@@ -52,7 +60,7 @@ const SingleTest = (props) => {
   //Like componentWillUpdate
   useEffect(() => {
     if (
-      currentLetter !== "A" &&
+      currentLetter !== lettersOnly[0] &&
       mixedImages[currentLetter] &&
       mixedImages[currentLetter].includes("letter")
     ) {
@@ -77,7 +85,7 @@ const SingleTest = (props) => {
         allLetters.reduce((accu, letter) => {
           if (letter.letterwords === lettersOnly[0]) {
             accu[letter.letterwords] = letter.textUrl;
-          } else if (Math.random() > 0.4) {
+          } else if (Math.random() > 0.45) {
             accu[letter.letterwords] = letter.url;
           } else {
             accu[letter.letterwords] = letter.textUrl;
@@ -91,20 +99,22 @@ const SingleTest = (props) => {
       clearInterval(await intervalId);
       clearTimeout(timerBetweenLetterId);
       clearTimeout(timerBetweenCompletionId);
-      clearTimeout(didSubmitTimerId)
+      clearTimeout(didSubmitTimerId);
     };
   }, [currentLetter]);
 
-  const handleUpdate = async (event) => {
+  const handleUpdate = async event => {
     setTextInput(event.target.value);
   };
-  const handleSubmit = async (event) => {
+  const handleSubmit = async event => {
     event.preventDefault();
     runTextBox();
     setTextInput("");
   };
   //componentWillUpdate to get allLetters
   useEffect(() => {
+    allLetters = shuffleArray(allLetters);
+
     allLetters[0] ? setLetter(allLetters[0].letterwords) : "";
   }, [allLetters]);
 
@@ -115,7 +125,7 @@ const SingleTest = (props) => {
     if (userTextInput.toUpperCase() === currentLetter && userTextInput) {
       let letterIndex = lettersOnly.indexOf(currentLetter) + 1;
       setEmoji(userTextInput.toUpperCase());
-      setDidSubmit(false)
+      setDidSubmit(false);
       if (letterIndex < lettersOnly.length) {
         timerBetweenLetterId = setTimeout(() => {
           setLetter(lettersOnly[letterIndex]);
@@ -124,17 +134,17 @@ const SingleTest = (props) => {
         dispatch(addPoints(testPoints));
         timerBetweenCompletionId = setTimeout(() => {
           history.push({
-            pathname: "/completionPage",
+            pathname: "/testcompletionPage",
             state: { tier: Number(props.match.params.tier) },
           });
         }, 3000);
       }
     } else {
       if (userTextInput) {
-        setDidSubmit(true)
+        setDidSubmit(true);
         didSubmitTimerId = setTimeout(() => {
-          setDidSubmit(false)
-        }, 2000)
+          setDidSubmit(false);
+        }, 2000);
       }
     }
   };
@@ -164,7 +174,7 @@ const SingleTest = (props) => {
     }, 100);
     return intervalId;
   };
-  const detect = async (net) => {
+  const detect = async net => {
     //Check data is available
     if (
       typeof webcamRef.current !== "undefined" &&
@@ -190,7 +200,7 @@ const SingleTest = (props) => {
         const gesture = await GE.estimate(hand[0].landmarks, 8);
         if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
           const confidence = gesture.gestures.map(
-            (prediction) => prediction.score
+            prediction => prediction.score
           );
           const maxConfidence = confidence.indexOf(
             Math.max.apply(null, confidence)
@@ -227,10 +237,8 @@ const SingleTest = (props) => {
       ""
     );
 
-
   let redCheck =
-    emoji !== currentLetter &&
-    ifTextBox && didSubmit ? (
+    emoji !== currentLetter && ifTextBox && didSubmit ? (
       <img
         src="redCircle.png"
         style={{
