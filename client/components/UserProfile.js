@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setUser } from '../store/auth';
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "../store/auth";
 
 const UserProfile = () => {
   const dispatch = useDispatch();
-  const currentUser = useSelector((state) => state.auth);
+  const currentUser = useSelector(state => state.auth);
   const [email, setEmail] = useState(currentUser.email);
   const [firstname, setFirstname] = useState(currentUser.firstname);
   const [lastname, setLastname] = useState(currentUser.lastname);
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
 
   const legend = {
     email: setEmail,
@@ -17,17 +17,20 @@ const UserProfile = () => {
     password: setPassword,
   };
 
-  const handleChange = (evt) => {
+  const handleChange = evt => {
     const fn = legend[evt.target.name];
 
     fn(evt.target.value);
   };
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = evt => {
     evt.preventDefault();
+
+    const lowerCaseEmail = email.toLowerCase();
+
     const newInfo = password
-      ? { email, firstname, lastname, password }
-      : { email, firstname, lastname };
+      ? { email: lowerCaseEmail, firstname, lastname, password }
+      : { email: lowerCaseEmail, firstname, lastname };
 
     dispatch(setUser(newInfo));
   };
