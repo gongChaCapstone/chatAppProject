@@ -9,6 +9,8 @@ import CompletionPage from './components/CompletionPage';
 import AllLearning from './components/AllLearning';
 import QuickStartGuide from './components/QuickStartGuide';
 import UserProfile from './components/UserProfile';
+import SingleTest from './components/SingleTest';
+import AllTests from './components/AllTests';
 import Leaderboard from './components/Leaderboard';
 import CommonPhrases from './components/CommonPhrases';
 import StudyGuide from './components/StudyGuide';
@@ -26,7 +28,9 @@ const Routes = () => {
       {isLoggedIn ? (
         <Switch>
           <Route exact path="/allLearning" component={AllLearning} />
+          <Route exact path="/allTests" component={AllTests} />
           <Route exact path="/learning/:tier" component={SingleLearning} />
+          <Route exact path="/test/:tier" component={SingleTest} />
           <Route path="/completionPage" component={CompletionPage} />
           <Route path="/quickstart" component={QuickStartGuide} />
           <Route path="/user" component={UserProfile} />

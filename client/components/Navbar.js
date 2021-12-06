@@ -20,6 +20,7 @@ const Navbar = () => {
             {/* The navbar will show these links after you log in */}
             <Link to="/allLearning">All Lessons</Link>
             <Link to="/user">User Profile</Link>
+            <Link to="/allTests">Tests</Link>
             <Link to='/leaderboard'>Leaderboard</Link>
             <Link to="/quickstart">Quick Start Guide</Link>
             <Link to='/commonphrases'>Common Phrases</Link>
