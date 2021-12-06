@@ -9,6 +9,14 @@ import { addPoints } from "../store/points";
 import { allGestures } from "../letterGestures";
 import { useHistory } from "react-router-dom";
 
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr
+}
+
 const SingleTest = (props) => {
   const testPoints = 20;
   const dispatch = useDispatch();
@@ -21,9 +29,9 @@ const SingleTest = (props) => {
   let textCheck = false;
   const [mixedImages, setMixedImages] = useState({});
   const [userTextInput, setTextInput] = useState("");
+  const [didSubmit, setDidSubmit] = useState(false)
   let allLetters = useSelector((state) => state.phrases);
   let lettersOnly = allLetters.map((letter) => letter.letterwords);
-  const [didSubmit, setDidSubmit] = useState(false)
 
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
@@ -52,7 +60,7 @@ const SingleTest = (props) => {
   //Like componentWillUpdate
   useEffect(() => {
     if (
-      currentLetter !== "A" &&
+      currentLetter !== lettersOnly[0] &&
       mixedImages[currentLetter] &&
       mixedImages[currentLetter].includes("letter")
     ) {
@@ -105,6 +113,8 @@ const SingleTest = (props) => {
   };
   //componentWillUpdate to get allLetters
   useEffect(() => {
+    allLetters = shuffleArray(allLetters)
+
     allLetters[0] ? setLetter(allLetters[0].letterwords) : "";
   }, [allLetters]);
 
