@@ -16,12 +16,15 @@ const SingleTest = (props) => {
   const canvasRef = useRef(null);
   const [currentLetter, setLetter] = useState("");
   const [emoji, setEmoji] = useState(null);
-  const [ifTextBox, setTextBox] = useState(true);
+  const [ifTextBox, setTextBox] = useState(false);
   let textCheck = false;
   const [mixedImages, setMixedImages] = useState({});
   const [userTextInput, setTextInput] = useState("");
   let allLetters = useSelector((state) => state.phrases);
   const lettersOnly = allLetters.map((letter) => letter.letterwords);
+  const [didSubmit, setDidSubmit] = useState(false)
+
+
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
     .filter((entry) => {
@@ -39,6 +42,7 @@ const SingleTest = (props) => {
   //setTimeout ids to clear
   let timerBetweenLetterId;
   let timerBetweenCompletionId;
+  let redCheckTimerId;
 
   //Like componentDidMount
   useEffect(() => {
@@ -89,6 +93,7 @@ const SingleTest = (props) => {
       clearInterval(await intervalId);
       clearTimeout(timerBetweenLetterId);
       clearTimeout(timerBetweenCompletionId);
+      clearTimeout(redCheckTimerId)
     };
   }, [currentLetter]);
 
@@ -109,9 +114,11 @@ const SingleTest = (props) => {
     console.log("run text box is running!");
     const net = await handpose.load(); //just to run camera
     await detect(net); //just to run camera
+
     if (userTextInput.toUpperCase() === currentLetter && userTextInput) {
       let letterIndex = lettersOnly.indexOf(currentLetter) + 1;
       setEmoji(userTextInput.toUpperCase());
+      setDidSubmit(false)
       if (letterIndex < lettersOnly.length) {
         timerBetweenLetterId = setTimeout(() => {
           setLetter(lettersOnly[letterIndex]);
@@ -125,6 +132,13 @@ const SingleTest = (props) => {
           });
         }, 3000);
       }
+    } else {
+      if (userTextInput) {
+        setDidSubmit(true)
+      }
+      redCheckTimerId = setTimeout(() => {
+        setDidSubmit(false)
+      }, 2000)
     }
   };
   const runHandpose = async () => {
@@ -215,10 +229,10 @@ const SingleTest = (props) => {
     ) : (
       ""
     );
+
   let redCheck =
-    userTextInput.toUpperCase() !== currentLetter &&
-    ifTextBox &&
-    userTextInput ? (
+    emoji !== currentLetter &&
+    ifTextBox && didSubmit ? (
       <img
         src="redCircle.png"
         style={{
