@@ -8,6 +8,7 @@ import { fetchTestPhrases } from "../store/phrases";
 import { addPoints } from "../store/points";
 import { allGestures } from "../letterGestures";
 import { useHistory } from "react-router-dom";
+
 const SingleTest = (props) => {
   const testPoints = 20;
   const dispatch = useDispatch();
@@ -21,9 +22,8 @@ const SingleTest = (props) => {
   const [mixedImages, setMixedImages] = useState({});
   const [userTextInput, setTextInput] = useState("");
   let allLetters = useSelector((state) => state.phrases);
-  const lettersOnly = allLetters.map((letter) => letter.letterwords);
+  let lettersOnly = allLetters.map((letter) => letter.letterwords);
   const [didSubmit, setDidSubmit] = useState(false)
-
 
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
@@ -56,11 +56,9 @@ const SingleTest = (props) => {
       mixedImages[currentLetter] &&
       mixedImages[currentLetter].includes("letter")
     ) {
-      console.log("ive updated setTextBox to true");
       setTextBox(true);
       textCheck = true;
     } else {
-      console.log("ive updated setTextBox to false");
       setTextBox(false);
       textCheck = false;
     }
@@ -74,12 +72,12 @@ const SingleTest = (props) => {
     } else {
       intervalId = runHandModel();
     }
-    if (!mixedImages["A"]) {
+    if (Object.keys(mixedImages).length === 0) {
       setMixedImages(
         allLetters.reduce((accu, letter) => {
-          if (letter.letterwords === "A") {
+          if (letter.letterwords === lettersOnly[0]) {
             accu[letter.letterwords] = letter.textUrl;
-          } else if (Math.random() > 0.5) {
+          } else if (Math.random() > 0.4) {
             accu[letter.letterwords] = letter.url;
           } else {
             accu[letter.letterwords] = letter.textUrl;
@@ -111,7 +109,6 @@ const SingleTest = (props) => {
   }, [allLetters]);
 
   const runTextBox = async () => {
-    console.log("run text box is running!");
     const net = await handpose.load(); //just to run camera
     await detect(net); //just to run camera
 
@@ -135,10 +132,10 @@ const SingleTest = (props) => {
     } else {
       if (userTextInput) {
         setDidSubmit(true)
+        didSubmitTimerId = setTimeout(() => {
+          setDidSubmit(false)
+        }, 2000)
       }
-      didSubmitTimerId = setTimeout(() => {
-        setDidSubmit(false)
-      }, 2000)
     }
   };
   const runHandpose = async () => {
@@ -229,6 +226,7 @@ const SingleTest = (props) => {
     ) : (
       ""
     );
+
 
   let redCheck =
     emoji !== currentLetter &&
