@@ -9,6 +9,7 @@ import { addPoints } from "../store/points"
 import { allGestures } from "../letterGestures";
 import { useHistory } from "react-router-dom";
 const SingleTest = props => {
+  const testPoints = 20;
   const dispatch = useDispatch();
   const history = useHistory();
   const webcamRef = useRef(null);
@@ -40,6 +41,7 @@ const SingleTest = props => {
   //setTimeout ids to clear
   let timerBetweenLetterId;
   let timerBetweenCompletionId;
+
   //Like componentDidMount
   useEffect(() => {
     dispatch(fetchTestPhrases(props.match.params.tier));
@@ -91,12 +93,13 @@ const SingleTest = props => {
   }, [currentLetter]);
 
   const handleUpdate = async (event) => {
-    await setTextInput(event.target.value)
+    setTextInput(event.target.value)
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     runTextBox();
+    setTextInput('');
   }
 
   //componentWillUpdate to get allLetters
@@ -113,7 +116,7 @@ const runTextBox = async () => {
   const net = await handpose.load(); //just to run camera
   await detect(net); //just to run camera
   console.log('userTextInput in runTextBox function', userTextInput, 'currentLetter', currentLetter, currentLetter === userTextInput);
-  if(userTextInput){
+  //  if(userTextInput){
   if(userTextInput.toUpperCase() === currentLetter && userTextInput){
         let letterIndex = lettersOnly.indexOf(currentLetter) + 1;
         setEmoji(userTextInput.toUpperCase());
@@ -122,7 +125,7 @@ const runTextBox = async () => {
             setLetter(lettersOnly[letterIndex]);
           }, 3000); // timer for between gestures
         } else {
-          dispatch(addPoints(20));
+          dispatch(addPoints(testPoints));
           timerBetweenCompletionId = setTimeout(() => {
             history.push({
               pathname: "/completionPage",
@@ -131,7 +134,7 @@ const runTextBox = async () => {
           }, 3000)
         }
       }
-    }
+    // }
   }
 
   const runHandpose = async () => {
@@ -150,7 +153,6 @@ const runTextBox = async () => {
             setLetter(lettersOnly[letterIndex]);
           }, 3000); // timer for between gestures
         } else {
-          dispatch(unlockPhrases(props.match.params.tier));
           dispatch(addPoints(20));
           timerBetweenCompletionId = setTimeout(() => {
             history.push({
@@ -197,8 +199,6 @@ const runTextBox = async () => {
             Math.max.apply(null, confidence)
           );
 
-
-
           const maxGesture = gesture.gestures[maxConfidence];
 
           if (
@@ -215,10 +215,10 @@ const runTextBox = async () => {
   };
 
   let checkMark =
-  // (emoji === currentLetter && !(ifTextBox || textCheck)) ? (
-    (emoji === currentLetter) ? (
+  // ((emoji === currentLetter && !(ifTextBox || textCheck)) || ((ifTextBox || textCheck) && userTextInput.toUpperCase() === currentLetter)) ? (
+     (emoji === currentLetter) ? (
     <img
-      src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
+      src="CheckMark.png"
       style={{
         position: "absolute",
         marginLeft: "auto",
@@ -233,6 +233,27 @@ const runTextBox = async () => {
   ) : (
     ""
   );
+
+  let redCheck =
+  // (emoji === currentLetter && !(ifTextBox || textCheck)) ? (
+    (userTextInput.toUpperCase() !== currentLetter && ifTextBox && userTextInput) ? (
+    <img
+      src="redCircle.png"
+      style={{
+        position: "absolute",
+        marginLeft: "auto",
+        marginRight: "auto",
+        left: 400,
+        bottom: 50,
+        right: 0,
+        textAlign: "center",
+        height: 100,
+      }}
+    />
+  ) : (
+    ""
+  );
+
   let textBoxx =
   ifTextBox || textCheck ? (
     <div>
@@ -302,6 +323,7 @@ return (
         }}
       />
       {checkMark}
+      {redCheck}
       {textBoxx}
     </header>
   </div>

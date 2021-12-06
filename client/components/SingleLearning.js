@@ -10,6 +10,7 @@ import { allGestures } from "../letterGestures";
 import { useHistory } from "react-router-dom";
 
 const SingleLearning = props => {
+  const learningPoints = 10;
   const dispatch = useDispatch();
   const history = useHistory();
   const webcamRef = useRef(null);
@@ -66,11 +67,13 @@ const SingleLearning = props => {
     allLetters[0] ? setLetter(allLetters[0].letterwords) : "";
     setImages(
       allLetters.reduce((accu, letter) => {
-        accu[letter.letterwords] = letter.url;
+        accu[letter.letterwords] = [letter.url, letter.textUrl];
         return accu;
       }, {})
     );
   }, [allLetters]);
+
+  console.log('images object', images);
 
   const runHandpose = async () => {
     const net = await handpose.load();
@@ -93,7 +96,7 @@ const SingleLearning = props => {
           }, 3000); // timer for between gestures
         } else {
           dispatch(unlockPhrases(props.match.params.tier));
-          dispatch(addPoints(10));
+          dispatch(addPoints(learningPoints));
           timerBetweenCompletionId = setTimeout(() => {
             history.push({
               pathname: "/completionPage",
@@ -171,7 +174,7 @@ const SingleLearning = props => {
   let emojiPrint =
     emoji === currentLetter ? (
       <img
-        src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
+        src="CheckMark.png"
         style={{
           position: "absolute",
           marginLeft: "auto",
@@ -218,8 +221,9 @@ const SingleLearning = props => {
             height: 480,
           }}
         />
+
         <img
-          src={images[currentLetter]}
+          src={images[currentLetter] ? images[currentLetter][0] : null}
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -227,6 +231,20 @@ const SingleLearning = props => {
             left: 100,
             bottom: 50,
             right: 0,
+            textAlign: "center",
+            height: 100,
+          }}
+        />
+
+        <img
+          src={images[currentLetter] ? images[currentLetter][1] : null}
+          style={{
+            position: "absolute",
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 0,
+            bottom: 50,
+            right: 120,
             textAlign: "center",
             height: 100,
           }}
