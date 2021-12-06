@@ -85,7 +85,7 @@ const SingleTest = (props) => {
         allLetters.reduce((accu, letter) => {
           if (letter.letterwords === lettersOnly[0]) {
             accu[letter.letterwords] = letter.textUrl;
-          } else if (Math.random() > 0.4) {
+          } else if (Math.random() > 0.45) {
             accu[letter.letterwords] = letter.url;
           } else {
             accu[letter.letterwords] = letter.textUrl;
@@ -134,7 +134,7 @@ const SingleTest = (props) => {
         dispatch(addPoints(testPoints));
         timerBetweenCompletionId = setTimeout(() => {
           history.push({
-            pathname: "/completionPage",
+            pathname: "/testcompletionPage",
             state: { tier: Number(props.match.params.tier) },
           });
         }, 3000);
