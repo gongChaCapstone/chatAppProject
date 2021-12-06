@@ -42,7 +42,7 @@ const SingleTest = (props) => {
   //setTimeout ids to clear
   let timerBetweenLetterId;
   let timerBetweenCompletionId;
-  let redCheckTimerId;
+  let didSubmitTimerId;
 
   //Like componentDidMount
   useEffect(() => {
@@ -93,7 +93,7 @@ const SingleTest = (props) => {
       clearInterval(await intervalId);
       clearTimeout(timerBetweenLetterId);
       clearTimeout(timerBetweenCompletionId);
-      clearTimeout(redCheckTimerId)
+      clearTimeout(didSubmitTimerId)
     };
   }, [currentLetter]);
 
@@ -136,7 +136,7 @@ const SingleTest = (props) => {
       if (userTextInput) {
         setDidSubmit(true)
       }
-      redCheckTimerId = setTimeout(() => {
+      didSubmitTimerId = setTimeout(() => {
         setDidSubmit(false)
       }, 2000)
     }
