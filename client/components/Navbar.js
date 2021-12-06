@@ -13,7 +13,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <h1>Red Panda</h1>
+      <h1><img class="" src="logo.png" /></h1>
       <nav>
         {isLoggedIn ? (
           <div>
