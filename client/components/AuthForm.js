@@ -9,7 +9,7 @@ export const Login = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    const email = evt.target.email.value;
+    const email = (evt.target.email.value).toLowerCase();
     const password = evt.target.password.value;
     dispatch(authenticate(email, password, 'login'));
   };
@@ -45,13 +45,14 @@ export const Signup = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    const email = evt.target.email.value;
+    const email = (evt.target.email.value).toLowerCase();
     const password = evt.target.password.value;
     const firstname = evt.target.firstname.value;
     const lastname = evt.target.lastname.value;
     dispatch(authenticate(email, password, 'signup', firstname, lastname));
     history.push('/quickstart');
   };
+
 
   return (
     <div>

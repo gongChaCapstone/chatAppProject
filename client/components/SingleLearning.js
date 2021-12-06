@@ -102,7 +102,7 @@ const SingleLearning = (props) => {
     }, 100);
 
     //return id of timers to clear when component unmounts
-    return [intervalId, timerBetweenLetterId, timerBetweenCompletionId];
+    return intervalId;
   };
 
   const detect = async (net) => {

@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-
-const TestCompletionPage = (props) => {
+const TestCompletionPage = props => {
   const currentTestTier = props.location.state.tier;
+
   return (
     <div>
       <div>Congrats!! You completed test {currentTestTier}</div>
