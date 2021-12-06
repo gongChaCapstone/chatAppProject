@@ -21,7 +21,10 @@ const Navbar = () => {
             <Link to="/allLearning">All Lessons</Link>
             <Link to="/user">User Profile</Link>
             <Link to="/allTests">Tests</Link>
+            <Link to='/leaderboard'>Leaderboard</Link>
             <Link to="/quickstart">Quick Start Guide</Link>
+            <Link to='/commonphrases'>Common Phrases</Link>
+            <Link to='/studyguide'>Study Guide</Link>
             <a href="#" onClick={handleClick}>
               Logout
             </a>

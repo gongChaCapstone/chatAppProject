@@ -1,27 +1,29 @@
 import * as fp from 'fingerpose';
 
-const letterD = new fp.GestureDescription('H');
 
-letterD.addCurl(fp.Finger.Thumb, fp.FingerCurl.HalfCurl);
-letterD.addDirection(fp.Finger.Thumb, fp.FingerDirection.VerticalUp, 1.0);
-// letterD.addDirection(fp.Finger.Thumb, fp.FingerDirection.DiagonalUpRight, 1.0);
+const letterH = new fp.GestureDescription('H');
 
-letterD.addCurl(fp.Finger.Index, fp.FingerCurl.NoCurl);
-letterD.addDirection(fp.Finger.Index, fp.FingerDirection.VerticalUp, 1.0);
-letterD.addDirection(fp.Finger.Index, fp.FingerDirection.DiagonalUpLeft, 1.0);
-letterD.addDirection(fp.Finger.Index, fp.FingerDirection.DiagonalUpRight, 1.0);
+letterH.addCurl(fp.Finger.Thumb, fp.FingerCurl.NoCurl, 1.0);
+letterH.addCurl(fp.Finger.Thumb, fp.FingerCurl.HalfCurl, 0.9);
+letterH.addDirection(fp.Finger.Thumb, fp.FingerDirection.HorizontalLeft, 1.0);
+letterH.addDirection(fp.Finger.Thumb, fp.FingerDirection.HorizontalRight, 1.0);
+letterH.addDirection(fp.Finger.Thumb, fp.FingerDirection.DiagonalUpRight, 0.9);
+letterH.addDirection(fp.Finger.Thumb, fp.FingerDirection.DiagonalUpLeft, 0.9);
 
-letterD.addCurl(fp.Finger.Middle, fp.FingerCurl.FullCurl);
-letterD.addDirection(fp.Finger.Middle, fp.FingerDirection.VerticalUp, 1.0);
-letterD.addDirection(fp.Finger.Middle, fp.FingerDirection.DiagonalUpRight, 0.9);
-letterD.addDirection(fp.Finger.Middle, fp.FingerDirection.DiagonalUpLeft, 0.9);
+letterH.addCurl(fp.Finger.Index, fp.FingerCurl.NoCurl, 1.0);
+letterH.addDirection(fp.Finger.Index, fp.FingerDirection.HorizontalLeft, 1.0);
+letterH.addDirection(fp.Finger.Index, fp.FingerDirection.HorizontalRight, 1.0);
+
+letterH.addCurl(fp.Finger.Middle, fp.FingerCurl.NoCurl, 1.0);
+letterH.addDirection(fp.Finger.Middle, fp.FingerDirection.HorizontalLeft, 1.0);
+letterH.addDirection(fp.Finger.Middle, fp.FingerDirection.HorizontalRight, 1.0);
+
 
 for (let finger of [fp.Finger.Ring, fp.Finger.Pinky]) {
-  letterD.addCurl(finger, fp.FingerCurl.FullCurl, 1.0);
-  letterD.addCurl(finger, fp.FingerCurl.HalfCurl, 0.9);
-  letterD.addDirection(finger, fp.FingerDirection.VerticalUp, 1.0);
-  letterD.addDirection(finger, fp.FingerDirection.DiagonalUpLeft, 1.0);
-  letterD.addDirection(finger, fp.FingerDirection.DiagonalUpRight, 1.0);
+  letterH.addCurl(finger, fp.FingerCurl.FullCurl, 1.0);
+  letterH.addCurl(finger, fp.FingerCurl.HalfCurl, 0.9);
+  letterH.addDirection(finger, fp.FingerDirection.HorizontalRight, 1.0);
+  letterH.addDirection(finger, fp.FingerDirection.HorizontalLeft, 1.0);
 }
 
-export default letterD;
+export default letterH;

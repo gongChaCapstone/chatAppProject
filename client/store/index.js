@@ -5,8 +5,9 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import maxTiers from './maxTiers'
 import auth from './auth'
 import phrases from './phrases'
+import leaderboard from './leaderboard'
 
-const reducer = combineReducers({ auth, phrases, maxTiers })
+const reducer = combineReducers({ auth, phrases, maxTiers, leaderboard })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
