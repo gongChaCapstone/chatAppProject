@@ -96,16 +96,17 @@ const SingleTest = props => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await setTextInput(event.target.value)
+    runTextBox();
   }
+
   //componentWillUpdate to get allLetters
   useEffect(() => {
     allLetters[0] ? setLetter(allLetters[0].letterwords) : "";
   }, [allLetters]);
 
-  useEffect(() => {
-    runTextBox();
-  }, [userTextInput]);
+  // useEffect(() => {
+  //   runTextBox();
+  // }, [userTextInput]);
 
 const runTextBox = async () => {
   console.log('run text box is running!');
@@ -115,6 +116,7 @@ const runTextBox = async () => {
   if(userTextInput){
   if(userTextInput.toUpperCase() === currentLetter && userTextInput){
         let letterIndex = lettersOnly.indexOf(currentLetter) + 1;
+        setEmoji(userTextInput.toUpperCase());
         if (letterIndex < lettersOnly.length) {
           timerBetweenLetterId = setTimeout(() => {
             setLetter(lettersOnly[letterIndex]);
@@ -213,7 +215,8 @@ const runTextBox = async () => {
   };
 
   let checkMark =
-  (emoji === currentLetter && !(ifTextBox || textCheck)) ? (
+  // (emoji === currentLetter && !(ifTextBox || textCheck)) ? (
+    (emoji === currentLetter) ? (
     <img
       src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
       style={{
