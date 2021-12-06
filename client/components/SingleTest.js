@@ -33,8 +33,8 @@ const SingleTest = (props) => {
       const [key, value] = entry;
       return value;
     });
-  const gestureAccuracyMany = 9.5;
-  const gestureAccuracyOne = 9.2;
+  const gestureAccuracyMany = 10;
+  const gestureAccuracyOne = 9.5;
 
   //setTimeout ids to clear
   let timerBetweenLetterId;

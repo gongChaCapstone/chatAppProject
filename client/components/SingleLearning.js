@@ -5,11 +5,11 @@ import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
 import * as fp from "fingerpose";
 import { fetchPhrases, unlockPhrases } from "../store/phrases";
-import { addPoints } from "../store/points"
+import { addPoints } from "../store/points";
 import { allGestures } from "../letterGestures";
 import { useHistory } from "react-router-dom";
 
-const SingleLearning = props => {
+const SingleLearning = (props) => {
   const learningPoints = 10;
   const dispatch = useDispatch();
   const history = useHistory();
@@ -19,17 +19,17 @@ const SingleLearning = props => {
   const [currentLetter, setLetter] = useState("");
   const [emoji, setEmoji] = useState(null);
   const [images, setImages] = useState({});
-  let allLetters = useSelector(state => state.phrases);
+  let allLetters = useSelector((state) => state.phrases);
 
-  const lettersOnly = allLetters.map(letter => letter.letterwords);
+  const lettersOnly = allLetters.map((letter) => letter.letterwords);
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
-    .filter(entry => {
+    .filter((entry) => {
       //key = key1 & value = value1  ..etc
       const [key, value] = entry;
       return lettersOnly.includes(key);
     })
-    .map(entry => {
+    .map((entry) => {
       const [key, value] = entry;
       return value;
     });
@@ -57,8 +57,8 @@ const SingleLearning = props => {
     // Like componentWillUnmount
     return async () => {
       clearInterval(await intervalId);
-      clearTimeout(timerBetweenLetterId)
-      clearTimeout(timerBetweenCompletionId)
+      clearTimeout(timerBetweenLetterId);
+      clearTimeout(timerBetweenCompletionId);
     };
   }, [currentLetter]);
 
@@ -73,14 +73,8 @@ const SingleLearning = props => {
     );
   }, [allLetters]);
 
-  console.log('images object', images);
-
   const runHandpose = async () => {
     const net = await handpose.load();
-
-    // let timerBetweenLetterId;
-    // let timerBetweenCompletionId;
-
     //Loop and detect hands
     let intervalId = setInterval(async () => {
       let result = await detect(net);
@@ -102,7 +96,7 @@ const SingleLearning = props => {
               pathname: "/completionPage",
               state: { tier: Number(props.match.params.tier) },
             });
-          }, 3000)
+          }, 3000);
         }
       }
     }, 100);
@@ -111,7 +105,7 @@ const SingleLearning = props => {
     return [intervalId, timerBetweenLetterId, timerBetweenCompletionId];
   };
 
-  const detect = async net => {
+  const detect = async (net) => {
     //Check data is available
     if (
       typeof webcamRef.current !== "undefined" &&
@@ -143,14 +137,14 @@ const SingleLearning = props => {
 
         if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
           const confidence = gesture.gestures.map(
-            prediction => prediction.score
+            (prediction) => prediction.score
           );
 
           const maxConfidence = confidence.indexOf(
             Math.max.apply(null, confidence)
           );
 
-          console.log(gesture);
+          // console.log(gesture);
 
           const maxGesture = gesture.gestures[maxConfidence];
 
@@ -166,10 +160,6 @@ const SingleLearning = props => {
       }
     }
   };
-  // console.log("emoji", emoji);
-  // console.log("allLetters", allLetters)
-  // console.log('currentLetter',currentLetter)
-  // console.log('images',images)
 
   let emojiPrint =
     emoji === currentLetter ? (
