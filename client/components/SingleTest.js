@@ -33,8 +33,8 @@ const SingleTest = props => {
   let allLetters = useSelector(state => state.testPhrases);
   let lettersOnly = allLetters.map(letter => letter.letterwords);
 
-  console.log(mixedImages)
-  console.log(lettersOnly)
+  // console.log(mixedImages)
+  // console.log(lettersOnly)
 
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
@@ -212,7 +212,7 @@ const SingleTest = props => {
             Math.max.apply(null, confidence)
           );
 
-          console.log(gesture);
+          // console.log(gesture);
 
           const maxGesture = gesture.gestures[maxConfidence];
           if (

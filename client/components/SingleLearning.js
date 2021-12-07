@@ -144,7 +144,7 @@ const SingleLearning = props => {
             Math.max.apply(null, confidence)
           );
 
-          console.log(gesture);
+          // console.log(gesture);
 
           const maxGesture = gesture.gestures[maxConfidence];
 
