@@ -9,7 +9,7 @@ import { addPoints } from "../store/points";
 import { allGestures } from "../letterGestures";
 import { useHistory } from "react-router-dom";
 
-const SingleLearning = (props) => {
+const SingleLearning = props => {
   const learningPoints = 10;
   const dispatch = useDispatch();
   const history = useHistory();
@@ -19,17 +19,17 @@ const SingleLearning = (props) => {
   const [currentLetter, setLetter] = useState("");
   const [emoji, setEmoji] = useState(null);
   const [images, setImages] = useState({});
-  let allLetters = useSelector((state) => state.phrases);
+  let allLetters = useSelector(state => state.phrases);
 
-  const lettersOnly = allLetters.map((letter) => letter.letterwords);
+  const lettersOnly = allLetters.map(letter => letter.letterwords);
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
-    .filter((entry) => {
+    .filter(entry => {
       //key = key1 & value = value1  ..etc
       const [key, value] = entry;
       return lettersOnly.includes(key);
     })
-    .map((entry) => {
+    .map(entry => {
       const [key, value] = entry;
       return value;
     });
@@ -43,7 +43,7 @@ const SingleLearning = (props) => {
 
   //Like componentDidMount
   useEffect(() => {
-    dispatch(fetchPhrases(props.match.params.tier));
+    dispatch(fetchPhrases(Number(props.match.params.tier)));
   }, []);
 
   //Like componentWillUpdate
@@ -89,7 +89,7 @@ const SingleLearning = (props) => {
             setLetter(lettersOnly[letterIndex]);
           }, 3000); // timer for between gestures
         } else {
-          dispatch(unlockPhrases(props.match.params.tier));
+          dispatch(unlockPhrases(Number(props.match.params.tier)));
           dispatch(addPoints(learningPoints));
           timerBetweenCompletionId = setTimeout(() => {
             history.push({
@@ -105,7 +105,7 @@ const SingleLearning = (props) => {
     return intervalId;
   };
 
-  const detect = async (net) => {
+  const detect = async net => {
     //Check data is available
     if (
       typeof webcamRef.current !== "undefined" &&
@@ -137,7 +137,7 @@ const SingleLearning = (props) => {
 
         if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
           const confidence = gesture.gestures.map(
-            (prediction) => prediction.score
+            prediction => prediction.score
           );
 
           const maxConfidence = confidence.indexOf(
@@ -153,8 +153,22 @@ const SingleLearning = (props) => {
               maxGesture.score >= gestureAccuracyOne) ||
             maxGesture.score >= gestureAccuracyMany
           ) {
-            setEmoji(maxGesture.name);
-            return maxGesture.name;
+            if (
+              (maxGesture.name === "T" || maxGesture.name === "S") &&
+              (currentLetter === "T" || currentLetter === "S")
+            ) {
+              setEmoji(currentLetter);
+              return currentLetter;
+            } else if (
+              (maxGesture.name === "R" || maxGesture.name === "U") &&
+              (currentLetter === "R" || currentLetter === "U")
+            ) {
+              setEmoji(currentLetter);
+              return currentLetter;
+            } else {
+              setEmoji(maxGesture.name);
+              return maxGesture.name;
+            }
           }
         }
       }
@@ -164,7 +178,7 @@ const SingleLearning = (props) => {
   let emojiPrint =
     emoji === currentLetter ? (
       <img
-        src="CheckMark.png"
+        src="/CheckMark.png"
         style={{
           position: "absolute",
           marginLeft: "auto",
@@ -213,7 +227,7 @@ const SingleLearning = (props) => {
         />
 
         <img
-          src={images[currentLetter] ? images[currentLetter][0] : null}
+          src={images[currentLetter] ? "/" + images[currentLetter][0] : null}
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -227,7 +241,7 @@ const SingleLearning = (props) => {
         />
 
         <img
-          src={images[currentLetter] ? images[currentLetter][1] : null}
+          src={images[currentLetter] ? "/" + images[currentLetter][1] : null}
           style={{
             position: "absolute",
             marginLeft: "auto",

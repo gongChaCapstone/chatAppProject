@@ -1,10 +1,10 @@
-import React, { useRef, useState, useEffect, useReducer } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
 import * as fp from "fingerpose";
-import { fetchTestPhrases } from "../store/phrases";
+import { fetchTestPhrases } from "../store/testPhrases";
 import { addPoints } from "../store/points";
 import { allGestures } from "../letterGestures";
 import { useHistory } from "react-router-dom";
@@ -30,8 +30,11 @@ const SingleTest = props => {
   const [mixedImages, setMixedImages] = useState({});
   const [userTextInput, setTextInput] = useState("");
   const [didSubmit, setDidSubmit] = useState(false);
-  let allLetters = useSelector(state => state.phrases);
+  let allLetters = useSelector(state => state.testPhrases);
   let lettersOnly = allLetters.map(letter => letter.letterwords);
+
+  // console.log(mixedImages)
+  // console.log(lettersOnly)
 
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
@@ -52,9 +55,18 @@ const SingleTest = props => {
   let timerBetweenCompletionId;
   let didSubmitTimerId;
 
+  const handleUpdate = async event => {
+    setTextInput(event.target.value);
+  };
+  const handleSubmit = async event => {
+    event.preventDefault();
+    runTextBox();
+    setTextInput("");
+  };
+
   //Like componentDidMount
   useEffect(() => {
-    dispatch(fetchTestPhrases(props.match.params.tier));
+    dispatch(fetchTestPhrases(Number(props.match.params.tier)));
   }, []);
 
   //Like componentWillUpdate
@@ -80,20 +92,7 @@ const SingleTest = props => {
     } else {
       intervalId = runHandModel();
     }
-    if (Object.keys(mixedImages).length === 0) {
-      setMixedImages(
-        allLetters.reduce((accu, letter) => {
-          if (letter.letterwords === lettersOnly[0]) {
-            accu[letter.letterwords] = letter.textUrl;
-          } else if (Math.random() > 0.45) {
-            accu[letter.letterwords] = letter.url;
-          } else {
-            accu[letter.letterwords] = letter.textUrl;
-          }
-          return accu;
-        }, {})
-      );
-    }
+
     // Like componentWillUnmount
     return async () => {
       clearInterval(await intervalId);
@@ -103,19 +102,24 @@ const SingleTest = props => {
     };
   }, [currentLetter]);
 
-  const handleUpdate = async event => {
-    setTextInput(event.target.value);
-  };
-  const handleSubmit = async event => {
-    event.preventDefault();
-    runTextBox();
-    setTextInput("");
-  };
   //componentWillUpdate to get allLetters
   useEffect(() => {
     allLetters = shuffleArray(allLetters);
 
     allLetters[0] ? setLetter(allLetters[0].letterwords) : "";
+
+    setMixedImages(
+      allLetters.reduce((accu, letter) => {
+        if (letter === allLetters[0]) {
+          accu[letter.letterwords] = letter.textUrl;
+        } else if (Math.random() > 0.45) {
+          accu[letter.letterwords] = letter.url;
+        } else {
+          accu[letter.letterwords] = letter.textUrl;
+        }
+        return accu;
+      }, {})
+    );
   }, [allLetters]);
 
   const runTextBox = async () => {
@@ -148,6 +152,7 @@ const SingleTest = props => {
       }
     }
   };
+
   const runHandpose = async () => {
     const net = await handpose.load();
     //Loop and detect hands
@@ -162,10 +167,10 @@ const SingleTest = props => {
             setLetter(lettersOnly[letterIndex]);
           }, 3000); // timer for between gestures
         } else {
-          dispatch(addPoints(20));
+          dispatch(addPoints(testPoints));
           timerBetweenCompletionId = setTimeout(() => {
             history.push({
-              pathname: "/completionPage",
+              pathname: "/testcompletionPage",
               state: { tier: Number(props.match.params.tier) },
             });
           }, 3000);
@@ -174,6 +179,7 @@ const SingleTest = props => {
     }, 100);
     return intervalId;
   };
+
   const detect = async net => {
     //Check data is available
     if (
@@ -205,23 +211,38 @@ const SingleTest = props => {
           const maxConfidence = confidence.indexOf(
             Math.max.apply(null, confidence)
           );
+
+          // console.log(gesture);
+
           const maxGesture = gesture.gestures[maxConfidence];
           if (
             (gesture.gestures.length === 1 &&
               maxGesture.score >= gestureAccuracyOne) ||
             maxGesture.score >= gestureAccuracyMany
           ) {
-            setEmoji(maxGesture.name);
-            return maxGesture.name;
+            if ((maxGesture.name === "N" || maxGesture.name === "M" || maxGesture.name === "T" || maxGesture.name === "S") && (currentLetter === "M" || currentLetter === "N" || currentLetter === "S" || currentLetter === "T")) {
+              setEmoji(currentLetter);
+              return currentLetter;
+            } else if (
+              (maxGesture.name === "R" || maxGesture.name === "U") &&
+              (currentLetter === "R" || currentLetter === "U")
+            ) {
+              setEmoji(currentLetter);
+              return currentLetter;
+            } else {
+              setEmoji(maxGesture.name);
+              return maxGesture.name;
+            }
           }
         }
       }
     }
   };
+
   let checkMark =
     emoji === currentLetter ? (
       <img
-        src="CheckMark.png"
+        src="/CheckMark.png"
         style={{
           position: "absolute",
           marginLeft: "auto",
@@ -240,7 +261,7 @@ const SingleTest = props => {
   let redCheck =
     emoji !== currentLetter && ifTextBox && didSubmit ? (
       <img
-        src="redCircle.png"
+        src="/redCircle.png"
         style={{
           position: "absolute",
           marginLeft: "auto",
@@ -255,6 +276,7 @@ const SingleTest = props => {
     ) : (
       ""
     );
+
   let textBoxx =
     ifTextBox || textCheck ? (
       <div>
@@ -271,6 +293,7 @@ const SingleTest = props => {
     ) : (
       ""
     );
+
   return (
     <div className="App">
       <header className="App-header">
@@ -303,7 +326,7 @@ const SingleTest = props => {
           }}
         />
         <img
-          src={mixedImages[currentLetter]}
+          src={"/" + mixedImages[currentLetter]}
           style={{
             position: "absolute",
             marginLeft: "auto",
