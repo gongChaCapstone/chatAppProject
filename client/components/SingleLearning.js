@@ -164,7 +164,7 @@ const SingleLearning = (props) => {
   let emojiPrint =
     emoji === currentLetter ? (
       <img
-        src="CheckMark.png"
+        src="/CheckMark.png"
         style={{
           position: "absolute",
           marginLeft: "auto",
@@ -213,7 +213,7 @@ const SingleLearning = (props) => {
         />
 
         <img
-          src={images[currentLetter] ? images[currentLetter][0] : null}
+          src={images[currentLetter] ? "/" + images[currentLetter][0] : null}
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -227,7 +227,7 @@ const SingleLearning = (props) => {
         />
 
         <img
-          src={images[currentLetter] ? images[currentLetter][1] : null}
+          src={images[currentLetter] ? "/" + images[currentLetter][1] : null}
           style={{
             position: "absolute",
             marginLeft: "auto",

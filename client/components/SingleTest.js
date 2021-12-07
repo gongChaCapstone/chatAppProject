@@ -233,7 +233,7 @@ const SingleTest = props => {
   let checkMark =
     emoji === currentLetter ? (
       <img
-        src="CheckMark.png"
+        src="/CheckMark.png"
         style={{
           position: "absolute",
           marginLeft: "auto",
@@ -252,7 +252,7 @@ const SingleTest = props => {
   let redCheck =
     emoji !== currentLetter && ifTextBox && didSubmit ? (
       <img
-        src="redCircle.png"
+        src="/redCircle.png"
         style={{
           position: "absolute",
           marginLeft: "auto",
@@ -317,7 +317,7 @@ const SingleTest = props => {
           }}
         />
         <img
-          src={mixedImages[currentLetter]}
+          src={"/" + mixedImages[currentLetter]}
           style={{
             position: "absolute",
             marginLeft: "auto",
