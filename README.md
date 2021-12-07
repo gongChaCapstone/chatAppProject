@@ -19,3 +19,10 @@ Red Panda was built using React and Redux for state management on the front-end,
 5. Earn points as you complete lessons and tests and see if you can top the leaderboard!
 
 # Play here: https://redpandaasl.herokuapp.com/
+
+
+# Team
+1. Sabi Kumar: https://github.com/skumar213 | http://www.linkedin.com/in/skumar213
+2. Max Boykin: https://github.com/Maxxboykin | https://www.linkedin.com/in/maxboykin/
+3. Peter Oehman: https://github.com/PeterOehman | https://www.linkedin.com/in/peter-oehman/
+4. Brendan Shulman: https://github.com/bshulman210 | https://www.linkedin.com/in/brendan-shulman/
