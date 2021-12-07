@@ -22,4 +22,5 @@ for (let finger of [fp.Finger.Middle, fp.Finger.Ring, fp.Finger.Pinky]) {
   letterT.addDirection(finger, fp.FingerDirection.DiagonalUpLeft, 0.9);
 }
 
+
 export default letterT;

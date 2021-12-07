@@ -8,14 +8,15 @@ module.exports = router;
 //also update in completionpage component
 const maxTier = 6;
 
-//will get all users
+//will get all users, only firstname and points for leaderboard
 router.get("/", requireToken, async (req, res, next) => {
   try {
     const users = await User.findAll({
-      // explicitly select only the id and username fields - even though
-      // users' passwords are encrypted, it won't help if we just
-      // send everything to anyone who asks!
-      attributes: ["id", "email"],
+      attributes: ["firstname", "points"],
+      order: [
+        ['points', 'DESC']
+      ],
+      limit: 5
     });
     res.json(users);
   } catch (err) {
@@ -23,17 +24,6 @@ router.get("/", requireToken, async (req, res, next) => {
   }
 });
 
-//will get single user
-//might not need this since auth adds the user to the state
-// router.get('/user', requireToken, async (req,res,next) => {
-//   try {
-//     const {email, firstname, lastname, points} = req.user;
-
-//     res.send(req.user)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
 
 //will update single user
 router.put('/user', requireToken, async (req,res,next) => {
@@ -43,6 +33,39 @@ router.put('/user', requireToken, async (req,res,next) => {
     const updatedUser = await req.user.update({email, password, firstname, lastname})
 
     res.send(updatedUser).status(202)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/points', requireToken, async (req,res,next) => {
+  try {
+    const specificUser = await User.findOne({
+      where: {
+        id: req.user.id
+      }
+    });
+    res.json(specificUser.points)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/points', requireToken, async (req,res,next) => {
+  try {
+    let incremental = req.body.incrementalQty;
+
+    const specificUser = await User.findOne({
+      where: {
+        id: req.user.id
+      }
+    });
+    let currentPoints = specificUser.points;
+    let updatedPoints = parseInt(currentPoints) + parseInt(incremental);
+     let updatedUser = await specificUser.update({
+         points: updatedPoints
+     })
+    res.json(updatedUser);
   } catch (error) {
     next(error)
   }
@@ -99,7 +122,7 @@ router.get("/maxTier", requireToken, async (req, res, next) => {
     let highestTestTier = userPhrases.phrases.filter(phrase => {
       return phrase.phraseUser.isComplete === true
     })
-    highestTestTier = highestTestTier[0] ? highestTestTier[0].tiers : 0
+    highestTestTier = highestTestTier[0] ? Math.floor(highestTestTier[0].tiers /  2) : 0
 
     res.json({highestLearningTier, highestTestTier})
   } catch (error) {

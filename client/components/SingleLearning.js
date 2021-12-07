@@ -5,10 +5,12 @@ import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
 import * as fp from "fingerpose";
 import { fetchPhrases, unlockPhrases } from "../store/phrases";
+import { addPoints } from "../store/points";
 import { allGestures } from "../letterGestures";
 import { useHistory } from "react-router-dom";
 
-const SingleLearning = props => {
+const SingleLearning = (props) => {
+  const learningPoints = 10;
   const dispatch = useDispatch();
   const history = useHistory();
   const webcamRef = useRef(null);
@@ -17,17 +19,17 @@ const SingleLearning = props => {
   const [currentLetter, setLetter] = useState("");
   const [emoji, setEmoji] = useState(null);
   const [images, setImages] = useState({});
-  let allLetters = useSelector(state => state.phrases);
+  let allLetters = useSelector((state) => state.phrases);
 
-  const lettersOnly = allLetters.map(letter => letter.letterwords);
+  const lettersOnly = allLetters.map((letter) => letter.letterwords);
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
-    .filter(entry => {
+    .filter((entry) => {
       //key = key1 & value = value1  ..etc
       const [key, value] = entry;
       return lettersOnly.includes(key);
     })
-    .map(entry => {
+    .map((entry) => {
       const [key, value] = entry;
       return value;
     });
@@ -55,8 +57,8 @@ const SingleLearning = props => {
     // Like componentWillUnmount
     return async () => {
       clearInterval(await intervalId);
-      clearTimeout(timerBetweenLetterId)
-      clearTimeout(timerBetweenCompletionId)
+      clearTimeout(timerBetweenLetterId);
+      clearTimeout(timerBetweenCompletionId);
     };
   }, [currentLetter]);
 
@@ -65,7 +67,7 @@ const SingleLearning = props => {
     allLetters[0] ? setLetter(allLetters[0].letterwords) : "";
     setImages(
       allLetters.reduce((accu, letter) => {
-        accu[letter.letterwords] = letter.url;
+        accu[letter.letterwords] = [letter.url, letter.textUrl];
         return accu;
       }, {})
     );
@@ -73,10 +75,6 @@ const SingleLearning = props => {
 
   const runHandpose = async () => {
     const net = await handpose.load();
-
-    let timerBetweenLetterId;
-    let timerBetweenCompletionId;
-
     //Loop and detect hands
     let intervalId = setInterval(async () => {
       let result = await detect(net);
@@ -92,12 +90,13 @@ const SingleLearning = props => {
           }, 3000); // timer for between gestures
         } else {
           dispatch(unlockPhrases(props.match.params.tier));
+          dispatch(addPoints(learningPoints));
           timerBetweenCompletionId = setTimeout(() => {
             history.push({
               pathname: "/completionPage",
               state: { tier: Number(props.match.params.tier) },
             });
-          }, 3000)
+          }, 3000);
         }
       }
     }, 100);
@@ -106,7 +105,7 @@ const SingleLearning = props => {
     return [intervalId, timerBetweenLetterId, timerBetweenCompletionId];
   };
 
-  const detect = async net => {
+  const detect = async (net) => {
     //Check data is available
     if (
       typeof webcamRef.current !== "undefined" &&
@@ -138,14 +137,14 @@ const SingleLearning = props => {
 
         if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
           const confidence = gesture.gestures.map(
-            prediction => prediction.score
+            (prediction) => prediction.score
           );
 
           const maxConfidence = confidence.indexOf(
             Math.max.apply(null, confidence)
           );
 
-          console.log(gesture);
+          // console.log(gesture);
 
           const maxGesture = gesture.gestures[maxConfidence];
 
@@ -161,15 +160,11 @@ const SingleLearning = props => {
       }
     }
   };
-  // console.log("emoji", emoji);
-  // console.log("allLetters", allLetters)
-  // console.log('currentLetter',currentLetter)
-  // console.log('images',images)
 
   let emojiPrint =
     emoji === currentLetter ? (
       <img
-        src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
+        src="CheckMark.png"
         style={{
           position: "absolute",
           marginLeft: "auto",
@@ -216,8 +211,9 @@ const SingleLearning = props => {
             height: 480,
           }}
         />
+
         <img
-          src={images[currentLetter]}
+          src={images[currentLetter] ? images[currentLetter][0] : null}
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -225,6 +221,20 @@ const SingleLearning = props => {
             left: 100,
             bottom: 50,
             right: 0,
+            textAlign: "center",
+            height: 100,
+          }}
+        />
+
+        <img
+          src={images[currentLetter] ? images[currentLetter][1] : null}
+          style={{
+            position: "absolute",
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 0,
+            bottom: 50,
+            right: 120,
             textAlign: "center",
             height: 100,
           }}
