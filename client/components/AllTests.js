@@ -25,7 +25,7 @@ const AllTests = () => {
     }
   }
 
-  return <div>{allTiers.map((tier) => tier)}</div>;
+  return <div>{allTiers.length !== 0 ? allTiers.map((tier) => tier) : <div>Finish lessons to unlock tests!</div>}</div>;
 };
 
 export default AllTests;
