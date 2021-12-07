@@ -86,9 +86,11 @@ router.put("/update/:tierId", requireToken, async (req, res, next) => {
         },
       },
     });
-    userPhrases.phrases.forEach(async phrase => {
-      await phrase.phraseUser.update({ isComplete: true });
-    });
+
+    await Promise.all(userPhrases.phrases.map(phrase => {
+      return phrase.phraseUser.update({ isComplete: true });
+    }))
+
     if (req.params.tierId < maxTier) {
       const nextTier = await Phrase.findAll({
         where: {
@@ -97,6 +99,7 @@ router.put("/update/:tierId", requireToken, async (req, res, next) => {
       });
       await userPhrases.addPhrases(nextTier);
     }
+
     res.sendStatus(202);
   } catch (error) {
     next(error);

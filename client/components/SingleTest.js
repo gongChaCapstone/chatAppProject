@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
@@ -33,9 +33,6 @@ const SingleTest = props => {
   let allLetters = useSelector(state => state.testPhrases);
   let lettersOnly = allLetters.map(letter => letter.letterwords);
 
-  console.log(lettersOnly);
-  console.log(mixedImages);
-
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
     .filter(entry => {
@@ -54,6 +51,15 @@ const SingleTest = props => {
   let timerBetweenLetterId;
   let timerBetweenCompletionId;
   let didSubmitTimerId;
+
+  const handleUpdate = async event => {
+    setTextInput(event.target.value);
+  };
+  const handleSubmit = async event => {
+    event.preventDefault();
+    runTextBox();
+    setTextInput("");
+  };
 
   //Like componentDidMount
   useEffect(() => {
@@ -93,14 +99,6 @@ const SingleTest = props => {
     };
   }, [currentLetter]);
 
-  const handleUpdate = async event => {
-    setTextInput(event.target.value);
-  };
-  const handleSubmit = async event => {
-    event.preventDefault();
-    runTextBox();
-    setTextInput("");
-  };
   //componentWillUpdate to get allLetters
   useEffect(() => {
     allLetters = shuffleArray(allLetters);
@@ -151,6 +149,7 @@ const SingleTest = props => {
       }
     }
   };
+
   const runHandpose = async () => {
     const net = await handpose.load();
     //Loop and detect hands
@@ -177,6 +176,7 @@ const SingleTest = props => {
     }, 100);
     return intervalId;
   };
+
   const detect = async net => {
     //Check data is available
     if (
@@ -229,6 +229,7 @@ const SingleTest = props => {
       }
     }
   };
+
   let checkMark =
     emoji === currentLetter ? (
       <img
@@ -266,6 +267,7 @@ const SingleTest = props => {
     ) : (
       ""
     );
+
   let textBoxx =
     ifTextBox || textCheck ? (
       <div>
@@ -282,6 +284,7 @@ const SingleTest = props => {
     ) : (
       ""
     );
+
   return (
     <div className="App">
       <header className="App-header">
