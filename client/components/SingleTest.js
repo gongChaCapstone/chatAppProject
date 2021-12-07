@@ -1,10 +1,10 @@
-import React, { useRef, useState, useEffect, useReducer } from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
 import * as fp from "fingerpose";
-import { fetchTestPhrases } from "../store/phrases";
+import { fetchTestPhrases } from "../store/testPhrases";
 import { addPoints } from "../store/points";
 import { allGestures } from "../letterGestures";
 import { useHistory } from "react-router-dom";
@@ -30,8 +30,12 @@ const SingleTest = props => {
   const [mixedImages, setMixedImages] = useState({});
   const [userTextInput, setTextInput] = useState("");
   const [didSubmit, setDidSubmit] = useState(false);
-  let allLetters = useSelector(state => state.phrases);
+  let allLetters = useSelector(state => state.testPhrases);
   let lettersOnly = allLetters.map(letter => letter.letterwords);
+
+  // console.log(currentLetter)
+  console.log(allLetters)
+  console.log(lettersOnly)
 
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
@@ -54,7 +58,7 @@ const SingleTest = props => {
 
   //Like componentDidMount
   useEffect(() => {
-    dispatch(fetchTestPhrases(props.match.params.tier));
+    dispatch(fetchTestPhrases(Number(props.match.params.tier)));
   }, []);
 
   //Like componentWillUpdate
@@ -83,7 +87,7 @@ const SingleTest = props => {
     if (Object.keys(mixedImages).length === 0) {
       setMixedImages(
         allLetters.reduce((accu, letter) => {
-          if (letter.letterwords === lettersOnly[0]) {
+          if (letter === allLetters[0]) { //changed this
             accu[letter.letterwords] = letter.textUrl;
           } else if (Math.random() > 0.45) {
             accu[letter.letterwords] = letter.url;
@@ -205,6 +209,9 @@ const SingleTest = props => {
           const maxConfidence = confidence.indexOf(
             Math.max.apply(null, confidence)
           );
+
+          // console.log(gesture);
+
           const maxGesture = gesture.gestures[maxConfidence];
           if (
             (gesture.gestures.length === 1 &&

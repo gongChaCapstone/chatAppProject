@@ -43,7 +43,7 @@ const SingleLearning = (props) => {
 
   //Like componentDidMount
   useEffect(() => {
-    dispatch(fetchPhrases(props.match.params.tier));
+    dispatch(fetchPhrases(Number(props.match.params.tier)));
   }, []);
 
   //Like componentWillUpdate
@@ -89,7 +89,7 @@ const SingleLearning = (props) => {
             setLetter(lettersOnly[letterIndex]);
           }, 3000); // timer for between gestures
         } else {
-          dispatch(unlockPhrases(props.match.params.tier));
+          dispatch(unlockPhrases(Number(props.match.params.tier)));
           dispatch(addPoints(learningPoints));
           timerBetweenCompletionId = setTimeout(() => {
             history.push({

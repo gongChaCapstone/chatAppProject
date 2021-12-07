@@ -24,18 +24,18 @@ export const fetchPhrases = (tierId) => async (dispatch) => {
   }
 }
 
-export const fetchTestPhrases = (tierId) => async (dispatch) => {
-  try {
-    const secondTier = tierId * 2
-    const {data: currentPhrases1} = await axios.get(`/api/phrases/${secondTier - 1}`)
-    const {data: currentPhrases2} = await axios.get(`/api/phrases/${secondTier}`)
-    const currentPhrases = currentPhrases1.concat(currentPhrases2)
+// export const fetchTestPhrases = (tierId) => async (dispatch) => {
+//   try {
+//     const secondTier = tierId * 2
+//     const {data: currentPhrases1} = await axios.get(`/api/phrases/${secondTier - 1}`)
+//     const {data: currentPhrases2} = await axios.get(`/api/phrases/${secondTier}`)
+//     const currentPhrases = currentPhrases1.concat(currentPhrases2)
 
-    dispatch(setPhrases(currentPhrases))
-  } catch (error) {
-    console.log(error)
-  }
-}
+//     dispatch(setPhrases(currentPhrases))
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
 
 export const unlockPhrases = (tierId) => async () => {
   try {
