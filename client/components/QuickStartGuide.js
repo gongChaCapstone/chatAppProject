@@ -14,6 +14,9 @@ const QuickStartGuide = () => {
             Keep your hand in the middle of the screen while making the gestures
           </li>
           <li>
+            Make sure your hand isn't too far away from the camera
+          </li>
+          <li>
             If it does not capture right away, do not worry! Adjust your hand to
             mimic the gesture as closely as possible
           </li>
