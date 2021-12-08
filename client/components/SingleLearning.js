@@ -170,7 +170,7 @@ const SingleLearning = (props) => {
           marginLeft: "auto",
           marginRight: "auto",
           left: 400,
-          bottom: 50,
+          bottom: 70,
           right: 0,
           textAlign: "center",
           height: 100,
@@ -194,7 +194,7 @@ const SingleLearning = (props) => {
             textAlign: "center",
             zindex: 9,
             width: 640,
-            height: 480,
+            height: 440,
           }}
         />
         <canvas
@@ -208,19 +208,19 @@ const SingleLearning = (props) => {
             textAlign: "center",
             zindex: 9,
             width: 640,
-            height: 480,
+            height: 440,
           }}
         />
 
         <img
           src={images[currentLetter] ? "/" + images[currentLetter][0] : null}
           style={{
-            position: "absolute",
+            position: "relative",
             marginLeft: "auto",
             marginRight: "auto",
-            left: 100,
-            bottom: 50,
-            right: 0,
+            left: 30,
+            bottom: -440,
+            right: 100,
             textAlign: "center",
             height: 100,
           }}
@@ -229,12 +229,12 @@ const SingleLearning = (props) => {
         <img
           src={images[currentLetter] ? "/" + images[currentLetter][1] : null}
           style={{
-            position: "absolute",
+            position: "relative",
             marginLeft: "auto",
             marginRight: "auto",
-            left: 0,
-            bottom: 50,
-            right: 120,
+            left: -100,
+            bottom: -340,
+            right: 100,
             textAlign: "center",
             height: 100,
           }}
