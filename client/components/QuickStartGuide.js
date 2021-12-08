@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 const QuickStartGuide = () => {
   return (
     <div>
-      <h1>Get started below!</h1>
-      <img class="w-7/12"src="QSG RedPandaASL.jpg" />
+      <img class="border-2 border-black w-7/12"src="infographic.png" />
       <div>
         <h4 class="font-bold" >Tips and Tricks for the best user experience:</h4>
         <ul>

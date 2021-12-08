@@ -166,11 +166,11 @@ const SingleLearning = (props) => {
       <img
         src="/CheckMark.png"
         style={{
-          position: "absolute",
+          position: "relative",
           marginLeft: "auto",
           marginRight: "auto",
-          left: 400,
-          bottom: 70,
+          left: 150,
+          bottom: -240,
           right: 0,
           textAlign: "center",
           height: 100,
@@ -194,7 +194,7 @@ const SingleLearning = (props) => {
             textAlign: "center",
             zindex: 9,
             width: 640,
-            height: 440,
+            height: 400,
           }}
         />
         <canvas
@@ -208,7 +208,7 @@ const SingleLearning = (props) => {
             textAlign: "center",
             zindex: 9,
             width: 640,
-            height: 440,
+            height: 380,
           }}
         />
 

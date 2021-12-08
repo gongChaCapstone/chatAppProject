@@ -235,11 +235,11 @@ const SingleTest = props => {
       <img
         src="/CheckMark.png"
         style={{
-          position: "absolute",
+          position: "relative",
           marginLeft: "auto",
           marginRight: "auto",
-          left: 400,
-          bottom: 50,
+          left: 150,
+          bottom: -325,
           right: 0,
           textAlign: "center",
           height: 100,
@@ -254,11 +254,11 @@ const SingleTest = props => {
       <img
         src="/redCircle.png"
         style={{
-          position: "absolute",
+          position: "relative",
           marginLeft: "auto",
           marginRight: "auto",
-          left: 400,
-          bottom: 50,
+          left: 150,
+          bottom: -325,
           right: 0,
           textAlign: "center",
           height: 100,
@@ -271,13 +271,24 @@ const SingleTest = props => {
   let textBoxx =
     ifTextBox || textCheck ? (
       <div>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="userGuess">Guess letter</label>
-          <input
+        <img src="/guessLetter.png"></img>
+        <form class="text-xl font-semibold" style={{
+          position: "relative",
+          marginLeft: "auto",
+          marginRight: "auto",
+          left: -230,
+          bottom: -140,
+          right: -50,
+          textAlign: "center",
+          height: 100,
+        }} onSubmit={handleSubmit}>
+          <label htmlFor="userGuess"></label>
+          <input class="w-1/12 border-4 border-red-600 border-opacity-75 border-dashed"
             type="text"
             onChange={handleUpdate}
             name="userGuess"
             value={userTextInput}
+            placeholder="guess"
           />
         </form>
       </div>
@@ -299,7 +310,7 @@ const SingleTest = props => {
             textAlign: "center",
             zindex: 9,
             width: 640,
-            height: 480,
+            height: 400,
           }}
         />
         <canvas
@@ -313,18 +324,18 @@ const SingleTest = props => {
             textAlign: "center",
             zindex: 9,
             width: 640,
-            height: 480,
+            height: 380,
           }}
         />
         <img
           src={"/" + mixedImages[currentLetter]}
           style={{
-            position: "absolute",
+            position: "relative",
             marginLeft: "auto",
             marginRight: "auto",
-            left: 100,
-            bottom: 50,
-            right: 0,
+            left: 0,
+            bottom: -420,
+            right: 180,
             textAlign: "center",
             height: 100,
           }}
