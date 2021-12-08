@@ -37,11 +37,12 @@ const UserProfile = () => {
 
   return (
     <div>
-      <h1 class="mt-6 font-bold text-lg text-left text-red-800" >Hello, {firstname} If you want to update any information about your profile, please do below. Happy learning!</h1>
-      <form onSubmit={handleSubmit}>
-        <div className=" mt-4 font-bold text-gray-400">
-          <label htmlFor="email">Email:</label>
+      <h1 class="mt-6 ml-2 font-bold text-lg text-left text-red-800" >Hello, {firstname} If you want to update any information about your profile, please do below. Happy learning!</h1>
+      <form className="" onSubmit={handleSubmit}>
+        <div className=" mt-4 font-bold text-gray-800 p-2">
+          <label htmlFor="email" className="mr-3">Email:</label>
           <input
+            className="border-2 border-red-700"
             type="text"
             name="email"
             value={email}
@@ -49,9 +50,10 @@ const UserProfile = () => {
           />
         </div>
 
-        <div>
-          <label htmlFor="password">Password:</label>
+        <div className=" mt-4 font-bold text-gray-800 p-2">
+          <label htmlFor="password" className="mr-3">Password:</label>
           <input
+            className="border-2 border-red-700"
             type="password"
             name="password"
             value={password}
@@ -59,9 +61,10 @@ const UserProfile = () => {
           />
         </div>
 
-        <div>
-          <label htmlFor="firstname">First Name:</label>
+        <div className=" mt-4 font-bold text-gray-800 p-">
+          <label htmlFor="firstname" className="mr-3 ml-2">First Name:</label>
           <input
+            className="border-2 border-red-700"
             type="text"
             name="firstname"
             value={firstname}
@@ -69,9 +72,10 @@ const UserProfile = () => {
           />
         </div>
 
-        <div>
-          <label htmlFor="lastname">Last Name:</label>
+        <div className=" mt-4 font-bold text-gray-800 p-2">
+          <label htmlFor="lastname" className="mr-3">Last Name:</label>
           <input
+            className="border-2 border-red-700"
             type="text"
             name="lastname"
             value={lastname}
@@ -79,7 +83,7 @@ const UserProfile = () => {
           />
         </div>
 
-        <button class="inline-block px-4 py-1 rounded-lg shadow-lg bg-red-800 hover:bg-red-400 hover:-translate-y-0.5 transform transition text-white mt-3 uppercase tracking-wider font-semibold text-sm" type="submit">Update</button>
+        <button class="ml-2 inline-block px-4 py-1 rounded-lg shadow-lg bg-red-800 hover:bg-red-400 hover:-translate-y-0.5 transform transition text-white mt-3 uppercase tracking-wider font-semibold text-sm" type="submit">Update</button>
       </form>
     </div>
   );

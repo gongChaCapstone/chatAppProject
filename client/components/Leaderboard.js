@@ -11,9 +11,9 @@ const Leaderboard = props => {
   }, []);
 
   return (
-    <div>
+    <div className="flex">
       <h1>Red Panda Top Scorers</h1>
-      <table>
+      <table className="">
         <tbody>
           <tr>
             <td>Rank</td>
