@@ -283,7 +283,7 @@ const SingleTest = props => {
           height: 100,
         }} onSubmit={handleSubmit}>
           <label htmlFor="userGuess"></label>
-          <input class="w-1/12 border-4 border-red-600 border-opacity-75 border-dashed"
+          <input class="w-1/12 border-4 border-yellow-500 border-opacity-75 border-solid"
             type="text"
             onChange={handleUpdate}
             name="userGuess"
