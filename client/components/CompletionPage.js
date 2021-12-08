@@ -16,7 +16,8 @@ const CompletionPage = props => {
 
   return (
     <div>
-      <div>Congrats!! You completed level {currentTier}</div>
+      <img class="w-8/12 h-8/12"src="/congratulations.png"></img>
+      <div>You completed level {currentTier}</div>
       <Link to="/allLearning">Click Here to go back to all lessons</Link>
 
       <div>
