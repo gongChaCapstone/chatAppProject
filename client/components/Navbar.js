@@ -26,7 +26,7 @@ const Navbar = () => {
             <Link to='/commonphrases'><img class="w-44 hover:-translate-y-1.5 transform transition" src="/phrases.png"></img></Link>
             <Link to='/studyguide'><img class="w-44 hover:-translate-y-1.5 transform transition" src="/alphabet.png"></img></Link>
             <a href="#" onClick={handleClick}>
-              Logout
+            <img class="w-44 hover:-translate-y-1.5 transform transition" src="/logout.png"></img>
             </a>
           </div>
         ) : (
