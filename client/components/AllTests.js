@@ -16,12 +16,12 @@ const AllTests = () => {
     let testNumber = i;
     if (i <= maxTestTier) {
       allTiers.push(
-        <div key={i}>
+        [<div key={i}>
           <Link to={`/test/${i}`}>Test {testNumber}</Link>
-        </div>
+        </div>, true]
       );
     } else {
-      allTiers.push(<div key={i}>Test {testNumber}</div>);
+      allTiers.push([<div key={i}>Test {testNumber}</div>, false]);
     }
   }
 
