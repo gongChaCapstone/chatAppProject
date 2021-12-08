@@ -43,7 +43,7 @@ const SingleLearning = (props) => {
 
   //Like componentDidMount
   useEffect(() => {
-    dispatch(fetchPhrases(props.match.params.tier));
+    dispatch(fetchPhrases(Number(props.match.params.tier)));
   }, []);
 
   //Like componentWillUpdate
@@ -89,7 +89,7 @@ const SingleLearning = (props) => {
             setLetter(lettersOnly[letterIndex]);
           }, 3000); // timer for between gestures
         } else {
-          dispatch(unlockPhrases(props.match.params.tier));
+          dispatch(unlockPhrases(Number(props.match.params.tier)));
           dispatch(addPoints(learningPoints));
           timerBetweenCompletionId = setTimeout(() => {
             history.push({
@@ -102,7 +102,7 @@ const SingleLearning = (props) => {
     }, 100);
 
     //return id of timers to clear when component unmounts
-    return [intervalId, timerBetweenLetterId, timerBetweenCompletionId];
+    return intervalId;
   };
 
   const detect = async (net) => {
@@ -164,7 +164,7 @@ const SingleLearning = (props) => {
   let emojiPrint =
     emoji === currentLetter ? (
       <img
-        src="CheckMark.png"
+        src="/CheckMark.png"
         style={{
           position: "absolute",
           marginLeft: "auto",
@@ -213,8 +213,7 @@ const SingleLearning = (props) => {
         />
 
         <img
-          src={images[currentLetter] ? images[currentLetter][0] : null}
-          //src={`/${mixedImages[currentLetter]}`}
+          src={images[currentLetter] ? "/" + images[currentLetter][0] : null}
           style={{
             position: "relative",
             marginLeft: "auto",
@@ -228,8 +227,7 @@ const SingleLearning = (props) => {
         />
 
         <img
-          src={images[currentLetter] ? images[currentLetter][1] : null}
-          //src={`/${mixedImages[currentLetter]}`}
+          src={images[currentLetter] ? "/" + images[currentLetter][1] : null}
           style={{
             position: "relative",
             marginLeft: "auto",

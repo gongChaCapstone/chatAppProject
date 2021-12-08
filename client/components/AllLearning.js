@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchMaxTiers } from '../store/maxTiers';
 import { maxTier } from './CompletionPage';
+import {me} from '../store/auth'
 
 const alphabet = [
   'A',
@@ -51,6 +52,7 @@ const AllLearning = () => {
 
   useEffect(() => {
     dispatch(fetchMaxTiers());
+    dispatch(me());
   }, []);
 
   const allTiers = [];

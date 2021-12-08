@@ -6,8 +6,9 @@ import maxTiers from './maxTiers'
 import auth from './auth'
 import phrases from './phrases'
 import leaderboard from './leaderboard'
+import testPhrases from './testPhrases'
 
-const reducer = combineReducers({ auth, phrases, maxTiers, leaderboard })
+const reducer = combineReducers({ auth, phrases, maxTiers, leaderboard, testPhrases })
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
