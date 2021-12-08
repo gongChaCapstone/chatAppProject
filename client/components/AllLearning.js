@@ -89,21 +89,21 @@ const AllLearning = () => {
 
   return (
     <div>
-      <div>
+      <div class="flex justify-around">
         <h1 class="flex">
-          <span class="text-2xl z-10">Howdy</span> {aslName.map((image) => image)} ({currentUser.firstname})
+          <span class="text-4xl font-bold text-gray-700 z-10"><div class="p-2">Howdy</div></span> {aslName.map((image) => image)}
+          <div class="text-4xl text-gray-700 font-bold p-2">({currentUser.firstname})</div>
         </h1>
-        <h4 class="float-right m-7 -mt-8">Points: {currentUser.points}</h4>
+        <h4 class="float-right text-gray-700 text-4xl font-bold p-2">Points: {currentUser.points}</h4>
       </div>
+      <img class="absolute z-0 mt-12"src="background3.png"/>
       <div class="flex">
-      <div class="grid z-0 grid-cols-3 justify-center flex-grow flex-wrap justify-items-center my-8 p-5">
-      {allTiers.map((tier) => {
-        return <button className="inline-block px-4 py-1 rounded-lg shadow-lg bg-green-700 hover:bg-green-300 hover:-translate-y-0.5 transform transition text-white mt-3 uppercase tracking-wider font-semibold text-sm border-solid border-2 border-black w-32 h-12">{tier}</button>})
-        }
-
+        <div class="grid z-0 grid-cols-3 flex-grow flex-wrap justify-items-center my-8 p-5 space-y-40">
+          {allTiers.map((tier) => {
+            return <button className="inline-block px-4 py-1 rounded-lg shadow-lg bg-green-700 hover:bg-green-300 hover:-translate-y-0.5 transform transition text-white mt-3 uppercase tracking-wider font-semibold text-sm border-solid border-2 border-white w-32 h-12">{tier}</button>
+          })}
+        </div>
       </div>
-      </div>
-      <img class="z-0 -mt-52"src="background3.png"/>
     </div>
   );
 };

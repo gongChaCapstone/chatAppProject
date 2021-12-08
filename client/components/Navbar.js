@@ -13,20 +13,20 @@ const Navbar = () => {
 
   return (
     <div class="flex">
-      <h1><img class="w-48" src="logo.png" /></h1>
+      <h1><img class="w-48" src="/logo.png" /></h1>
       <nav>
         {isLoggedIn ? (
           <div class="flex container grid grid-flow-col mx-auto p-12 tracking-wider space-x-7 text-xl text-gray-900 transition duration-500">
             {/* The navbar will show these links after you log in */}
-            <Link to="/allLearning"><img class="w-44 hover:-translate-y-1.5 transform transition" src="books.png"></img></Link>
-            <Link to="/user"><img class="w-44 hover:-translate-y-1.5 transform transition" src="profile.png"></img></Link>
-            <Link to="/allTests"><img class="w-44 hover:-translate-y-1.5 transform transition" src="tests.png"></img></Link>
-            <Link to='/leaderboard'><img class="w-44 hover:-translate-y-1.5 transform transition" src="leaders.png"></img></Link>
-            <Link to="/quickstart"><img class="w-44 hover:-translate-y-1.5 transform transition" src="guide.png"></img></Link>
-            <Link to='/commonphrases'><img class="w-44 hover:-translate-y-1.5 transform transition" src="phrases.png"></img></Link>
-            <Link to='/studyguide'><img class="w-44 hover:-translate-y-1.5 transform transition" src="alphabet.png"></img></Link>
+            <Link to="/allLearning"><img class="w-44 hover:-translate-y-1.5 transform transition" src="/books.png"></img></Link>
+            <Link to="/user"><img class="w-44 hover:-translate-y-1.5 transform transition" src="/profile.png"></img></Link>
+            <Link to="/allTests"><img class="w-44 hover:-translate-y-1.5 transform transition" src="/tests.png"></img></Link>
+            <Link to='/leaderboard'><img class="w-44 hover:-translate-y-1.5 transform transition" src="/leaders.png"></img></Link>
+            <Link to="/quickstart"><img class="w-44 hover:-translate-y-1.5 transform transition" src="/guide.png"></img></Link>
+            <Link to='/commonphrases'><img class="w-44 hover:-translate-y-1.5 transform transition" src="/phrases.png"></img></Link>
+            <Link to='/studyguide'><img class="w-44 hover:-translate-y-1.5 transform transition" src="/alphabet.png"></img></Link>
             <a href="#" onClick={handleClick}>
-              Logout
+            <img class="w-44 hover:-translate-y-1.5 transform transition" src="/logout.png"></img>
             </a>
           </div>
         ) : (
