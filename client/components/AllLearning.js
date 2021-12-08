@@ -59,12 +59,12 @@ const AllLearning = () => {
   for (let i = 1; i <= maxTier; i++) {
     if (i <= maxLearningTier) {
       allTiers.push(
-        <div key={i}>
+        [<div key={i}>
           <Link to={`/learning/${i}`}>{alphaTiers[i]}</Link>
-        </div>
+        </div>, true]
       );
     } else {
-      allTiers.push(<div key={i}>{alphaTiers[i]}</div>);
+      [allTiers.push(<div key={i}>{alphaTiers[i]}</div>), false]
     }
   }
 
@@ -96,11 +96,12 @@ const AllLearning = () => {
         </h1>
         <h4 class="float-right text-gray-700 text-4xl font-bold p-2">Points: {currentUser.points}</h4>
       </div>
-      <img class="absolute z-0 mt-12"src="background3.png"/>
+      <img class="absolute object-cover h-5/6 w-full z-0 mt-12"src="background3.png"/>
       <div class="flex">
         <div class="grid z-0 grid-cols-3 flex-grow flex-wrap justify-items-center my-8 p-5 space-y-40">
           {allTiers.map((tier) => {
-            return <button className="inline-block px-4 py-1 rounded-lg shadow-lg bg-green-700 hover:bg-green-300 hover:-translate-y-0.5 transform transition text-white mt-3 uppercase tracking-wider font-semibold text-sm border-solid border-2 border-white w-32 h-12">{tier}</button>
+            return tier[1] === true ? <button className="inline-block px-4 py-1 rounded-lg shadow-lg bg-green-700 hover:bg-green-300 hover:-translate-y-0.5 transform transition text-white mt-3 uppercase tracking-wider font-semibold text-sm border-solid border-2 border-white w-32 h-12">{tier}</button> :
+            <button className="inline-block px-4 py-1 rounded-lg shadow-lg bg-gray-500 transform transition text-white mt-3 uppercase tracking-wider font-semibold text-sm border-solid border-2 border-white w-32 h-12">{tier}</button>
           })}
         </div>
       </div>
