@@ -88,12 +88,20 @@ const AllLearning = () => {
   return (
     <div>
       <div>
-        <h1>
-          Hello, {aslName.map((image) => image)} ({currentUser.firstname})
+        <h1 class="flex">
+          <span class="text-2xl z-10">Howdy</span> {aslName.map((image) => image)} ({currentUser.firstname})
         </h1>
-        <h4>Points: {currentUser.points}</h4>
+        <h4 class="float-right m-7 -mt-8">Points: {currentUser.points}</h4>
       </div>
-      {allTiers.map((tier) => tier)}
+      <div class="flex">
+      <div class="grid z-0 grid-cols-3 justify-center flex-grow flex-wrap justify-items-center my-8 p-5">
+      {allTiers.map((tier) => {
+        return <button className="inline-block px-4 py-1 rounded-lg shadow-lg bg-green-700 hover:bg-green-300 hover:-translate-y-0.5 transform transition text-white mt-3 uppercase tracking-wider font-semibold text-sm border-solid border-2 border-black w-32 h-12">{tier}</button>})
+        }
+
+      </div>
+      </div>
+      <img class="z-0 -mt-52"src="background3.png"/>
     </div>
   );
 };

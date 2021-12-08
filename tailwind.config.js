@@ -2,7 +2,11 @@ module.exports = {
   purge: [],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'bamboo': "url('/public/background3.png')"
+      },
+    },
   },
   variants: {
     extend: {},

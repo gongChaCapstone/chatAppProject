@@ -283,7 +283,7 @@ const SingleTest = (props) => {
           }}
         />
         <img
-          src={mixedImages[currentLetter]}
+          src={`/${mixedImages[currentLetter]}`}
           style={{
             position: "absolute",
             marginLeft: "auto",
