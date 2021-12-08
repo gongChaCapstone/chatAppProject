@@ -37,9 +37,9 @@ const UserProfile = () => {
 
   return (
     <div>
-      <h1>Hello, {firstname}</h1>
+      <h1 class="mt-6 font-bold text-lg text-left text-red-800" >Hello, {firstname} If you want to update any information about your profile, please do below. Happy learning!</h1>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className=" mt-4 font-bold text-gray-400">
           <label htmlFor="email">Email:</label>
           <input
             type="text"
@@ -79,7 +79,7 @@ const UserProfile = () => {
           />
         </div>
 
-        <button type="submit">Update</button>
+        <button class="inline-block px-4 py-1 rounded-lg shadow-lg bg-red-800 hover:bg-red-400 hover:-translate-y-0.5 transform transition text-white mt-3 uppercase tracking-wider font-semibold text-sm" type="submit">Update</button>
       </form>
     </div>
   );
