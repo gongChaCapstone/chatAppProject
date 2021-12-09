@@ -96,6 +96,7 @@ const AllLearning = () => {
             <div className="p-2">Howdy</div>
           </span>{" "}
           {aslName.map(image => image)}
+          <div className="text-4xl text-gray-700 font-bold p-2">({currentUser.firstname})</div>
         </h1>
         <h4 className="float-right text-gray-700 text-4xl font-bold p-2">
           Points: {currentUser.points}
