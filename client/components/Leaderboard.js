@@ -11,12 +11,15 @@ const Leaderboard = props => {
   }, []);
 
   return (
+    <div>
     <div className="flex">
       {/* <h1 className="absolute text-3xl left-1/2 transform -translate-x-1/2 text-red-500">Red Panda Top Scorers</h1> */}
-      <img className="absolute text-3xl left-1/2 transform -translate-x-1/2 w-96" src="/leaderboard.png" />
+      <img className="absolute text-3xl left-1/2 transform -translate-x-1/2 w-96" src="/leaderBoard_logo.png" />
       <hr/>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 text-2xl">
-      <table className="w-72">
+      </div>
+      <div className="flex grid grid-cols-2 w-full text-2xl mt-40">
+        <img class="justify-start" src="/leaderboard.png"/>
+      <table className="w-8/12 m-auto h-1/2 -mt-4 text-3xl text-black">
         <tbody>
           <tr className="font-bold">
             <td>Rank</td>
@@ -28,39 +31,40 @@ const Leaderboard = props => {
           return (
             index === 0 ?
             <tbody key={index}>
-              <tr className="border-4 bg-green-200 border-gray-500 font-semibold">
-                <td><img className="w-8" src="/first.png" /></td>
+              <tr className="border-4 bg-purple-200 border-gray-500 font-semibold">
+                <td><img className="w-16" src="/first.png" /></td>
                 <td>{leader.firstname}</td>
-                <td className="text-yellow-300">{leader.points}</td>
+                <td>{leader.points}</td>
               </tr>
             </tbody> :
             index === 1 ?
             <tbody key={index}>
-            <tr className="border-4 bg-green-400 border-gray-500 font-semibold">
-              <td><img className="w-8" src="/second.png" /></td>
+            <tr className="border-4 bg-purple-400 border-gray-500 font-semibold">
+              <td><img className="w-16" src="/second.png" /></td>
               <td>{leader.firstname}</td>
-              <td className="text-yellow-300">{leader.points}</td>
+              <td>{leader.points}</td>
             </tr>
           </tbody> :
           index === 2 ?
           <tbody key={index}>
-          <tr className="border-4 bg-green-600 border-gray-500 font-semibold">
-            <td><img className="w-8" src="/third.png" /></td>
+          <tr className="border-4 bg-purple-600 border-gray-500 font-semibold">
+            <td><img className="w-16" src="/third.png" /></td>
             <td>{leader.firstname}</td>
-            <td className="text-yellow-300">{leader.points}</td>
+            <td>{leader.points}</td>
           </tr>
         </tbody> :
         <tbody key={index}>
-        <tr className="border-4 bg-green-700 border-gray-500 font-semibold">
+        <tr className="border-4 bg-purple-700 border-gray-500 font-semibold">
           <td className="pl-2">{index + 1}. </td>
           <td>{leader.firstname}</td>
-          <td className="text-yellow-300">{leader.points}</td>
+          <td>{leader.points}</td>
         </tr>
       </tbody>
           );
         })}
       </table>
       </div>
+
     </div>
   );
 };
