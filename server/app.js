@@ -9,7 +9,7 @@ const app = express();
 module.exports = app;
 
 
-//remove this if heroku no longer has ssl cert <------------
+//comment this out if heroku no longer has ssl cert <------------
 if (process.env.DATABASE_URL) {
   app.use(enforce.HTTPS({ trustProtoHeader: true }));
 }
