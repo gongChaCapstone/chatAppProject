@@ -1,8 +1,8 @@
-import * as fp from 'fingerpose';
+import * as fp from "fingerpose";
 
-const letterN = new fp.GestureDescription('N');
+const letterN = new fp.GestureDescription("N");
 
-letterN.addCurl(fp.Finger.Thumb, fp.FingerCurl.FullCurl, .9);
+letterN.addCurl(fp.Finger.Thumb, fp.FingerCurl.FullCurl, 0.9);
 letterN.addCurl(fp.Finger.Thumb, fp.FingerCurl.HalfCurl, 1);
 letterN.addDirection(fp.Finger.Thumb, fp.FingerDirection.DiagonalUpRight, 1.0);
 letterN.addDirection(fp.Finger.Thumb, fp.FingerDirection.DiagonalUpLeft, 1.0);

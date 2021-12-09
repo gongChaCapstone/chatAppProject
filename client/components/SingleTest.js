@@ -33,9 +33,6 @@ const SingleTest = props => {
   let allLetters = useSelector(state => state.testPhrases);
   let lettersOnly = allLetters.map(letter => letter.letterwords);
 
-  // console.log(mixedImages)
-  // console.log(lettersOnly)
-
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
     .filter(entry => {
@@ -212,6 +209,7 @@ const SingleTest = props => {
             Math.max.apply(null, confidence)
           );
 
+          // prints current hand gesture
           // console.log(gesture);
 
           const maxGesture = gesture.gestures[maxConfidence];
@@ -220,7 +218,16 @@ const SingleTest = props => {
               maxGesture.score >= gestureAccuracyOne) ||
             maxGesture.score >= gestureAccuracyMany
           ) {
-            if ((maxGesture.name === "N" || maxGesture.name === "M" || maxGesture.name === "T" || maxGesture.name === "S") && (currentLetter === "M" || currentLetter === "N" || currentLetter === "S" || currentLetter === "T")) {
+            if (
+              (maxGesture.name === "N" ||
+                maxGesture.name === "M" ||
+                maxGesture.name === "T" ||
+                maxGesture.name === "S") &&
+              (currentLetter === "M" ||
+                currentLetter === "N" ||
+                currentLetter === "S" ||
+                currentLetter === "T")
+            ) {
               setEmoji(currentLetter);
               return currentLetter;
             } else if (
@@ -280,19 +287,24 @@ const SingleTest = props => {
   let textBoxx =
     ifTextBox || textCheck ? (
       <div>
-        <img className="ml-60"src="/guessLetter.png"></img>
-        <form className="text-xl font-semibold" style={{
-          position: "relative",
-          marginLeft: "auto",
-          marginRight: "auto",
-          left: -230,
-          bottom: -140,
-          right: -50,
-          textAlign: "center",
-          height: 100,
-        }} onSubmit={handleSubmit}>
+        <img className="ml-60" src="/guessLetter.png"></img>
+        <form
+          className="text-xl font-semibold"
+          style={{
+            position: "relative",
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: -230,
+            bottom: -140,
+            right: -50,
+            textAlign: "center",
+            height: 100,
+          }}
+          onSubmit={handleSubmit}
+        >
           <label htmlFor="userGuess"></label>
-          <input className="w-1/12 border-4 border-yellow-300 border-opacity-75 border-solid"
+          <input
+            className="w-1/12 border-4 border-yellow-300 border-opacity-75 border-solid"
             type="text"
             onChange={handleUpdate}
             name="userGuess"

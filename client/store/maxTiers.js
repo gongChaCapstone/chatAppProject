@@ -1,34 +1,33 @@
-import axios from 'axios';
-import { authenticateRequest } from './gateKeepingMiddleware'
-
+import axios from "axios";
+import { authenticateRequest } from "./gateKeepingMiddleware";
 
 //action types
-const GET_MAX_TIERS = 'GET_MAX_TIERS';
+const GET_MAX_TIERS = "GET_MAX_TIERS";
 
 //action creators
-const setMaxTiers = (tiers) => {
+const setMaxTiers = tiers => {
   return {
     type: GET_MAX_TIERS,
-    tiers
-  }
-}
+    tiers,
+  };
+};
 
 //thunk creators
-export const fetchMaxTiers = () => async (dispatch) => {
+export const fetchMaxTiers = () => async dispatch => {
   try {
-    const maxTiers = await authenticateRequest('get', '/api/users/maxTier')
-    dispatch(setMaxTiers(maxTiers))
+    const maxTiers = await authenticateRequest("get", "/api/users/maxTier");
+    dispatch(setMaxTiers(maxTiers));
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 //reducer
-export default function(state = {}, action) {
+export default function (state = {}, action) {
   switch (action.type) {
     case GET_MAX_TIERS:
-      return action.tiers
+      return action.tiers;
     default:
-      return state
+      return state;
   }
 }

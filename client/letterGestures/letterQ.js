@@ -1,6 +1,6 @@
-import * as fp from 'fingerpose';
+import * as fp from "fingerpose";
 
-const letterQ = new fp.GestureDescription('Q');
+const letterQ = new fp.GestureDescription("Q");
 
 letterQ.addCurl(fp.Finger.Thumb, fp.FingerCurl.NoCurl, 1.0);
 letterQ.addDirection(fp.Finger.Thumb, fp.FingerDirection.HorizontalLeft, 1.0);
@@ -20,8 +20,8 @@ letterQ.addDirection(
   fp.FingerDirection.DiagonalDownRight,
   1.0
 );
-letterQ.addDirection(fp.Finger.Index, fp.FingerDirection.HorizontalLeft, .9);
-letterQ.addDirection(fp.Finger.Index, fp.FingerDirection.HorizontalRight, .9);
+letterQ.addDirection(fp.Finger.Index, fp.FingerDirection.HorizontalLeft, 0.9);
+letterQ.addDirection(fp.Finger.Index, fp.FingerDirection.HorizontalRight, 0.9);
 
 for (let finger of [fp.Finger.Ring, fp.Finger.Pinky, fp.Finger.Middle]) {
   letterQ.addCurl(finger, fp.FingerCurl.HalfCurl, 1);

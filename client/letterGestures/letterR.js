@@ -1,14 +1,12 @@
-import * as fp from 'fingerpose';
+import * as fp from "fingerpose";
 
-const letterR = new fp.GestureDescription('R');
+const letterR = new fp.GestureDescription("R");
 
 letterR.addCurl(fp.Finger.Thumb, fp.FingerCurl.NoCurl, 1.0);
 letterR.addDirection(fp.Finger.Thumb, fp.FingerDirection.VerticalUp, 1.0);
 
-
 letterR.addCurl(fp.Finger.Index, fp.FingerCurl.NoCurl, 1.0);
 letterR.addDirection(fp.Finger.Index, fp.FingerDirection.VerticalUp, 1.0);
-
 
 letterR.addCurl(fp.Finger.Middle, fp.FingerCurl.NoCurl, 1.0);
 letterR.addCurl(fp.Finger.Middle, fp.FingerCurl.HalfCurl, 0.9);

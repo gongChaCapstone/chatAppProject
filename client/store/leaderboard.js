@@ -1,34 +1,34 @@
-import axios from 'axios';
-import { authenticateRequest } from './gateKeepingMiddleware'
+import axios from "axios";
+import { authenticateRequest } from "./gateKeepingMiddleware";
 
 //ACTION TYPES
-const SET_LEADERS = 'SET_LEADERS'
+const SET_LEADERS = "SET_LEADERS";
 
 //ACTION CREATORS
-const setLeaders = (leaders) => {
+const setLeaders = leaders => {
   return {
     type: SET_LEADERS,
-    leaders
-  }
-}
+    leaders,
+  };
+};
 
 //zTHUNK CREATOR
-export const fetchLeaders = () => async (dispatch) => {
+export const fetchLeaders = () => async dispatch => {
   try {
-    const leaders = await authenticateRequest('get', '/api/users')
+    const leaders = await authenticateRequest("get", "/api/users");
 
-    dispatch(setLeaders(leaders))
+    dispatch(setLeaders(leaders));
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 //REDUCER
-export default function(state = [], action) {
+export default function (state = [], action) {
   switch (action.type) {
     case SET_LEADERS:
-      return action.leaders
+      return action.leaders;
     default:
-      return state
+      return state;
   }
 }

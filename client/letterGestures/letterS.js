@@ -1,11 +1,9 @@
-import * as fp from 'fingerpose';
+import * as fp from "fingerpose";
 
-
-const letterS = new fp.GestureDescription('S');
+const letterS = new fp.GestureDescription("S");
 
 letterS.addCurl(fp.Finger.Thumb, fp.FingerCurl.HalfCurl, 1);
 letterS.addDirection(fp.Finger.Thumb, fp.FingerDirection.VerticalUp, 1.0);
-
 
 for (let finger of [
   fp.Finger.Ring,

@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize');
-const db = require('../db');
+const Sequelize = require("sequelize");
+const db = require("../db");
 
-const PhraseUser = db.define('phraseUser', {
+const PhraseUser = db.define("phraseUser", {
   isComplete: {
     type: Sequelize.BOOLEAN,
     defaultValue: false,

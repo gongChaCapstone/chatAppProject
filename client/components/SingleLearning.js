@@ -101,7 +101,7 @@ const SingleLearning = props => {
       }
     }, 100);
 
-    //return id of timers to clear when component unmounts
+    //return id of timer to clear when component unmounts
     return intervalId;
   };
 
@@ -144,6 +144,7 @@ const SingleLearning = props => {
             Math.max.apply(null, confidence)
           );
 
+          // prints current hand gesture
           // console.log(gesture);
 
           const maxGesture = gesture.gestures[maxConfidence];
@@ -214,7 +215,6 @@ const SingleLearning = props => {
         />
         <canvas
           ref={canvasRef}
-
           style={{
             position: "absolute",
             marginLeft: "auto",
