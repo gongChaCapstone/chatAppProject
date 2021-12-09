@@ -1,6 +1,6 @@
-import * as fp from 'fingerpose';
+import * as fp from "fingerpose";
 
-const letterT = new fp.GestureDescription('T');
+const letterT = new fp.GestureDescription("T");
 
 letterT.addCurl(fp.Finger.Thumb, fp.FingerCurl.HalfCurl, 1.0);
 letterT.addCurl(fp.Finger.Thumb, fp.FingerCurl.NoCurl, 0.9);
@@ -21,6 +21,5 @@ for (let finger of [fp.Finger.Middle, fp.Finger.Ring, fp.Finger.Pinky]) {
   letterT.addDirection(finger, fp.FingerDirection.DiagonalUpRight, 0.9);
   letterT.addDirection(finger, fp.FingerDirection.DiagonalUpLeft, 0.9);
 }
-
 
 export default letterT;

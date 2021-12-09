@@ -1,6 +1,6 @@
-import * as fp from 'fingerpose';
+import * as fp from "fingerpose";
 
-const letterI = new fp.GestureDescription('I');
+const letterI = new fp.GestureDescription("I");
 
 letterI.addCurl(fp.Finger.Thumb, fp.FingerCurl.HalfCurl, 1.0);
 letterI.addDirection(fp.Finger.Thumb, fp.FingerDirection.DiagonalUpRight, 1.0);

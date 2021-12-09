@@ -1,8 +1,8 @@
-import * as fp from 'fingerpose';
+import * as fp from "fingerpose";
 
-const letterU = new fp.GestureDescription('U');
+const letterU = new fp.GestureDescription("U");
 
-letterU.addCurl(fp.Finger.Thumb, fp.FingerCurl.HalfCurl, .9);
+letterU.addCurl(fp.Finger.Thumb, fp.FingerCurl.HalfCurl, 0.9);
 letterU.addCurl(fp.Finger.Thumb, fp.FingerCurl.NoCurl, 1.0);
 letterU.addDirection(fp.Finger.Thumb, fp.FingerDirection.DiagonalUpRight, 1.0);
 letterU.addDirection(fp.Finger.Thumb, fp.FingerDirection.DiagonalUpLeft, 1.0);

@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize');
-const db = require('../db');
+const Sequelize = require("sequelize");
+const db = require("../db");
 
-const Phrase = db.define('phrase', {
+const Phrase = db.define("phrase", {
   tiers: {
     type: Sequelize.INTEGER,
     defaultValue: 1,
