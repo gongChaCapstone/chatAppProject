@@ -280,8 +280,8 @@ const SingleTest = props => {
   let textBoxx =
     ifTextBox || textCheck ? (
       <div>
-        <img class="ml-60"src="/guessLetter.png"></img>
-        <form class="text-xl font-semibold" style={{
+        <img className="ml-60"src="/guessLetter.png"></img>
+        <form className="text-xl font-semibold" style={{
           position: "relative",
           marginLeft: "auto",
           marginRight: "auto",
@@ -292,7 +292,7 @@ const SingleTest = props => {
           height: 100,
         }} onSubmit={handleSubmit}>
           <label htmlFor="userGuess"></label>
-          <input class="w-1/12 border-4 border-yellow-300 border-opacity-75 border-solid"
+          <input className="w-1/12 border-4 border-yellow-300 border-opacity-75 border-solid"
             type="text"
             onChange={handleUpdate}
             name="userGuess"
@@ -310,7 +310,7 @@ const SingleTest = props => {
       <header className="App-header">
         <Webcam
           ref={webcamRef}
-          class=" bg-yellow-300 border-4 border-gray-600"
+          className=" bg-yellow-300 border-4 border-gray-600"
           style={{
             position: "absolute",
             marginLeft: "auto",

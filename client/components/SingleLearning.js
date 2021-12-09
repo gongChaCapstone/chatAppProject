@@ -199,7 +199,7 @@ const SingleLearning = props => {
       <header className="App-header">
         <Webcam
           ref={webcamRef}
-          class=" bg-yellow-300 border-4 border-gray-600"
+          className=" bg-yellow-300 border-4 border-gray-600"
           style={{
             position: "absolute",
             marginLeft: "auto",

@@ -18,7 +18,7 @@ const Leaderboard = props => {
       <hr/>
       </div>
       <div className="flex grid grid-cols-2 w-full text-2xl mt-40">
-        <img class="justify-start" src="/leaderboard.png"/>
+        <img className="justify-start" src="/leaderboard.png"/>
       <table className="w-8/12 m-auto h-1/2 -mt-4 text-3xl text-black">
         <tbody>
           <tr className="font-bold">
