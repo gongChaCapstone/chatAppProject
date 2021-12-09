@@ -2,9 +2,9 @@ import React from "react";
 
 const StudyGuide = () => {
   return (
-    <div class="flex">
+    <div class="flex justify-center">
 
-      <img class="fixed w-6/12 h-6/12 left-300"src="/alphabetLetters.png" />
+      <img class="absolute w-5/12 h-5/12 left-300"src="/alphabetLetters.png" />
     </div>
   );
 };

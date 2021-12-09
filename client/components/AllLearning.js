@@ -96,7 +96,7 @@ const AllLearning = () => {
         </h1>
         <h4 class="float-right text-gray-700 text-4xl font-bold p-2">Points: {currentUser.points}</h4>
       </div>
-      <img class="absolute object-cover h-3/5 w-full z-0 mt-12"src="background3.png"/>
+      <img class="absolute object-cover h-full w-full z-0 mt-12"src="background3.png"/>
       <div class="flex">
         <div class="grid z-0 grid-cols-2 flex-grow flex-wrap justify-items-center my-8 p-5 mt-16">
           {allTiers.map((tier) => {

@@ -7,12 +7,14 @@ const AllTests = () => {
   const dispatch = useDispatch();
   const maxTestTier = useSelector((state) => state.maxTiers.highestTestTier);
 
+  const highestTestingTier= 3;
+
   useEffect(() => {
     dispatch(fetchMaxTiers());
   }, []);
 
   const allTiers = [];
-  for (let i = 1; i <= maxTestTier; i++) {
+  for (let i = 1; i <= highestTestingTier; i++) {
     let testNumber = i;
     if (i <= maxTestTier) {
       allTiers.push(
@@ -27,7 +29,7 @@ const AllTests = () => {
 
   return (
     <div>
-      <img class="absolute object-cover h-3/5 w-full z-0 mt-12"src="background3.png"/>
+      <img class="absolute object-cover h-full w-full z-0 mt-12"src="background3.png"/>
       <div class="flex">
         <div class="grid z-0 grid-cols-2 flex-grow flex-wrap justify-items-center my-8 p-5 mt-16">
           {allTiers.map((tier) => {

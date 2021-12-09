@@ -12,7 +12,7 @@ const Navbar = () => {
   };
 
   return (
-    <div class="flex bg-yellow-50">
+    <div class="flex bg-yellow-50 justify-center">
       <nav>
         {isLoggedIn ? (
           <div class="flex container grid grid-flow-col mx-auto p-12 tracking-wider space-x-7 text-xl text-gray-900 transition duration-500">
