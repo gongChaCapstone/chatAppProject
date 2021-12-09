@@ -96,12 +96,12 @@ const AllLearning = () => {
         </h1>
         <h4 class="float-right text-gray-700 text-4xl font-bold p-2">Points: {currentUser.points}</h4>
       </div>
-      <img class="absolute object-cover h-4/6 w-full z-0 mt-12"src="background3.png"/>
+      <img class="absolute object-cover h-3/5 w-full z-0 mt-12"src="background3.png"/>
       <div class="flex">
         <div class="grid z-0 grid-cols-2 flex-grow flex-wrap justify-items-center my-8 p-5 mt-16">
           {allTiers.map((tier) => {
-            return tier[1] === true ? <button className="inline-block  rounded-lg shadow-lg bg-green-700 hover:bg-green-300 hover:-translate-y-0.5 transform transition text-white uppercase tracking-wider font-semibold text-2xl border-solid border-2 border-white w-96 h-20 mx-48 mt-16">{tier}</button> :
-            <button className="inline-block px-4 py-1 rounded-lg shadow-lg bg-gray-500 transform transition text-white mt-3 uppercase tracking-wider font-semibold text-2xl border-solid border-2 border-white w-96 h-20 mx-48 mt-16">{tier}</button>
+            return tier[1] === true ? <button className="inline-block  rounded-lg shadow-lg bg-green-700 hover:bg-green-300 hover:-translate-y-0.5 transform transition text-white uppercase tracking-widest font-medium text-3xl border-solid border-2 border-white w-96 h-20 mx-48 mt-16">{tier}</button> :
+            <button className="inline-block px-4 py-1 rounded-lg shadow-lg bg-gray-500 line-through text-opacity-40 transform transition text-white mt-3 uppercase tracking-widest font-medium text-3xl border-solid border-2 border-white w-96 h-20 mx-48 mt-16">{tier}</button>
           })}
         </div>
       </div>

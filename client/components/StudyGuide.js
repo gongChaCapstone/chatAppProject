@@ -4,7 +4,7 @@ const StudyGuide = () => {
   return (
     <div class="flex">
 
-      <img class="absolute w-6/12 h-6/12 left-10"src="/alphabetLetters.png" />
+      <img class="fixed w-6/12 h-6/12 left-300"src="/alphabetLetters.png" />
     </div>
   );
 };
