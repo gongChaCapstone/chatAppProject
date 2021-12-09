@@ -60,13 +60,13 @@ const UserProfile = () => {
 
   return (
     <div>
-      <h1 class="mt-6 ml-2 font-bold text-lg text-left text-red-800" >Hello, {firstname} If you want to update any information about your profile, please do below. Happy learning!</h1>
+      <h1 class="mt-6 ml-2 font-bold text-xl text-left text-red-600 flex justify-center font-mono" >Hello, {firstname} If you want to update any information about your profile, please do below. Happy learning!</h1>
       <img className="w-1/3 absolute left-3/4 top-1/2 transform translate-x-20" src="/logoPanda3.png" />
-      <div className="absolute left-1/2 top-2/3 mt-12 transform -translate-x-1/2 -translate-y-1/2 font-bold text-gray-800 p-2">
+      <div className=" mt-16 grid grid-cols-1 justify-items-center font-bold text-gray-800 m-auto ">
         <form className="" onSubmit={handleSubmit}>
-            <label htmlFor="email" className="mr-3 ml-2">Email:</label>
+            <label htmlFor="email" className="mr-12 ml-2">Email:</label>
             <input
-              className="border-2 border-green-500"
+              className="border-2 border-purple-500 "
               type="text"
               name="email"
               value={email}
@@ -74,9 +74,9 @@ const UserProfile = () => {
             />
 
           <div className=" mt-4 font-bold text-gray-800 p-2">
-            <label htmlFor="password" className="mr-3">Password:</label>
+            <label htmlFor="password" className="mr-4">Password:</label>
             <input
-              className="border-2 border-green-500"
+              className="border-2 border-purple-500"
               type="password"
               name="password"
               value={password}
@@ -85,9 +85,9 @@ const UserProfile = () => {
           </div>
 
           <div className=" mt-4 font-bold text-gray-800 p-">
-            <label htmlFor="firstname" className="mr-3 ml-2">First Name:</label>
+            <label htmlFor="firstname" className="mr-2 ml-2">First Name:</label>
             <input
-              className="border-2 border-green-500"
+              className="border-2 border-purple-500"
               type="text"
               name="firstname"
               value={firstname}
@@ -98,15 +98,16 @@ const UserProfile = () => {
           <div className=" mt-4 font-bold text-gray-800 p-2">
             <label htmlFor="lastname" className="mr-3">Last Name:</label>
             <input
-              className="border-2 border-green-500"
+              className="border-2 border-purple-500"
               type="text"
               name="lastname"
               value={lastname}
               onChange={handleChange}
             />
           </div>
-
-          <button className="mt-5 rounded-lg shadow-lg bg-yellow-500 hover:bg-yellow-600 transition text-white uppercase tracking-widest font-medium text-xl border-solid border-2 border-white w-28 h-8 text-center absolute" type="submit">Update</button>
+          <div class="flex grid grid-cols-1 justify-items-center">
+          <button className=" inline-block px-4 py-1 rounded-lg shadow-lg bg-purple-500 hover:bg-purple-300 hover:-translate-y-0.5 transform transition text-white mt-3 uppercase tracking-wider font-semibold text-md border-solid border-2 border-black w-44 h-10" type="submit">Update</button>
+          </div>
         </form>
       </div>
     </div>

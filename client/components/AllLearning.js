@@ -92,7 +92,7 @@ const AllLearning = () => {
       <div class="flex justify-around">
         <h1 class="flex">
           <span class="text-4xl font-bold text-gray-700 z-10"><div class="p-2">Howdy</div></span> {aslName.map((image) => image)}
-          <div class="text-4xl text-gray-700 font-bold p-2">({currentUser.firstname})</div>
+          {/* <div class="text-4xl text-gray-700 font-bold p-2">({currentUser.firstname})</div> */}
         </h1>
         <h4 class="float-right text-gray-700 text-4xl font-bold p-2">Points: {currentUser.points}</h4>
       </div>

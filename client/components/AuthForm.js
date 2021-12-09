@@ -6,13 +6,15 @@ import { Link } from 'react-router-dom';
 
 export const Main = () => {
   return (
-    <div>
-      <img className="w-1/2 absolute left-1/2 transform -translate-x-1/2 -translate-y-16" src="/welcome.gif" />
-      <img className="w-1/3 absolute left-20 top-1/2 transform" src="/logoPanda.png" />
-      <div>
-            {/* The navbar will show these links before you log in */}
-            <Link to="/login"><div className="rounded-lg shadow-lg bg-yellow-500 hover:bg-yellow-600 transition text-white uppercase tracking-widest font-medium text-xl border-solid border-2 border-white w-28 h-8 text-center absolute left-1/2 transform -translate-x-1/2 translate-y-64">Login</div></Link>
-            <Link to="/signup"><div className="rounded-lg shadow-lg bg-yellow-500 hover:bg-yellow-600 transition text-white uppercase tracking-widest font-medium text-xl border-solid border-2 border-white w-28 h-8 text-center absolute left-1/2 transform -translate-x-1/2 translate-y-80">Sign Up</div></Link>
+    <div class="flex align-center">
+      <img className="w-3/4 absolute left-1/2 transform -translate-x-1/2 mt-10" src="/welcome.png" />
+      <img className="w-1/2 absolute left-10 top-1/2 transform" src="/logoPanda.png" />
+      <div class="flex grid grid-cols-1 justify-items-center m-auto mt-14">
+
+      <Link to="/login"><div className="rounded-lg shadow-lg bg-purple-500 hover:bg-purple-300 transition text-white uppercase tracking-widest font-medium text-xl border-solid border-2 border-white w-28 h-8 text-center absolute left-1/2 transform -translate-x-1/2 translate-y-64">Login</div></Link>
+            <Link to="/signup"><div className="rounded-lg shadow-lg bg-purple-500 hover:bg-purple-300 transition text-white uppercase tracking-widest font-medium text-xl border-solid border-2 border-white w-28 h-8 text-center absolute left-1/2 transform -translate-x-1/2 translate-y-80">Sign Up</div></Link>
+
+
       </div>
     </div>
   );
@@ -30,21 +32,21 @@ export const Login = () => {
   };
 
   return (
-    <div>
-      <img className="w-1/2 absolute left-1/2 transform -translate-x-1/2 -translate-y-16" src="/welcome.gif" />
-      <img className="w-1/3 absolute left-2/3 top-1/2 transform" src="/logoPanda2.png" />
-      <div className="absolute left-1/2 top-1/3 transform -translate-x-1/2 -translate-y-1/2 mt-4 font-bold text-gray-800 p-2">
+    <div class="flex align-center">
+      <img className="w-3/4 absolute left-1/2 transform -translate-x-1/2" src="/welcome.png" />
+      <img className="w-1/3 absolute left-10 top-1/2 transform" src="/logoPanda2.png" />
+      <div className="absolute left-1/2 top-1/3 transform -translate-x-1/2 -translate-y-1/2 mt-4 font-bold text-gray-800 p-2 m-4">
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email" className="mr-3">Email:</label>
-            <input className="border-2 border-green-500 mb-5" name="email" type="text" />
+            <input className="border-2 border-purple-500 mb-5" name="email" type="text" />
           </div>
           <div>
             <label htmlFor="password" className="mr-3">Password:</label>
-            <input className="border-2 border-green-500 mb-8" name="password" type="password" />
+            <input className="border-2 border-purple-500 mb-8" name="password" type="password" />
           </div>
           <div>
-            <button className="rounded-lg shadow-lg bg-yellow-500 hover:bg-yellow-600 transition text-white uppercase tracking-widest font-medium text-xl border-solid border-2 border-white w-28 h-8 text-center absolute" type="submit">Login</button>
+            <button className="rounded-lg shadow-lg bg-purple-500 hover:bg-purple-300 transition text-white uppercase tracking-widest font-medium text-xl border-solid border-2 border-white w-28 h-8 text-center absolute" type="submit">Login</button>
           </div>
           {error && error.response && <div> {error.response.data} </div>}
         </form>
@@ -70,29 +72,29 @@ export const Signup = () => {
 
 
   return (
-    <div>
-      <img className="w-1/2 absolute left-1/2 transform -translate-x-1/2 -translate-y-16" src="/welcome.gif" />
-      <img className="w-1/3 absolute left-20 top-1/2 transform" src="/logoPanda.png" />
+    <div class="flex align-center">
+      <img className="w-3/4 absolute left-1/2 transform -translate-x-1/2 mt-8" src="/welcome.png" />
+      <img className="w-1/3 absolute left-10 top-1/2 transform" src="/logoPanda.png" />
       <div className="absolute left-1/2 top-1/3 transform -translate-x-1/2 -translate-y-8 mt-4 font-bold text-gray-800 p-2">
         <form onSubmit={handleSubmit}>
           <div>
-            <label className="mr-3" htmlFor="email">Email</label>
-            <input className="border-2 border-green-500 mb-5" name="email" type="text" />
+            <label className="mr-12" htmlFor="email">Email:</label>
+            <input className="border-2 border-purple-500 mb-5" name="email" type="text" />
           </div>
           <div>
-            <label className="mr-3" htmlFor="password">Password</label>
-            <input className="border-2 border-green-500 mb-5" name="password" type="password" />
+            <label className="mr-4" htmlFor="password">Password:</label>
+            <input className="border-2 border-purple-500 mb-5" name="password" type="password" />
           </div>
           <div>
-            <label className="mr-3" htmlFor="firstname">First Name</label>
-            <input className="border-2 border-green-500 mb-5" name="firstname" type="text" />
+            <label className="mr-2" htmlFor="firstname">First Name:</label>
+            <input className="border-2 border-purple-500 mb-5" name="firstname" type="text" />
           </div>
           <div>
-            <label className="mr-3" htmlFor="lastname">Last Name</label>
-            <input className="border-2 border-green-500 mb-5" name="lastname" type="text" />
+            <label className="mr-3" htmlFor="lastname">Last Name:</label>
+            <input className="border-2 border-purple-500 mb-5" name="lastname" type="text" />
           </div>
-          <div>
-            <button className="rounded-lg shadow-lg bg-yellow-500 hover:bg-yellow-600 transition text-white uppercase tracking-widest font-medium text-xl border-solid border-2 border-white w-28 h-8 text-center absolute" type="submit">Sign Up</button>
+          <div class="flex grid grid-cols-1 justify-items-center">
+            <button className="inline-block px-4 py-1 rounded-lg shadow-lg bg-purple-500 hover:bg-purple-300 hover:-translate-y-0.5 transform transition text-white mt-3 uppercase tracking-wider font-semibold text-md border-solid border-2 border-black w-44 h-10" type="submit">Sign Up</button>
           </div>
           {error && error.response && <div> {error.response.data} </div>}
         </form>
