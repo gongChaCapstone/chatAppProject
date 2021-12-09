@@ -33,6 +33,9 @@ const SingleTest = props => {
   let allLetters = useSelector(state => state.testPhrases);
   let lettersOnly = allLetters.map(letter => letter.letterwords);
 
+  // console.log(mixedImages)
+  // console.log(lettersOnly)
+
   //Object is now 2d array: [[key1,value1], [key2,value2]]
   const currentGestures = Object.entries(allGestures)
     .filter(entry => {
@@ -217,7 +220,13 @@ const SingleTest = props => {
               maxGesture.score >= gestureAccuracyOne) ||
             maxGesture.score >= gestureAccuracyMany
           ) {
-            if (maxGesture.name === "N" || maxGesture.name === "M") {
+            if ((maxGesture.name === "N" || maxGesture.name === "M" || maxGesture.name === "T" || maxGesture.name === "S") && (currentLetter === "M" || currentLetter === "N" || currentLetter === "S" || currentLetter === "T")) {
+              setEmoji(currentLetter);
+              return currentLetter;
+            } else if (
+              (maxGesture.name === "R" || maxGesture.name === "U") &&
+              (currentLetter === "R" || currentLetter === "U")
+            ) {
               setEmoji(currentLetter);
               return currentLetter;
             } else {

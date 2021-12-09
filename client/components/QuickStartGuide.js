@@ -10,7 +10,10 @@ const QuickStartGuide = () => {
         <ul class="text-xl">
           <li>• Be sure to allow camera access</li>
           <li>
-            • Keep your hand in the middle of the screen while making the gestures
+            • Keep your hand in the middle of the screen and <span class="font-bold text-red-300">parallel</span> to the camera while making the gestures
+          </li>
+          <li>
+            • Make sure your hand isn't too far away from the camera
           </li>
           <li>
             • If it does not capture right away, do not worry! Adjust your hand to

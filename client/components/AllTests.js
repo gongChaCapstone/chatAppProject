@@ -27,6 +27,7 @@ const AllTests = () => {
     }
   }
 
+
   return (
     <div>
       <img class="absolute object-cover h-full w-full z-0 mt-12"src="background3.png"/>
@@ -40,6 +41,7 @@ const AllTests = () => {
       </div>
     </div>
   );
+
 };
 
 export default AllTests;
