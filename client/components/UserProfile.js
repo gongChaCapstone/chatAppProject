@@ -106,7 +106,7 @@ const UserProfile = () => {
             />
           </div>
 
-          <button className="ml-24 mt-5 rounded-lg shadow-lg bg-yellow-500 hover:bg-yellow-600 transition text-white uppercase tracking-widest font-medium text-xl border-solid border-2 border-white w-28 h-8 text-center absolute" type="submit">Update</button>
+          <button className="mt-5 rounded-lg shadow-lg bg-yellow-500 hover:bg-yellow-600 transition text-white uppercase tracking-widest font-medium text-xl border-solid border-2 border-white w-28 h-8 text-center absolute" type="submit">Update</button>
         </form>
       </div>
     </div>
