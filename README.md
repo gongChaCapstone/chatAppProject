@@ -1,4 +1,4 @@
-# Red Panda ASL
+# Red Panda
 Who said learning couldn't be fun! Red Panda is an interactive app to learn basic sign language. Mimic the hand gestures on the screen to learn ASL (American Sign Language), the more you learn the more tests you can unlock. Earn points as you go and fight for a spot on the leaderboard!
 
 # Tech Stack
