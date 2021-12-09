@@ -7,6 +7,9 @@ module.exports = {
         'bamboo': "url('/public/background3.png')"
       },
     },
+    minWidth: {
+      '1/4': '25%'
+    }
   },
   variants: {
     extend: {},

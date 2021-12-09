@@ -15,7 +15,7 @@ const Navbar = () => {
     <div class="flex bg-yellow-50 justify-center">
       <nav>
         {isLoggedIn ? (
-          <div class="flex container grid grid-flow-col mx-auto p-12 tracking-wider space-x-7 text-xl text-gray-900 transition duration-500">
+          <div class="flex container grid grid-flow-col mx-auto p-12 tracking-wider space-x-7 text-xl text-gray-900 transition duration-500  ">
             {/* The navbar will show these links after you log in */}
             <div class="flex container grid grid-flow-col mx-auto p-12 tracking-wider space-x-7 text-xl text-gray-900 transition duration-500 border-b-2 border-gray-600">
             <Link to="/allLearning"><img class="w-44 hover:-translate-y-1.5 transform transition" src="/books.png"></img></Link>

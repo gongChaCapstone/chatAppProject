@@ -271,7 +271,7 @@ const SingleTest = props => {
   let textBoxx =
     ifTextBox || textCheck ? (
       <div>
-        <img src="/guessLetter.png"></img>
+        <img class="ml-60"src="/guessLetter.png"></img>
         <form class="text-xl font-semibold" style={{
           position: "relative",
           marginLeft: "auto",
@@ -283,7 +283,7 @@ const SingleTest = props => {
           height: 100,
         }} onSubmit={handleSubmit}>
           <label htmlFor="userGuess"></label>
-          <input class="w-1/12 border-4 border-yellow-500 border-opacity-75 border-solid"
+          <input class="w-1/12 border-4 border-yellow-300 border-opacity-75 border-solid"
             type="text"
             onChange={handleUpdate}
             name="userGuess"
