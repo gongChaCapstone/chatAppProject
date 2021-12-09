@@ -26,6 +26,7 @@
     "bcrypt": "^5.0.0",
     "compression": "^1.7.3",
     "express": "^4.17.1",
+    "express-sslify": "^1.2.0",
     "fingerpose": "^0.1.0",
     "history": "^4.9.0",
     "jsonwebtoken": "^8.5.1",

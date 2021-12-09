@@ -2,8 +2,18 @@ const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 
+var http = require('http');
+var enforce = require('express-sslify');
+
 const app = express();
 module.exports = app;
+
+
+//comment this out if heroku no longer has ssl cert <------------
+if (process.env.DATABASE_URL) {
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
+}
+
 
 // logging middleware
 app.use(morgan("dev"));
