@@ -16,7 +16,7 @@ router.get("/", requireToken, async (req, res, next) => {
       order: [
         ['points', 'DESC']
       ],
-      limit: 5
+      limit: 3
     });
     res.json(users);
   } catch (err) {

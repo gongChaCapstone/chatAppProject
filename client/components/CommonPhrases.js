@@ -2,9 +2,13 @@ import React from "react";
 
 const CommonPhrases = () => {
   return (
-    <div>
-      <h1>Common ASL Phrases</h1>
-      <img src="commonPhrases.png" />
+    <div class="flex  grid grid-cols-3 justify-items-center">
+      <img src="/commonGestures1.gif"/>
+      <img  src="/commonGestures2.gif"/>
+      <img src="/commonGestures3.gif"/>
+      {/* <video>
+        <source src="/commonGestures.mp4" type='video/mp4'/>
+      </video> */}
     </div>
   );
 };

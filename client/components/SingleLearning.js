@@ -180,11 +180,11 @@ const SingleLearning = props => {
       <img
         src="/CheckMark.png"
         style={{
-          position: "absolute",
+          position: "relative",
           marginLeft: "auto",
           marginRight: "auto",
-          left: 400,
-          bottom: 50,
+          left: 150,
+          bottom: -240,
           right: 0,
           textAlign: "center",
           height: 100,
@@ -199,6 +199,7 @@ const SingleLearning = props => {
       <header className="App-header">
         <Webcam
           ref={webcamRef}
+          class=" bg-yellow-300 border-4 border-gray-600"
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -208,11 +209,12 @@ const SingleLearning = props => {
             textAlign: "center",
             zindex: 9,
             width: 640,
-            height: 480,
+            height: 400,
           }}
         />
         <canvas
           ref={canvasRef}
+
           style={{
             position: "absolute",
             marginLeft: "auto",
@@ -222,19 +224,19 @@ const SingleLearning = props => {
             textAlign: "center",
             zindex: 9,
             width: 640,
-            height: 480,
+            height: 380,
           }}
         />
 
         <img
           src={images[currentLetter] ? "/" + images[currentLetter][0] : null}
           style={{
-            position: "absolute",
+            position: "relative",
             marginLeft: "auto",
             marginRight: "auto",
-            left: 100,
-            bottom: 50,
-            right: 0,
+            left: 30,
+            bottom: -440,
+            right: 100,
             textAlign: "center",
             height: 100,
           }}
@@ -243,12 +245,12 @@ const SingleLearning = props => {
         <img
           src={images[currentLetter] ? "/" + images[currentLetter][1] : null}
           style={{
-            position: "absolute",
+            position: "relative",
             marginLeft: "auto",
             marginRight: "auto",
-            left: 0,
-            bottom: 50,
-            right: 120,
+            left: -100,
+            bottom: -340,
+            right: 100,
             textAlign: "center",
             height: 100,
           }}

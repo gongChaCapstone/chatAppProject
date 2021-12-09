@@ -2,9 +2,9 @@ import React from "react";
 
 const StudyGuide = () => {
   return (
-    <div>
-      <h1>English Alphabet Study Guide</h1>
-      <img src="alphabetStudyGuide.png" />
+    <div class="flex justify-center">
+
+      <img class="absolute w-5/12 h-5/12 left-300"src="/alphabetLetters.png" />
     </div>
   );
 };
