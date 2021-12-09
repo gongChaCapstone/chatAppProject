@@ -101,7 +101,11 @@ export const Signup = () => {
     const firstname = evt.target.firstname.value;
     const lastname = evt.target.lastname.value;
     dispatch(authenticate(email, password, "signup", firstname, lastname));
-    history.push("/quickstart");
+
+    if (email && password && firstname && lastname) {
+      history.push("/quickstart");
+    }
+
   };
 
   return (
