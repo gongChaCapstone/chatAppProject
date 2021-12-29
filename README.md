@@ -24,7 +24,13 @@ Red Panda was built using React and Redux for state management on the front-end,
 4. Complete a test by either showing the hand gesture given the letter or typing in the letter given the gesture.
 5. Earn points as you complete lessons and tests and see if you can top the leaderboard!
 
-# Play here: https://redpandaasl.herokuapp.com/
+
+<div align='center'>
+<img src="public/demoGif.gif" height=300">
+</div>
+<h1 align='center'>
+Play here: https://redpandaasl.herokuapp.com/
+</h1>
 
 # Team
 
