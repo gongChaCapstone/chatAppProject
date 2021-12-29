@@ -25,7 +25,7 @@ Red Panda was built using React and Redux for state management on the front-end,
 5. Earn points as you complete lessons and tests and see if you can top the leaderboard!
 
 <div align='center'>
-<img src="public/demoGif.gif">
+<img src="public/demoGif.gif" height="400">
 </div>
 <h1 align='center'>
 Play here: https://redpandaasl.herokuapp.com/
